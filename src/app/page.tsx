@@ -1,10 +1,11 @@
 /** @package */
-import { Button } from "@nextui-org/button";
+import SelectAtm from "@/components/atoms/select-atm.tsx";
+import Box from "@mui/material/Box";
 
 export default function Page() {
   return (
-    <div>
-      <Button>Click me</Button>
-    </div>
+    <Box p="10px">
+      <SelectAtm />
+    </Box>
   );
 }

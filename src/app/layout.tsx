@@ -1,8 +1,5 @@
-/** @packages */
-import { Providers } from "./providers";
-
 /** @styles */
-import "../styles/globals.css";
+import ThemeRegistry from "@/styles/theme/ThemeRegistry";
 
 export default function RootLayout({
   children,
@@ -10,9 +7,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <ThemeRegistry>{children}</ThemeRegistry>
       </body>
     </html>
   );
