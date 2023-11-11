@@ -10,12 +10,13 @@ const RoomCard = () => {
       item
       md={3}
       xs={12}
-      xl={1.5}
+      xl={2}
       sx={{
-        boxShadow: 3,
+        backgroundColor: "white",
         borderRadius: 2,
-        padding: "10px",
+        boxShadow: 3,
         cursor: "pointer",
+        padding: "10px",
       }}
     >
       <Grid item xs={10} pr="7px">

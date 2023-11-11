@@ -7,7 +7,11 @@ import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { useState } from "react";
 
-const SelectAtm = () => {
+type Props = {
+  fullWidth?: boolean;
+};
+
+const SelectAtm = ({ fullWidth }: Props) => {
   const [age, setAge] = useState("");
 
   const handleChange = (event: SelectChangeEvent) => {
@@ -15,7 +19,7 @@ const SelectAtm = () => {
   };
 
   return (
-    <FormControl sx={{ minWidth: 300 }}>
+    <FormControl fullWidth={fullWidth} sx={{ minWidth: 300 }}>
       <InputLabel id="select-helper-label" sx={{ top: "-7px" }}>
         Filter Rooms
       </InputLabel>
