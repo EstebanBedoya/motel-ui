@@ -1,15 +1,19 @@
 /** @package */
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import { Key } from "react";
 
 /** @component */
 import RoomCard from "@/components/molecules/room-card";
 import HeaderAppBar from "@/components/molecules/header-app-bar";
 import SelectAtm from "@/components/atoms/select-atm.tsx";
 
-const array = new Array(50).fill(0);
+/** @scripts */
+import RoomService from "@/core/services/rooms";
 
-export default function Page() {
+export default async function Page() {
+  const data = await RoomService.getAll();
+
   return (
     <>
       <HeaderAppBar />
@@ -23,8 +27,8 @@ export default function Page() {
         <SelectAtm fullWidth />
       </Box>
       <Grid container p={3} gap={3} justifyContent="center">
-        {array.map((_, index) => (
-          <RoomCard key={index} />
+        {data.map((room: any, index: Key | null | undefined) => (
+          <RoomCard room={room} key={index} />
         ))}
       </Grid>
     </>

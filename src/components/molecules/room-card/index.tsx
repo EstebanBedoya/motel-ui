@@ -6,15 +6,24 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 /** @scripts */
-import DialogMle from "../dialog-mle";
+import DialogMol from "../dialog-mol";
 import { useState } from "react";
 
-const RoomCard = () => {
+type Props = {
+  room: any;
+};
+
+const colorState = {
+  available: "green",
+  occupied: "red",
+};
+
+const RoomCard = ({ room }: Props) => {
   const [openModal, setOpenModal] = useState(false);
 
   const handleOpenModal = () => {
     setOpenModal(true);
-  }
+  };
 
   return (
     <>
@@ -34,13 +43,20 @@ const RoomCard = () => {
         }}
       >
         <Grid item xs={10} pr="7px">
-          <Typography variant="h5">105</Typography>
+          <Typography variant="h5">{room.roomId}</Typography>
           <Divider />
-          <Typography variant="h6">sencilla</Typography>
+          <Typography variant="h6">{room.name}</Typography>
         </Grid>
-        <Grid item xs={2} sx={{ backgroundColor: "green", borderRadius: 2 }} />
+        <Grid
+          item
+          xs={2}
+          sx={{
+            backgroundColor: colorState[room.state as keyof typeof colorState],
+            borderRadius: 2,
+          }}
+        />
       </Grid>
-      <DialogMle open={openModal} setOpen={setOpenModal} />
+      <DialogMol open={openModal} setOpen={setOpenModal} />
     </>
   );
 };

@@ -30,7 +30,7 @@ type Props = {
   setOpen: (open: boolean) => void;
 };
 
-const DialogMle = ({ open, setOpen }: Props) => {
+const DialogMol = ({ open, setOpen }: Props) => {
   if (!open) return;
 
   const theme = useTheme();
@@ -153,4 +153,4 @@ const DialogMle = ({ open, setOpen }: Props) => {
   );
 };
 
-export default DialogMle;
+export default DialogMol;
