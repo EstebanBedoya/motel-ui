@@ -1,10 +1,13 @@
 /** @package */
-import { Button } from "@nextui-org/button";
+import SelectAtm from "@/components/atoms/select-atm.tsx";
+import DialogMle from "@/components/molecules/dialog-mol";
+import HeaderAppBar from "@/components/molecules/header-app-bar";
+import Box from "@mui/material/Box";
 
 export default function Page() {
   return (
-    <div>
-      <Button>Click me</Button>
-    </div>
+    <Box p="10px">
+      {/* <DialogMle /> */}
+    </Box>
   );
 }
