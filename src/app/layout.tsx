@@ -1,6 +1,9 @@
 /** @styles */
 import ThemeRegistry from "@/styles/theme/ThemeRegistry";
 
+/** @script */
+import SessionAuthProvider from "@/context/SessionAuthProvider";
+
 export default function RootLayout({
   children,
 }: {
@@ -9,7 +12,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <ThemeRegistry>{children}</ThemeRegistry>
+        <SessionAuthProvider>
+          <ThemeRegistry>{children}</ThemeRegistry>
+        </SessionAuthProvider>
       </body>
     </html>
   );

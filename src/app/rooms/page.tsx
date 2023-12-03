@@ -9,7 +9,7 @@ import HeaderAppBar from "@/components/molecules/header-app-bar";
 import SelectAtm from "@/components/atoms/select-atm.tsx";
 
 /** @scripts */
-import RoomService from "@/core/services/rooms";
+import RoomService from "@/services/rooms";
 
 export default async function Page() {
   const data = await RoomService.getAll();
