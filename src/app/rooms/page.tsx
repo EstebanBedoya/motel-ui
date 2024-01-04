@@ -6,7 +6,7 @@ import { Key } from "react";
 /** @component */
 import RoomCard from "@/components/molecules/room-card";
 import HeaderAppBar from "@/components/molecules/header-app-bar";
-import SelectAtm from "@/components/atoms/select-atm.tsx";
+import SelectAtm from "@/components/atoms/select-atm";
 
 /** @scripts */
 import RoomService from "@/services/rooms";
