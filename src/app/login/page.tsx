@@ -34,7 +34,7 @@ export default function Page() {
       return;
     }
 
-    router.push("/rooms");
+    router.push("/dashboard/rooms");
   };
 
   return (
