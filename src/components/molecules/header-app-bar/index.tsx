@@ -7,7 +7,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
 /** @component */
-import SelectAtm from "@/components/atoms/select-atm.tsx";
+import SelectAtm from "@/components/atoms/select-atm";
 
 const HeaderAppBar = () => {
   return (

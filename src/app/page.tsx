@@ -1,27 +1,14 @@
 "use client";
 /** @package */
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function Page() {
-  const { data: session, status } = useSession();
+  const router = useRouter();
 
-  if (status === "loading") {
-    return <div>Loading...</div>;
-  }
+  useEffect(() => {
+    router.push("/login");
+  }, [router]);
 
-  return (
-    <Box p="10px">
-      {session ? (
-        <Button color="error" variant="contained" onClick={() => signOut()}>
-          Logout
-        </Button>
-      ) : (
-        <Button color="primary" variant="contained" onClick={() => signIn()}>
-          Login
-        </Button>
-      )}
-    </Box>
-  );
+  return null;
 }
