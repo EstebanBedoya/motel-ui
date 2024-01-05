@@ -15,8 +15,8 @@ import { useState } from "react";
 
 export default function Page() {
   const [errors, setErrors] = useState<string[]>([]);
-  const [email, setEmail] = useState("test@test.com");
-  const [password, setPassword] = useState("Paswordrandom123*");
+  const [email, setEmail] = useState("test@test.com"); // Default values for testing
+  const [password, setPassword] = useState("Paswordrandom123*"); // Default values for testing
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -34,7 +34,7 @@ export default function Page() {
       return;
     }
 
-    router.push("/");
+    router.push("/rooms");
   };
 
   return (
