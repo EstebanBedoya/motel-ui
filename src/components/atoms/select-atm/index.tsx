@@ -19,9 +19,9 @@ const SelectAtm = ({ fullWidth }: Props) => {
   };
 
   return (
-    <FormControl fullWidth={fullWidth} sx={{ minWidth: 300 }}>
+    <FormControl fullWidth={fullWidth} sx={{ minWidth: 600 }}>
       <InputLabel id="select-helper-label" sx={{ top: "-7px" }}>
-        Filter Rooms
+        Filtro de habitaciones
       </InputLabel>
       <Select
         id="select-helper"
