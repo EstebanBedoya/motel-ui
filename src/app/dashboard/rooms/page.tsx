@@ -5,21 +5,59 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
 
 /** @component */
 import SelectAtm from "@/components/atoms/select-atm";
-
-/** @scripts */
-import Box from "@mui/material/Box";
 import RoomItemAtm from "@/components/atoms/room-item-atm";
 
-export default function Page() {
-  const [value, setValue] = useState(0);
-  const items = Array.from({ length: 10 }, (_, index) => index);
+/** @style */
+import { useTheme } from "@mui/material";
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
+enum RoomStates {
+  AVAILABLE = "available",
+  OCCUPIED = "occupied",
+  MAINTENANCE = "maintenance",
+  CLEANING = "cleaning",
+}
+
+const mockItems = [
+  { id: 101, state: "available", type: "sencilla" },
+  { id: 102, state: "occupied", type: "jacuzzi" },
+  { id: 103, state: "maintenance", type: "sauna" },
+  { id: 104, state: "cleaning", type: "sencilla" },
+  { id: 105, state: "available", type: "jacuzzi" },
+  { id: 106, state: "occupied", type: "sauna" },
+  { id: 107, state: "maintenance", type: "sencilla" },
+  { id: 108, state: "cleaning", type: "jacuzzi" },
+  { id: 109, state: "available", type: "sauna" },
+  { id: 110, state: "occupied", type: "sencilla" },
+  { id: 111, state: "maintenance", type: "jacuzzi" },
+  { id: 112, state: "cleaning", type: "sauna" },
+  { id: 113, state: "available", type: "sencilla" },
+  { id: 114, state: "occupied", type: "jacuzzi" },
+  { id: 115, state: "maintenance", type: "sauna" },
+  { id: 115, state: "maintenance", type: "sauna" },
+];
+
+export default function Page() {
+  const [tabValue, setTabValue] = useState("all");
+  const items = Array.from({ length: 10 }, (_, index) => index);
+  const theme = useTheme();
+
+  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+    setTabValue(newValue);
   };
+
+  console.log(tabValue);
+
+  const stateColor =
+    {
+      [RoomStates.AVAILABLE]: theme.palette.success.main,
+      [RoomStates.OCCUPIED]: theme.palette.error.main,
+      [RoomStates.MAINTENANCE]: theme.palette.warning.main,
+      [RoomStates.CLEANING]: theme.palette.violet.main,
+    }[tabValue] ?? theme.palette.primary.main;
 
   return (
     <>
@@ -36,22 +74,94 @@ export default function Page() {
         </Typography>
         <SelectAtm />
       </Grid>
-      <Box borderBottom={2} borderTop={2} borderColor="#0000004D">
-        <Tabs value={value} onChange={handleChange} centered>
-          <Tab label="Todas" />
-          <Tab label="Disponibles" />
-          <Tab label="Ocupadas" />
-          <Tab label="Limpieza" />
-          <Tab label="Mantenimiento" />
-          <Tab label="Crear Habitación" />
+      <Box
+        borderBottom={2}
+        borderTop={2}
+        borderColor={theme.palette.text.secondary}
+      >
+        <Tabs
+          value={tabValue}
+          onChange={handleChange}
+          centered
+          sx={{
+            "& .MuiTabs-indicator": {
+              backgroundColor: stateColor,
+            },
+            "& .Mui-selected": {
+              color: stateColor,
+            },
+          }}
+        >
+          <Tab
+            label="Todas"
+            value="all"
+            sx={{
+              color: theme.palette.text.primary,
+              fontWeight: 700,
+            }}
+          />
+          <Tab
+            label="Disponibles"
+            value={RoomStates.AVAILABLE}
+            sx={{
+              color: theme.palette.text.primary,
+              fontWeight: 700,
+            }}
+          />
+          <Tab
+            label="Ocupadas"
+            value={RoomStates.OCCUPIED}
+            sx={{
+              color: theme.palette.text.primary,
+              fontWeight: 700,
+            }}
+          />
+          <Tab
+            label="Limpieza"
+            value={RoomStates.CLEANING}
+            sx={{
+              color: theme.palette.text.primary,
+              fontWeight: 700,
+            }}
+          />
+          <Tab
+            label="Mantenimiento"
+            value={RoomStates.MAINTENANCE}
+            sx={{
+              color: theme.palette.text.primary,
+              fontWeight: 700,
+            }}
+          />
+          <Tab
+            label="Crear Habitación"
+            value="create"
+            sx={{
+              color: theme.palette.text.primary,
+              fontWeight: 700,
+            }}
+          />
         </Tabs>
       </Box>
-      <Grid container gap={2} mt={5} pl={10} pr={10}>
-        {items.map((item, index) => (
-          <Grid item key={index}>
-            <RoomItemAtm />
-          </Grid>
-        ))}
+      <Grid
+        container
+        spacing={2}
+        mt={5}
+        gap={2}
+        pl={10}
+        pr={10}
+        mb={5}
+      >
+        {mockItems
+          .filter((item) => item.state === tabValue || tabValue === "all")
+          .map((item, index) => (
+            <Grid item key={index} >
+              <RoomItemAtm
+                roomId={item.id}   
+                state={item.state as RoomStates}
+                type={item.type.toUpperCase()}
+              />
+            </Grid>
+          ))}
       </Grid>
     </>
   );

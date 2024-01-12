@@ -3,6 +3,9 @@ import { Roboto } from "next/font/google";
 import { createTheme } from "@mui/material/styles";
 
 declare module "@mui/material/styles" {
+  interface Palette {
+    violet: Palette['primary'];
+  }
   interface PaletteOptions {
     violet?: PaletteOptions["primary"];
   }
