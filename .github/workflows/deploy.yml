@@ -26,3 +26,5 @@ jobs:
             conventional-changelog-conventionalcommits@4.6.1
           branches: |
             ['main']
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
