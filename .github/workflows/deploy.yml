@@ -12,8 +12,6 @@ jobs:
     steps:
       - name: Checkout files
         uses: actions/checkout@v2
-        with:
-          persist-credentials: false
 
       - name: Generate a semantic release
         uses: cycjimmy/semantic-release-action@v2
