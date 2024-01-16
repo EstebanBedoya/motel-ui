@@ -72,7 +72,7 @@ export default function Page() {
         </Grid>
         <Grid container mt={5} justifyContent="center">
           <Typography variant="h4" fontWeight={700}>
-            Iniciar Sesión bro bro
+            Iniciar Sesión c:
           </Typography>
         </Grid>
         <form onSubmit={handleSubmit}>

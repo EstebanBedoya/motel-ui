@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout files
         uses: actions/checkout@v2
+        with:
+          persist-credentials: false
 
       - name: Generate a semantic release
         uses: cycjimmy/semantic-release-action@v2
@@ -25,4 +27,4 @@ jobs:
           branches: |
             ['main']
         env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
