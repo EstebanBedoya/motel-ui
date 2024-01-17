@@ -13,6 +13,7 @@ import RoomItemAtm from "@/components/atoms/room-item-atm";
 
 /** @style */
 import { useTheme } from "@mui/material";
+import CreateRoomCardMol from "@/components/molecules/create-room-card-mol";
 
 enum RoomStates {
   AVAILABLE = "available",
@@ -42,14 +43,11 @@ const mockItems = [
 
 export default function Page() {
   const [tabValue, setTabValue] = useState("all");
-  const items = Array.from({ length: 10 }, (_, index) => index);
   const theme = useTheme();
 
   const handleChange = (event: React.SyntheticEvent, newValue: string) => {
     setTabValue(newValue);
   };
-
-  console.log(tabValue);
 
   const stateColor =
     {
@@ -151,7 +149,7 @@ export default function Page() {
         pr={10}
         mb={5}
       >
-        {mockItems
+        {/* {mockItems
           .filter((item) => item.state === tabValue || tabValue === "all")
           .map((item, index) => (
             <Grid item key={index} >
@@ -161,7 +159,8 @@ export default function Page() {
                 type={item.type.toUpperCase()}
               />
             </Grid>
-          ))}
+          ))} */}
+          <CreateRoomCardMol />
       </Grid>
     </>
   );
