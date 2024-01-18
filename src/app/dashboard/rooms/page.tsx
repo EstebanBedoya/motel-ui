@@ -14,6 +14,7 @@ import RoomItemAtm from "@/components/atoms/room-item-atm";
 /** @style */
 import { useTheme } from "@mui/material";
 import CreateRoomCardMol from "@/components/molecules/create-room-card-mol";
+import CreateRoomCardSummary from "@/components/molecules/create-room-card-summary";
 
 enum RoomStates {
   AVAILABLE = "available",
@@ -160,7 +161,8 @@ export default function Page() {
               />
             </Grid>
           ))} */}
-          <CreateRoomCardMol />
+          {/* <CreateRoomCardMol /> */}
+          <CreateRoomCardSummary />
       </Grid>
     </>
   );

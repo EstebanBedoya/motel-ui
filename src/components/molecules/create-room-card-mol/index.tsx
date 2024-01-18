@@ -2,14 +2,16 @@
 /** @package */
 import Box from "@mui/material/Box";
 import Checkbox from "@mui/material/Checkbox";
+import FormControl from "@mui/material/FormControl";
 import Grid from "@mui/material/Grid";
+import InputLabel from "@mui/material/InputLabel";
 import ListItemText from "@mui/material/ListItemText";
 import MenuItem from "@mui/material/MenuItem";
-import OutlinedInput from "@mui/material/OutlinedInput";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
+import Button from "@mui/material/Button";
 
 /** @style */
 import { useTheme } from "@mui/material";
@@ -29,20 +31,22 @@ const names = [
 
 const TextFieldAtm = ({
   label,
-  width = 150,
+  width = "150px",
   isRequired = false,
 }: {
   label: string;
   width?: string | number;
   isRequired?: boolean;
 }) => (
-  <Box display="flex" alignItems="center" width={width} gap={2}>
-    <Typography fontWeight={400} fontSize={15}>
-      {label}
-      {isRequired && "*"}
-    </Typography>
-    <TextField sx={{ "& .MuiInputBase-root": { height: "30px" } }}></TextField>
-  </Box>
+  <TextField
+    label={label}
+    size="small"
+    variant="outlined"
+    required={isRequired}
+    sx={{
+      width,
+    }}
+  />
 );
 
 const SelectAtm = ({
@@ -63,38 +67,33 @@ const SelectAtm = ({
   };
 
   return (
-    <Box display="flex" alignItems="center" gap={2}>
-      <Typography fontWeight={400} fontSize={15}>
-        {label}
-        {isRequired && "*"}
-      </Typography>
-      <Select
-        labelId="demo-multiple-checkbox-label"
-        id="demo-multiple-checkbox"
-        multiple={multiple}
-        value={personName}
-        onChange={handleChange}
-        renderValue={multiple ? (selected) => selected.join(", ") : undefined}
-        MenuProps={{
-          PaperProps: {
-            style: {
-              maxHeight: 48 * 4.5 + 8,
-              width: 250,
+    <Box sx={{ minWidth: 110, maxWidth: "100%" }}>
+      <FormControl fullWidth size="small" required={isRequired}>
+        <InputLabel id="demo-simple-select-label">{label}</InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-multiple-checkbox"
+          multiple={multiple}
+          label={label}
+          value={personName}
+          onChange={handleChange}
+          renderValue={multiple ? (selected) => selected.join(", ") : undefined}
+          MenuProps={{
+            PaperProps: {
+              style: {
+                maxHeight: 48 * 4.5 + 8,
+              },
             },
-          },
-        }}
-        sx={{
-          width: 250,
-          height: 35,
-        }}
-      >
-        {names.map((name) => (
-          <MenuItem key={name} value={name}>
-            {multiple && <Checkbox checked={personName.indexOf(name) > -1} />}
-            <ListItemText primary={name} />
-          </MenuItem>
-        ))}
-      </Select>
+          }}
+        >
+          {names.map((name) => (
+            <MenuItem key={name} value={name}>
+              {multiple && <Checkbox checked={personName.indexOf(name) > -1} />}
+              <ListItemText primary={name} />
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
     </Box>
   );
 };
@@ -107,26 +106,56 @@ const CreateRoomCardMol = () => {
       border="2px solid"
       borderColor={theme.palette.text.secondary}
       borderRadius="20px"
-      height={630}
-      paddingX={10}
-      pt={3}
-      width={850}
+      height={410}
+      paddingX={7}
+      paddingY={3}
+      width={600}
+      container
     >
       <Typography fontWeight={600} fontSize={20}>
         Detalles de la habitacion
       </Typography>
-      <Grid container xs={12} mt={4}>
+      <Grid container xs={12}>
         <Grid item xs={6} container direction="column" gap={3}>
           <TextFieldAtm label="Numero" isRequired />
-          <TextFieldAtm label="Rato" />
-          <TextFieldAtm label="Amanecida" />
+          <Box>
+            <Typography fontWeight={700} fontSize={15}>
+              Precios*
+            </Typography>
+            <Box
+              borderColor={theme.palette.text.secondary}
+              borderRadius={2}
+              display="flex"
+              flexDirection="column"
+              gap={1}
+              paddingY={1}
+            >
+              <TextFieldAtm label="Rato" isRequired />
+              <TextFieldAtm label="Amanecida" isRequired />
+            </Box>
+          </Box>
           <SelectAtm label="Adicionales" isRequired multiple />
         </Grid>
-        <Grid item xs={6}>
-          <TextFieldAtm label="Nombre" />
+        <Grid item xs={6} container direction="column" gap={3}>
+          <TextFieldAtm label="Nombre" width={240} />
           <SelectAtm label="Tipo de Habitacion" isRequired multiple />
           <SelectAtm label="Estado Habitacion" isRequired />
         </Grid>
+      </Grid>
+      <Grid
+        item
+        container
+        justifyContent="center"
+        alignItems="flex-end"
+      >
+        <Button
+          variant="contained"
+          sx={{
+            borderRadius: "20px",
+          }}
+        >
+          Crear habitacion
+        </Button>
       </Grid>
     </Grid>
   );
