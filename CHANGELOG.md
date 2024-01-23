@@ -1,3 +1,11 @@
+# [1.1.0](https://github.com/EstebanBedoya/motel-ui/compare/v1.0.0...v1.1.0) (2024-01-23)
+
+
+### Features
+
+* create card ([fbbac49](https://github.com/EstebanBedoya/motel-ui/commit/fbbac492b2af476cab597373054a85cba563b631))
+* create room card summary ([ab66ee4](https://github.com/EstebanBedoya/motel-ui/commit/ab66ee447cf9178bfeaaf5d0ce96e7760bc50bd6))
+
 # 1.0.0 (2024-01-16)
 
 
