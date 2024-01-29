@@ -4,8 +4,12 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 
+/** @component */
+import RoomIdAtm from "@/components/atoms/room-id-atm";
+
 /** @style */
 import { useTheme } from "@mui/material";
+import ListItemsMol from "../list-items-mol";
 
 const CreateRoomCardSummary = () => {
   const theme = useTheme();
@@ -37,54 +41,38 @@ const CreateRoomCardSummary = () => {
           >
             Habitacón
           </Typography>
-          <Box
-            alignItems="center"
-            border={4}
-            borderColor={theme.palette.primary.main}
-            borderRadius={20}
-            display="flex"
-            height={90}
-            justifyContent="center"
-            mt={3}
-            width={90}
-          >
-            <Typography
-              fontSize={40}
-              fontWeight={700}
-              color={theme.palette.primary.main}
-            >
-              01
-            </Typography>
-          </Box>
+          <RoomIdAtm roomId={111} color={theme.palette.primary.main} />
         </Grid>
         <Grid item xs={8} pr="26px" pt="10px" container>
-          <Typography fontSize={20} fontWeight={600} ml="26px">
-            Detalles de la Habitación
-          </Typography>
-          <Box ml="26px">
-            <ul>
-              <li style={{ fontSize: "20px", fontWeight: 600 }}>
-                Nombre: <span style={{ fontWeight: "normal" }}>name</span>
-              </li>
-              <li style={{ fontSize: "20px", fontWeight: 600 }}>
-                Tipo de Habitacion:{" "}
-                <span style={{ fontWeight: "normal" }}>name</span>
-              </li>
-              <li style={{ fontSize: "20px", fontWeight: 600 }}>
-                Precios: <span style={{ fontWeight: "normal" }}>name</span>
-              </li>
-              <li style={{ fontSize: "20px", fontWeight: 600 }}>
-                Servicios: <span style={{ fontWeight: "normal" }}>name</span>
-              </li>
-              <li style={{ fontSize: "20px", fontWeight: 600 }}>
-                Adicionales: <span style={{ fontWeight: "normal" }}>name</span>
-              </li>
-              <li style={{ fontSize: "20px", fontWeight: 600 }}>
-                Estado Habitación:{" "}
-                <span style={{ fontWeight: "normal" }}>name</span>
-              </li>
-            </ul>
-          </Box>
+          <ListItemsMol
+            title="Detalles:"
+            items={[
+              {
+                primary: "Nombre",
+                secondary: "name",
+              },
+              {
+                primary: "Tipo de Habitacion",
+                secondary: "name",
+              },
+              {
+                primary: "Precios",
+                secondary: "name",
+              },
+              {
+                primary: "Servicios",
+                secondary: "name",
+              },
+              {
+                primary: "Adicionales",
+                secondary: "name",
+              },
+              {
+                primary: "Estado Habitación",
+                secondary: "name",
+              },
+            ]}
+          />
           <Grid container gap={2} justifyContent="flex-end" alignItems="center">
             <Button
               variant="contained"
