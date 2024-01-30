@@ -14,7 +14,9 @@ interface Props {
 const ListItemsMol = ({ title, items }: Props) => (
   <List
     subheader={
-      <ListSubheader sx={{ fontSize: 20, fontWeight: 700, color: "black" }}>
+      <ListSubheader
+        sx={{ fontSize: 20, fontWeight: 700, color: "black", lineHeight: 'unset' }}
+      >
         {title}
       </ListSubheader>
     }
@@ -36,7 +38,7 @@ const ListItemsMol = ({ title, items }: Props) => (
         <ListItemText
           sx={{
             display: "flex",
-            gap: 1
+            gap: 1,
           }}
           primaryTypographyProps={{
             fontWeight: typeof item === "string" ? "normal" : 700,

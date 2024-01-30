@@ -4,14 +4,13 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
-import { useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
 
 /** @components */
 import RoomIdAtm from "@/components/atoms/room-id-atm";
 import ListItemsMol from "@/components/molecules/list-items-mol";
+import AvailableRoomContent from "./available-room-content";
 
 /** @styles */
 
@@ -26,7 +25,7 @@ interface Props {
 }
 
 const RoomModalMol = ({
-  roomData: { id, state, type },
+  roomData: { id, state },
   open,
   handleClose,
 }: Props) => {
@@ -41,7 +40,7 @@ const RoomModalMol = ({
           border: "2px",
           borderStyle: "solid",
           borderColor: color,
-          width: { sm: "80vw", md: "60vw", lg: "35vw" },
+          width: { sm: "90vw", md: "70vw", lg: "50vw", xl: "40vw" },
           maxWidth: "100%",
         },
       }}
@@ -75,64 +74,28 @@ const RoomModalMol = ({
         <CloseIcon />
       </IconButton>
       <DialogContent>
-        <Grid container xs={12}>
-          <Grid item xs={6} borderRight="2px solid #ccc">
-            {state === RoomStates.AVAILABLE && (
-              <ListItemsMol
-                title="Detalles:"
-                items={[
-                  {
-                    primary: "Nombre",
-                    secondary: "name",
-                  },
-                  {
-                    primary: "Tipo de Habitacion",
-                    secondary: type,
-                  },
-                  {
-                    primary: "Precios",
-                    secondary: "name",
-                  },
-                  {
-                    primary: "Servicios",
-                    secondary: "name",
-                  },
-                  {
-                    primary: "Estado Habitación",
-                    secondary: "name",
-                  },
-                ]}
-              />
-            )}
-            {state === RoomStates.OCCUPIED && (
-              <ListItemsMol
-                title="Facturación"
-                items={[
-                  {
-                    primary: "tipo de servicio",
-                    secondary: "rato",
-                  },
-                  {
-                    primary: "Adicionales",
-                    secondary: "name",
-                  },
-                  {
-                    primary: "Total",
-                    secondary: "100.000",
-                  }
-                ]}
-              />
-            )}
-          </Grid>
-          <Grid item xs={6} px={2}>
-            <ListItemsMol
-              title="Adicionales:"
-              items={["add 1", "add 2", "add 3"]}
-            />
-          </Grid>
-        </Grid>
+        {state === RoomStates.AVAILABLE && <AvailableRoomContent />}
+        {state === RoomStates.OCCUPIED && (
+          <ListItemsMol
+            title="Facturación"
+            items={[
+              {
+                primary: "tipo de servicio",
+                secondary: "rato",
+              },
+              {
+                primary: "Adicionales",
+                secondary: "name",
+              },
+              {
+                primary: "Total",
+                secondary: "100.000",
+              },
+            ]}
+          />
+        )}
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ display: "flex", justifyContent: " center" }}>
         {state === RoomStates.OCCUPIED && (
           <Button variant="contained" color="error">
             Check out
