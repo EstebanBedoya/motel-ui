@@ -13,50 +13,46 @@ import RoomItemAtm from "@/components/atoms/room-item-atm";
 
 /** @style */
 import { useTheme } from "@mui/material";
+import RoomModalMol from "@/components/organisms/room-modal-org";
+import { IRoom, RoomStates } from "@/utils/types";
+import { colorState } from "@/utils/room";
 import CreateRoomCardMol from "@/components/molecules/create-room-card-mol";
-import CreateRoomCardSummary from "@/components/molecules/create-room-card-summary";
 
-enum RoomStates {
-  AVAILABLE = "available",
-  OCCUPIED = "occupied",
-  MAINTENANCE = "maintenance",
-  CLEANING = "cleaning",
-}
-
-const mockItems = [
-  { id: 101, state: "available", type: "sencilla" },
-  { id: 102, state: "occupied", type: "jacuzzi" },
-  { id: 103, state: "maintenance", type: "sauna" },
-  { id: 104, state: "cleaning", type: "sencilla" },
-  { id: 105, state: "available", type: "jacuzzi" },
-  { id: 106, state: "occupied", type: "sauna" },
-  { id: 107, state: "maintenance", type: "sencilla" },
-  { id: 108, state: "cleaning", type: "jacuzzi" },
-  { id: 109, state: "available", type: "sauna" },
-  { id: 110, state: "occupied", type: "sencilla" },
-  { id: 111, state: "maintenance", type: "jacuzzi" },
-  { id: 112, state: "cleaning", type: "sauna" },
-  { id: 113, state: "available", type: "sencilla" },
-  { id: 114, state: "occupied", type: "jacuzzi" },
-  { id: 115, state: "maintenance", type: "sauna" },
-  { id: 116, state: "maintenance", type: "sauna" },
+const mockItems: IRoom[] = [
+  { id: 101, state: RoomStates.AVAILABLE, type: "sencilla" },
+  { id: 102, state: RoomStates.OCCUPIED, type: "jacuzzi" },
+  { id: 103, state: RoomStates.MAINTENANCE, type: "sauna" },
+  { id: 104, state: RoomStates.CLEANING, type: "sencilla" },
+  { id: 105, state: RoomStates.AVAILABLE, type: "jacuzzi" },
+  { id: 106, state: RoomStates.OCCUPIED, type: "sauna" },
+  { id: 107, state: RoomStates.MAINTENANCE, type: "sencilla" },
+  { id: 108, state: RoomStates.CLEANING, type: "jacuzzi" },
+  { id: 109, state: RoomStates.AVAILABLE, type: "sauna" },
+  { id: 110, state: RoomStates.OCCUPIED, type: "sencilla" },
+  { id: 111, state: RoomStates.MAINTENANCE, type: "jacuzzi" },
+  { id: 112, state: RoomStates.CLEANING, type: "sauna" },
+  { id: 113, state: RoomStates.AVAILABLE, type: "sencilla" },
+  { id: 114, state: RoomStates.OCCUPIED, type: "jacuzzi" },
+  { id: 115, state: RoomStates.MAINTENANCE, type: "sauna" },
+  { id: 116, state: RoomStates.MAINTENANCE, type: "sauna" },
 ];
 
 export default function Page() {
   const [tabValue, setTabValue] = useState("all");
+  const [roomModalData, setRoomModalData] = useState<IRoom | null>(null);
   const theme = useTheme();
 
-  const handleChange = (event: React.SyntheticEvent, newValue: string) => {
+  const handleChange = (_: any, newValue: string) => {
     setTabValue(newValue);
   };
 
+  const handleRoomModalData = (roomId: IRoom) => {
+    setRoomModalData(roomId);
+  };
+
   const stateColor =
-    {
-      [RoomStates.AVAILABLE]: theme.palette.success.main,
-      [RoomStates.OCCUPIED]: theme.palette.error.main,
-      [RoomStates.MAINTENANCE]: theme.palette.warning.main,
-      [RoomStates.CLEANING]: theme.palette.violet.main,
-    }[tabValue] ?? theme.palette.primary.main;
+    colorState[tabValue as keyof typeof colorState] ??
+    theme.palette.primary.main;
 
   return (
     <>
@@ -150,6 +146,7 @@ export default function Page() {
                 roomId={item.id}
                 state={item.state as RoomStates}
                 type={item.type.toUpperCase()}
+                onClick={() => handleRoomModalData(item)}
               />
             </Grid>
           ))}
@@ -158,6 +155,13 @@ export default function Page() {
           // <CreateRoomCardSummary />
         )}
       </Grid>
+      {roomModalData && (
+        <RoomModalMol
+          roomData={roomModalData}
+          handleClose={() => setRoomModalData(null)}
+          open={!!roomModalData}
+        />
+      )}
     </>
   );
 }
