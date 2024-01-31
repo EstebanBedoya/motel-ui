@@ -16,7 +16,6 @@ import { useTheme } from "@mui/material";
 import RoomModalMol from "@/components/organisms/room-modal-org";
 import { IRoom, RoomStates } from "@/utils/types";
 import { colorState } from "@/utils/room";
-import CreateRoomCardSummary from "@/components/molecules/create-room-card-summary";
 import CreateRoomCardMol from "@/components/molecules/create-room-card-mol";
 
 const mockItems: IRoom[] = [

@@ -9,13 +9,19 @@ import ListItemText from "@mui/material/ListItemText";
 interface Props {
   title: string;
   items: string[] | { primary: string; secondary: string }[];
+  inlineItems?: boolean;
 }
 
-const ListItemsMol = ({ title, items }: Props) => (
+const ListItemsMol = ({ title, items, inlineItems = false }: Props) => (
   <List
     subheader={
       <ListSubheader
-        sx={{ fontSize: 20, fontWeight: 700, color: "black", lineHeight: 'unset' }}
+        sx={{
+          fontSize: 20,
+          fontWeight: 700,
+          color: "black",
+          lineHeight: "unset",
+        }}
       >
         {title}
       </ListSubheader>
@@ -36,10 +42,15 @@ const ListItemsMol = ({ title, items }: Props) => (
           <ArrowRightIcon />
         </ListItemIcon>
         <ListItemText
-          sx={{
-            display: "flex",
-            gap: 1,
-          }}
+          sx={
+            inlineItems
+              ? {
+                  display: "flex",
+                  gap: 1,
+                  alignItems: "center",
+                }
+              : null
+          }
           primaryTypographyProps={{
             fontWeight: typeof item === "string" ? "normal" : 700,
           }}

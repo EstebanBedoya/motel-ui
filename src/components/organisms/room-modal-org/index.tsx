@@ -1,22 +1,24 @@
 /** @packages */
-import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+import CloseIcon from "@mui/icons-material/Close";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
-import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 
 /** @components */
+import AvailableRoom from "./available-room";
+import CleaningRoom from "./cleaning-room";
+import MaintenanceRoom from "./maintenance-room";
 import RoomIdAtm from "@/components/atoms/room-id-atm";
-import ListItemsMol from "@/components/molecules/list-items-mol";
-import AvailableRoomContent from "./available-room-content";
 
 /** @styles */
 
 /** @scripts */
 import { RoomStatesSpanish, colorState } from "@/utils/room";
 import { RoomStates } from "@/utils/types";
+import OccupiedRoomContent from "./occupied-room";
 
 interface Props {
   roomData: any;
@@ -31,6 +33,27 @@ const RoomModalMol = ({
 }: Props) => {
   const color = colorState[state as keyof typeof colorState];
 
+  const stateContent = {
+    [RoomStates.AVAILABLE]: <AvailableRoom.Content />,
+    [RoomStates.OCCUPIED]: <OccupiedRoomContent.Content />,
+    [RoomStates.CLEANING]: <CleaningRoom.Content />,
+    [RoomStates.MAINTENANCE]: <MaintenanceRoom.Content inMaintenance={false} />,
+  };
+
+  const stateActions = {
+    [RoomStates.AVAILABLE]: <AvailableRoom.Actions handleClose={handleClose} />,
+    [RoomStates.OCCUPIED]: (
+      <OccupiedRoomContent.Actions handleClose={handleClose} />
+    ),
+    [RoomStates.CLEANING]: <CleaningRoom.Actions handleClose={handleClose} />,
+    [RoomStates.MAINTENANCE]: (
+      <MaintenanceRoom.Actions
+        handleClose={handleClose}
+        inMaintenance={false}
+      />
+    ),
+  };
+
   return (
     <Dialog
       open={open}
@@ -42,17 +65,18 @@ const RoomModalMol = ({
           borderColor: color,
           width: { sm: "90vw", md: "70vw", lg: "50vw", xl: "40vw" },
           maxWidth: "100%",
+          minHeight: "65vh",
         },
       }}
     >
-      <DialogContent
-        dividers
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: 2,
-        }}
+      <Box
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+        gap={2}
+        borderBottom={2}
+        borderColor={color}
+        py={3}
       >
         <RoomIdAtm roomId={id} color={color} />
         <Typography fontSize={25} fontWeight={700} color={color}>
@@ -60,7 +84,7 @@ const RoomModalMol = ({
             RoomStatesSpanish[state as keyof typeof RoomStatesSpanish]
           }`}
         </Typography>
-      </DialogContent>
+      </Box>
       <IconButton
         aria-label="close"
         onClick={handleClose}
@@ -73,37 +97,11 @@ const RoomModalMol = ({
       >
         <CloseIcon />
       </IconButton>
-      <DialogContent>
-        {state === RoomStates.AVAILABLE && <AvailableRoomContent />}
-        {state === RoomStates.OCCUPIED && (
-          <ListItemsMol
-            title="Facturación"
-            items={[
-              {
-                primary: "tipo de servicio",
-                secondary: "rato",
-              },
-              {
-                primary: "Adicionales",
-                secondary: "name",
-              },
-              {
-                primary: "Total",
-                secondary: "100.000",
-              },
-            ]}
-          />
-        )}
+      <DialogContent dividers>
+        {stateContent[state as keyof typeof stateContent]}
       </DialogContent>
       <DialogActions sx={{ display: "flex", justifyContent: " center" }}>
-        {state === RoomStates.OCCUPIED && (
-          <Button variant="contained" color="error">
-            Check out
-          </Button>
-        )}
-        <Button onClick={handleClose} variant="contained">
-          {state === RoomStates.OCCUPIED ? "Aumentar Servicio" : "Check in"}
-        </Button>
+        {stateActions[state as keyof typeof stateActions]}
       </DialogActions>
     </Dialog>
   );
