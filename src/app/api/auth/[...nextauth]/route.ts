@@ -1,7 +1,9 @@
 /** @package */
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import { cookies } from "next/headers";
+
+/** @scripts */
+import prisma from "@/libs/prisma";
 
 const handler = NextAuth({
   providers: [
@@ -12,25 +14,18 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_LOGIN_SERVICE_HOST}/auth/login`,
-          {
-            method: "POST",
-            body: JSON.stringify({
-              email: credentials?.email,
-              password: credentials?.password,
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials?.email,
+          },
+        })
 
-        const user = await res.json();
+        if (!user) return null;
 
-        if (user.error) throw user;
+        // Esto tiene que cambiar por una comparación segura con bcrypt
+        const matchPassword = user.password === credentials?.password;
 
-        cookies().set("next-jwt", user.token);
+        if (!matchPassword) return null;
 
         return user;
       },
