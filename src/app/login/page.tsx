@@ -16,7 +16,7 @@ import { useState } from "react";
 export default function Page() {
   const [errors, setErrors] = useState<string[]>([]);
   const [email, setEmail] = useState("test@test.com"); // Default values for testing
-  const [password, setPassword] = useState("Paswordrandom123*"); // Default values for testing
+  const [password, setPassword] = useState("password"); // Default values for testing
   const router = useRouter();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
