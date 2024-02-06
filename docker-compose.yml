@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres
+    container_name: psql-db
+    ports:
+      - "5432:5432"
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=ebedoya
+      - POSTGRES_DB=moteldb
+    
