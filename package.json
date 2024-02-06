@@ -6,7 +6,10 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:format": "prisma format",
+    "db:migrate": "npx prisma migrate dev",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
