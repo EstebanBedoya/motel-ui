@@ -3,7 +3,7 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
 /** @style */
-import { useTheme } from "@mui/material";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 enum RoomStates {
   AVAILABLE = "available",
@@ -31,6 +31,7 @@ const RoomItemAtm = ({
   type 
 }: Props) => {
   const theme = useTheme();
+  const matchMaxWidth = useMediaQuery('(max-width:500px)');
 
   const color = {
     [RoomStates.AVAILABLE]: theme.palette.success.main,
@@ -47,11 +48,13 @@ const RoomItemAtm = ({
       display="flex"
       flexDirection="column"
       gap={2}
-      height={226}
-      width={196}
+      height={matchMaxWidth ? 200 : 226}
+      width={"100%"}
+      maxWidth="250px"
       sx={{
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
+        margin: "5px",
       }}
     >
       <Box
@@ -65,12 +68,12 @@ const RoomItemAtm = ({
         mt={3}
         width={90}
       >
-        <Typography fontSize={40} fontWeight={700} color={color}>
+        <Typography fontSize={matchMaxWidth ? 30 : 40} fontWeight={700} color={color}>
           {roomId}
         </Typography>
       </Box>
       <Box display="flex" flexDirection="column" alignItems="center">
-        <Typography fontSize={25} fontWeight={600}>
+        <Typography fontSize={matchMaxWidth ? 20 : 25} fontWeight={600}>
           {type}
         </Typography>
         <Typography fontSize={20} fontWeight={600} color={color}>

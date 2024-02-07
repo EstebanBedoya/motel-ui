@@ -38,10 +38,9 @@ const HeaderAppBar = () => {
       color="inherit"
       sx={{ borderBottom: "2px solid #0054A3" }}
     >
-      <Toolbar>
+      <Toolbar sx={{ justifyContent: "space-between"}}>
         <BrandLogoAtm />
-        <Box sx={{ flexGrow: 1 }} />
-        <Box sx={{ flexGrow: 0 }}>
+        <Box>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
               <Avatar>M</Avatar>
