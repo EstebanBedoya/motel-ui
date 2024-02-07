@@ -6,9 +6,10 @@ interface Props {
   roomId: number;
   color: string;
   sx?: any;
+  matchMaxWidth?: boolean;
 }
 
-const RoomIdAtm = ({ roomId, color, sx }: Props) => (
+const RoomIdAtm = ({ roomId, matchMaxWidth, color, sx }: Props) => (
   <Box
     alignItems="center"
     border={4}
@@ -17,8 +18,8 @@ const RoomIdAtm = ({ roomId, color, sx }: Props) => (
     display="flex"
     height={90}
     justifyContent="center"
+    mt={3}
     width={90}
-    sx={sx}
   >
     <Typography fontSize={40} fontWeight={700} color={color}>
       {roomId}
