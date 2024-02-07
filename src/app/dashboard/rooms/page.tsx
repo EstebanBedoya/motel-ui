@@ -17,6 +17,7 @@ import RoomModalMol from "@/components/organisms/room-modal-org";
 import { IRoom, RoomStates } from "@/utils/types";
 import { colorState } from "@/utils/room";
 import CreateRoomCardMol from "@/components/molecules/create-room-card-mol";
+import { trpc } from "@/app/_trpc/client";
 
 const mockItems: IRoom[] = [
   { id: 101, state: RoomStates.AVAILABLE, type: "sencilla" },
@@ -41,6 +42,8 @@ export default function Page() {
   const [tabValue, setTabValue] = useState("all");
   const [roomModalData, setRoomModalData] = useState<IRoom | null>(null);
   const theme = useTheme();
+
+  const getTodos = trpc.getTodos.useQuery();
 
   const handleChange = (_: any, newValue: string) => {
     setTabValue(newValue);
