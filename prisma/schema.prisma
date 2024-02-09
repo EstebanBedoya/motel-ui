@@ -17,7 +17,7 @@ enum Role {
 
 enum RoomStates {
   available
-  ocuppied
+  occupied
   mantainance
   cleaning
 }
@@ -64,7 +64,7 @@ model Price {
   startDate   DateTime?
   endDate     DateTime?
   createAt    DateTime  @default(now())
-  updateAt    DateTime  @updatedAt
+  updateAt    DateTime  @updatedAt()
 }
 
 model Record {

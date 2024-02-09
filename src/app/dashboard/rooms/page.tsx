@@ -43,7 +43,9 @@ export default function Page() {
   const [roomModalData, setRoomModalData] = useState<IRoom | null>(null);
   const theme = useTheme();
 
-  const getTodos = trpc.getTodos.useQuery();
+  const getTodos = trpc.rooms.listAll.useQuery();
+
+  console.log(getTodos.data);
 
   const handleChange = (_: any, newValue: string) => {
     setTabValue(newValue);
