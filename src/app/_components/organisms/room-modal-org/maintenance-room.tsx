@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
 /** @components */
-import ListItemsMol from "@/components/molecules/list-items-mol";
+import ListItemsMol from "@/app/_components/molecules/list-items-mol";
 
 /** @scripts */
 

@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import AvailableRoom from "./available-room";
 import CleaningRoom from "./cleaning-room";
 import MaintenanceRoom from "./maintenance-room";
-import RoomIdAtm from "@/components/atoms/room-id-atm";
+import RoomIdAtm from "@/app/_components/atoms/room-id-atm";
 
 /** @styles */
 

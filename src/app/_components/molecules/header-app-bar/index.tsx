@@ -13,7 +13,7 @@ import { useState } from "react";
 import { signOut } from "next-auth/react";
 
 /** @component */
-import BrandLogoAtm from "@/components/atoms/brand-logo-atm";
+import BrandLogoAtm from "@/app/_components/atoms/brand-logo-atm";
 
 const actions = ["Profile", "Logout"];
 

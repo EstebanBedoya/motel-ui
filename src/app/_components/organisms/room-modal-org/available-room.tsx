@@ -9,7 +9,7 @@ import Typography from "@mui/material/Typography";
 import { useState } from "react";
 
 /** @components */
-import ListItemsMol from "@/components/molecules/list-items-mol";
+import ListItemsMol from "@/app/_components/molecules/list-items-mol";
 
 /** @scripts */
 import { formatPrice } from "@/utils/format";

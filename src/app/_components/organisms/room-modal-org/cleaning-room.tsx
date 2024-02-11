@@ -2,7 +2,7 @@
 import Grid from "@mui/material/Grid";
 
 /** @components */
-import ListItemsMol from "@/components/molecules/list-items-mol";
+import ListItemsMol from "@/app/_components/molecules/list-items-mol";
 
 /** @scripts */
 import Button from "@mui/material/Button";

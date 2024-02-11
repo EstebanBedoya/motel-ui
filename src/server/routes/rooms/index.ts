@@ -1,10 +1,16 @@
-import { publicProcedure, router } from "@/server/trpc";
+import { privateProcedure, publicProcedure, router } from "@/server/trpc";
 import { db } from "@/libs/prisma";
 import { z } from "zod";
 import { RoomStates } from "@prisma/client";
+import { TRPCError } from "@trpc/server";
 
 export const roomsRouter = router({
-  listAll: publicProcedure.query(async () => {
+  listAll: privateProcedure.query(async ({ ctx }) => {
+    // const { userId } = ctx.auth;
+    //   if (!userId) {
+    //     throw new TRPCError({ code: "UNAUTHORIZED", message: "Unauthorized" });
+    //   }
+    console.log(ctx);
     const rooms = await db.room.findMany();
     return rooms;
   }),
@@ -18,15 +24,15 @@ export const roomsRouter = router({
       })
     )
     .mutation(async ({ input }) => {
-        const room = await db.room.create({
-            data: {
-                id: input.id,
-                name: input.name,
-                type: input.type,
-                state: input.state as RoomStates,
-            },
-        });
+      const room = await db.room.create({
+        data: {
+          id: input.id,
+          name: input.name,
+          type: input.type,
+          state: input.state as RoomStates,
+        },
+      });
 
-        return room;
+      return room;
     }),
 });

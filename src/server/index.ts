@@ -1,5 +1,5 @@
-import { publicProcedure, router } from "../trpc";
-import { roomsRouter } from "./rooms";
+import { router } from "./trpc";
+import { roomsRouter } from "./routes/rooms";
 
 export const appRouter = router({
   rooms: roomsRouter,
