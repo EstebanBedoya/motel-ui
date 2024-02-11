@@ -14,7 +14,7 @@ import { useState } from "react";
 import Button from "@mui/material/Button";
 
 /** @style */
-import { useTheme } from "@mui/material";
+import { Divider, useTheme } from "@mui/material";
 
 const names = [
   "Oliver Hansen",
@@ -33,10 +33,12 @@ const TextFieldAtm = ({
   label,
   width = "150px",
   isRequired = false,
+  sx,
 }: {
   label: string;
   width?: string | number;
   isRequired?: boolean;
+  sx?: Record<string, unknown>;
 }) => (
   <TextField
     label={label}
@@ -45,6 +47,7 @@ const TextFieldAtm = ({
     required={isRequired}
     sx={{
       width,
+      ...sx,
     }}
   />
 );
@@ -106,42 +109,47 @@ const CreateRoomCardMol = () => {
       border="2px solid"
       borderColor={theme.palette.text.secondary}
       borderRadius="20px"
-      height={410}
-      paddingX={7}
-      paddingY={3}
+      paddingX={3}
+      paddingY={2}
       width={600}
       container
+      spacing={2}
     >
-      <Typography fontWeight={600} fontSize={20}>
+      <Typography fontWeight={600} fontSize={20} >
         Detalles de la habitacion
       </Typography>
-      <Grid container xs={12}>
-        <Grid item xs={6} container direction="column" gap={3}>
-          <TextFieldAtm label="Numero" isRequired />
-          <Box>
-            <Typography fontWeight={700} fontSize={15}>
-              Precios*
-            </Typography>
-            <Box
-              borderColor={theme.palette.text.secondary}
-              borderRadius={2}
-              display="flex"
-              flexDirection="column"
-              gap={1}
-              paddingY={1}
-            >
-              <TextFieldAtm label="Rato" isRequired />
-              <TextFieldAtm label="Amanecida" isRequired />
-            </Box>
-          </Box>
-          <SelectAtm label="Adicionales" isRequired multiple />
+      <Divider sx={{ color: "red", width:"100%", mt: 1}} />
+      <Grid item container xs={12} gap={1}>
+        <Grid item xs={12} md={6}>
+          <TextFieldAtm label="Nombre" width="100%" isRequired />
         </Grid>
-        <Grid item xs={6} container direction="column" gap={3}>
-          <TextFieldAtm label="Nombre" width={240} />
-          <SelectAtm label="Tipo de Habitacion" isRequired multiple />
-          <SelectAtm label="Estado Habitacion" isRequired />
+        <Grid item xs={12} md={5}>
+          <TextFieldAtm label="Precio" width="100%" isRequired />
         </Grid>
       </Grid>
+      <Typography fontWeight={600} fontSize={18} pt={1} >
+        Precios
+      </Typography>
+      <Grid item container xs={12} gap={1}>
+        <Grid item xs={12} md={6}>
+          <TextFieldAtm label="Rato" width="100%" isRequired />
+        </Grid>
+        <Grid item xs={12} md={5}>
+          <SelectAtm label="Tipo de Habitacion" isRequired multiple />
+        </Grid>
+      </Grid>
+      <Grid item container xs={12} gap={1}>
+        <Grid item xs={12} md={6}>
+          <TextFieldAtm label="Amanecida" width="100%" isRequired />
+        </Grid>
+        <Grid item xs={12} md={5}>
+          <SelectAtm label="Estado de Habitacion" isRequired multiple />
+        </Grid>
+      </Grid>
+      <Grid item xs={12} md={6} mt={2}>
+        <SelectAtm label="Adicionales" isRequired multiple />
+      </Grid>
+      <Divider sx={{ color: "red", width:"100%", mt: 1}} />
       <Grid
         item
         container

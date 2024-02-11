@@ -2,6 +2,9 @@
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 
+/** @style */
+import { useMediaQuery, useTheme } from "@mui/material";
+
 /** @component */
 import RoomIdAtm from "../room-id-atm";
 import { RoomStates } from "@/utils/types";
@@ -13,9 +16,9 @@ interface Props {
   type: string;
   onClick?: () => void;
 }
-
 const RoomItemAtm = ({ roomId, state, type, onClick }: Props) => {
   const color = colorState[state];
+  const matchMaxWidth = useMediaQuery('(max-width:500px)');
 
   return (
     <Box
@@ -25,18 +28,20 @@ const RoomItemAtm = ({ roomId, state, type, onClick }: Props) => {
       display="flex"
       flexDirection="column"
       gap={2}
-      height={226}
+      height={matchMaxWidth ? 200 : 226}
       onClick={onClick}
-      width={196}
+      width={"100%"}
+      maxWidth="250px"
       sx={{
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
         cursor: "pointer",
+        margin: "5px",
       }}
     >
-      <RoomIdAtm roomId={roomId} color={color} sx={{ marginTop: 3 }} />
+      <RoomIdAtm roomId={roomId} matchMaxWidth={matchMaxWidth} color={color} sx={{ marginTop: 3 }} />
       <Box display="flex" flexDirection="column" alignItems="center">
-        <Typography fontSize={25} fontWeight={600}>
+        <Typography fontSize={matchMaxWidth ? 20 : 25} fontWeight={600}>
           {type}
         </Typography>
         <Typography fontSize={20} fontWeight={600} color={color}>

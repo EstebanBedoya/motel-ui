@@ -2,6 +2,7 @@
 /** @package */
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import { useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -17,9 +18,6 @@ import RoomModalMol from "@/app/_components/organisms/room-modal-org";
 /** @scripts */
 import { IRoom, RoomStates } from "@/utils/types";
 import { colorState } from "@/utils/room";
-
-/** @style */
-import { useTheme } from "@mui/material";
 
 const mockItems: IRoom[] = [
   { id: 101, state: RoomStates.AVAILABLE, type: "sencilla" },
@@ -45,6 +43,7 @@ export default function Page() {
   const [roomModalData, setRoomModalData] = useState<IRoom | null>(null);
   const theme = useTheme();
   const session = useSession();
+  const matchMaxWidth = useMediaQuery("(max-width:500px)");
 
   const handleChange = (_: any, newValue: string) => {
     setTabValue(newValue);
@@ -77,6 +76,10 @@ export default function Page() {
         borderBottom={2}
         borderTop={2}
         borderColor={theme.palette.text.secondary}
+        sx={{
+          justifyContent: "center",
+          display: "flex",
+        }}
       >
         <Tabs
           value={tabValue}
@@ -84,10 +87,14 @@ export default function Page() {
           centered
           sx={{
             "& .MuiTabs-indicator": {
-              backgroundColor: stateColor,
+              backgroundColor: !matchMaxWidth ? stateColor : "unset",
             },
             "& .Mui-selected": {
               color: stateColor,
+            },
+            "& .MuiTabs-flexContainer": {
+              overflowY: "auto",
+              display: "block",
             },
           }}
         >
@@ -141,11 +148,27 @@ export default function Page() {
           />
         </Tabs>
       </Box>
-      <Grid container spacing={2} mt={5} gap={2} pl={10} pr={10} mb={5}>
+      <Grid
+        container
+        mb={5}
+        mt={5}
+        justifyItems="center"
+        pl={matchMaxWidth ? 3 : 10}
+        pr={matchMaxWidth ? 3 : 10}
+      >
         {mockItems
           .filter((item) => item.state === tabValue || tabValue === "all")
           .map((item, index) => (
-            <Grid item key={index}>
+            <Grid
+              item
+              container
+              key={index}
+              xs={6}
+              sm={4}
+              md={3}
+              lg={2}
+              xl={1.5}
+            >
               <RoomItemAtm
                 roomId={item.id}
                 state={item.state as RoomStates}
