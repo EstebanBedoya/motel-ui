@@ -5,7 +5,7 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 
 /** @component */
-import RoomIdAtm from "@/components/atoms/room-id-atm";
+import RoomIdAtm from "@/app/_components/atoms/room-id-atm";
 
 /** @style */
 import { useTheme } from "@mui/material";

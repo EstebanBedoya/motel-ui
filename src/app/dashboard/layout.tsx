@@ -1,5 +1,5 @@
 /** @components */
-import HeaderAppBar from "@/components/molecules/header-app-bar";
+import HeaderAppBar from "@/app/_components/molecules/header-app-bar";
 
 export default function DashboardLayout({
   children,

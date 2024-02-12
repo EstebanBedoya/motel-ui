@@ -1,22 +1,23 @@
 "use client";
 /** @package */
-import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import Tab from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
 import Typography from "@mui/material/Typography";
 import { useMediaQuery, useTheme } from "@mui/material";
 import { useState } from "react";
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
+import Box from "@mui/material/Box";
+import { useSession } from "next-auth/react";
 
 /** @component */
-import SelectAtm from "@/components/atoms/select-atm";
-import RoomItemAtm from "@/components/atoms/room-item-atm";
+import SelectAtm from "@/app/_components/atoms/select-atm";
+import RoomItemAtm from "@/app/_components/atoms/room-item-atm";
+import CreateRoomCardMol from "@/app/_components/molecules/create-room-card-mol";
+import RoomModalMol from "@/app/_components/organisms/room-modal-org";
 
-/** @style */
-import RoomModalMol from "@/components/organisms/room-modal-org";
+/** @scripts */
 import { IRoom, RoomStates } from "@/utils/types";
 import { colorState } from "@/utils/room";
-import CreateRoomCardMol from "@/components/molecules/create-room-card-mol";
 
 const mockItems: IRoom[] = [
   { id: 101, state: RoomStates.AVAILABLE, type: "sencilla" },
@@ -41,7 +42,8 @@ export default function Page() {
   const [tabValue, setTabValue] = useState("all");
   const [roomModalData, setRoomModalData] = useState<IRoom | null>(null);
   const theme = useTheme();
-  const matchMaxWidth = useMediaQuery('(max-width:500px)');
+  const session = useSession();
+  const matchMaxWidth = useMediaQuery("(max-width:500px)");
 
   const handleChange = (_: any, newValue: string) => {
     setTabValue(newValue);
@@ -76,7 +78,7 @@ export default function Page() {
         borderColor={theme.palette.text.secondary}
         sx={{
           justifyContent: "center",
-            display: "flex",
+          display: "flex",
         }}
       >
         <Tabs
@@ -90,10 +92,9 @@ export default function Page() {
             "& .Mui-selected": {
               color: stateColor,
             },
-            '& .MuiTabs-flexContainer': {
-              overflowY: 'auto',
+            "& .MuiTabs-flexContainer": {
+              overflowY: "auto",
               display: "block",
-
             },
           }}
         >
@@ -147,19 +148,19 @@ export default function Page() {
           />
         </Tabs>
       </Box>
-      <Grid 
-        container 
+      <Grid
+        container
         mb={5}
-        mt={5} 
+        mt={5}
         justifyItems="center"
-        pl={matchMaxWidth ? 3 : 10} 
-        pr={matchMaxWidth ? 3 : 10} 
+        pl={matchMaxWidth ? 3 : 10}
+        pr={matchMaxWidth ? 3 : 10}
       >
         {mockItems
           .filter((item) => item.state === tabValue || tabValue === "all")
           .map((item, index) => (
-            <Grid 
-              item 
+            <Grid
+              item
               container
               key={index}
               xs={6}

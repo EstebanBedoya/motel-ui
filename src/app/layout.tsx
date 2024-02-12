@@ -2,7 +2,8 @@
 import ThemeRegistry from "@/styles/theme/ThemeRegistry";
 
 /** @script */
-import SessionAuthProvider from "@/context/SessionAuthProvider";
+import SessionAuthProvider from "@/app/_context/SessionAuthProvider";
+import TrpcProvider from "./_trpc/TrpcProvider";
 
 export default function RootLayout({
   children,
@@ -13,7 +14,9 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <SessionAuthProvider>
-          <ThemeRegistry>{children}</ThemeRegistry>
+          <TrpcProvider>
+            <ThemeRegistry>{children}</ThemeRegistry>
+          </TrpcProvider>
         </SessionAuthProvider>
       </body>
     </html>

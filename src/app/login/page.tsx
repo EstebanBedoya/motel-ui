@@ -1,6 +1,6 @@
 "use client";
 /** @package */
-import BrandLogoAtm from "@/components/atoms/brand-logo-atm";
+import BrandLogoAtm from "@/app/_components/atoms/brand-logo-atm";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import Image from "next/image";

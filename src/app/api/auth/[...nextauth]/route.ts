@@ -1,11 +1,11 @@
 /** @package */
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 /** @scripts */
-import prisma from "@/libs/prisma";
+import { db } from "@/libs/prisma";
 
-const handler = NextAuth({
+const handler: NextAuthOptions = NextAuth({
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -14,11 +14,11 @@ const handler = NextAuth({
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const user = await prisma.user.findUnique({
+        const user = await db.user.findUnique({
           where: {
             email: credentials?.email,
           },
-        })
+        });
 
         if (!user) return null;
 
@@ -36,7 +36,7 @@ const handler = NextAuth({
       return { ...token, ...user };
     },
     async session({ session, token }) {
-      session.user = token as any;
+      session.user = { ...session.user, id: token.id } as any;
       return session;
     },
   },
@@ -45,4 +45,5 @@ const handler = NextAuth({
   },
 });
 
+export const authOptions = handler;
 export { handler as GET, handler as POST };
