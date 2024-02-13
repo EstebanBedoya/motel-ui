@@ -18,6 +18,7 @@ import RoomModalMol from "@/app/_components/organisms/room-modal-org";
 /** @scripts */
 import { IRoom, RoomStates } from "@/utils/types";
 import { colorState } from "@/utils/room";
+import { trpc } from "@/app/_trpc/client";
 
 const mockItems: IRoom[] = [
   { id: 101, state: RoomStates.AVAILABLE, type: "sencilla" },
@@ -44,6 +45,10 @@ export default function Page() {
   const theme = useTheme();
   const session = useSession();
   const matchMaxWidth = useMediaQuery("(max-width:500px)");
+
+  const rooms = trpc.rooms.listAll.useQuery();
+
+  console.log(rooms.data);
 
   const handleChange = (_: any, newValue: string) => {
     setTabValue(newValue);
