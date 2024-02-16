@@ -16,39 +16,33 @@ import CreateRoomCardMol from "@/app/_components/molecules/create-room-card-mol"
 import RoomModalMol from "@/app/_components/organisms/room-modal-org";
 
 /** @scripts */
-import { IRoom, RoomStates } from "@/utils/types";
+import { IRoom, RoomStatus } from "@/utils/types";
 import { colorState } from "@/utils/room";
-import { trpc } from "@/app/_trpc/client";
 
 const mockItems: IRoom[] = [
-  { id: 101, state: RoomStates.AVAILABLE, type: "sencilla" },
-  { id: 102, state: RoomStates.OCCUPIED, type: "jacuzzi" },
-  { id: 103, state: RoomStates.MAINTENANCE, type: "sauna" },
-  { id: 104, state: RoomStates.CLEANING, type: "sencilla" },
-  { id: 105, state: RoomStates.AVAILABLE, type: "jacuzzi" },
-  { id: 106, state: RoomStates.OCCUPIED, type: "sauna" },
-  { id: 107, state: RoomStates.MAINTENANCE, type: "sencilla" },
-  { id: 108, state: RoomStates.CLEANING, type: "jacuzzi" },
-  { id: 109, state: RoomStates.AVAILABLE, type: "sauna" },
-  { id: 110, state: RoomStates.OCCUPIED, type: "sencilla" },
-  { id: 111, state: RoomStates.MAINTENANCE, type: "jacuzzi" },
-  { id: 112, state: RoomStates.CLEANING, type: "sauna" },
-  { id: 113, state: RoomStates.AVAILABLE, type: "sencilla" },
-  { id: 114, state: RoomStates.OCCUPIED, type: "jacuzzi" },
-  { id: 115, state: RoomStates.MAINTENANCE, type: "sauna" },
-  { id: 116, state: RoomStates.MAINTENANCE, type: "sauna" },
+  { id: 101, state: RoomStatus.AVAILABLE, type: "sencilla" },
+  { id: 102, state: RoomStatus.OCCUPIED, type: "jacuzzi" },
+  { id: 103, state: RoomStatus.MAINTENANCE, type: "sauna" },
+  { id: 104, state: RoomStatus.CLEANING, type: "sencilla" },
+  { id: 105, state: RoomStatus.AVAILABLE, type: "jacuzzi" },
+  { id: 106, state: RoomStatus.OCCUPIED, type: "sauna" },
+  { id: 107, state: RoomStatus.MAINTENANCE, type: "sencilla" },
+  { id: 108, state: RoomStatus.CLEANING, type: "jacuzzi" },
+  { id: 109, state: RoomStatus.AVAILABLE, type: "sauna" },
+  { id: 110, state: RoomStatus.OCCUPIED, type: "sencilla" },
+  { id: 111, state: RoomStatus.MAINTENANCE, type: "jacuzzi" },
+  { id: 112, state: RoomStatus.CLEANING, type: "sauna" },
+  { id: 113, state: RoomStatus.AVAILABLE, type: "sencilla" },
+  { id: 114, state: RoomStatus.OCCUPIED, type: "jacuzzi" },
+  { id: 115, state: RoomStatus.MAINTENANCE, type: "sauna" },
+  { id: 116, state: RoomStatus.MAINTENANCE, type: "sauna" },
 ];
 
 export default function Page() {
   const [tabValue, setTabValue] = useState("all");
   const [roomModalData, setRoomModalData] = useState<IRoom | null>(null);
   const theme = useTheme();
-  const session = useSession();
   const matchMaxWidth = useMediaQuery("(max-width:500px)");
-
-  const rooms = trpc.rooms.listAll.useQuery();
-
-  console.log(rooms.data);
 
   const handleChange = (_: any, newValue: string) => {
     setTabValue(newValue);
@@ -113,7 +107,7 @@ export default function Page() {
           />
           <Tab
             label="Disponibles"
-            value={RoomStates.AVAILABLE}
+            value={RoomStatus.AVAILABLE}
             sx={{
               color: theme.palette.text.primary,
               fontWeight: 700,
@@ -121,7 +115,7 @@ export default function Page() {
           />
           <Tab
             label="Ocupadas"
-            value={RoomStates.OCCUPIED}
+            value={RoomStatus.OCCUPIED}
             sx={{
               color: theme.palette.text.primary,
               fontWeight: 700,
@@ -129,7 +123,7 @@ export default function Page() {
           />
           <Tab
             label="Limpieza"
-            value={RoomStates.CLEANING}
+            value={RoomStatus.CLEANING}
             sx={{
               color: theme.palette.text.primary,
               fontWeight: 700,
@@ -137,7 +131,7 @@ export default function Page() {
           />
           <Tab
             label="Mantenimiento"
-            value={RoomStates.MAINTENANCE}
+            value={RoomStatus.MAINTENANCE}
             sx={{
               color: theme.palette.text.primary,
               fontWeight: 700,
@@ -176,7 +170,7 @@ export default function Page() {
             >
               <RoomItemAtm
                 roomId={item.id}
-                state={item.state as RoomStates}
+                state={item.state as RoomStatus}
                 type={item.type.toUpperCase()}
                 onClick={() => handleRoomModalData(item)}
               />

@@ -7,18 +7,18 @@ import { useMediaQuery, useTheme } from "@mui/material";
 
 /** @component */
 import RoomIdAtm from "../room-id-atm";
-import { RoomStates } from "@/utils/types";
-import { RoomStatesSpanish, colorState } from "@/utils/room";
+import { RoomStatus } from "@/utils/types";
+import { RoomStatusSpanish, colorState } from "@/utils/room";
 
 interface Props {
   roomId: number;
-  state: RoomStates;
+  state: RoomStatus;
   type: string;
   onClick?: () => void;
 }
 const RoomItemAtm = ({ roomId, state, type, onClick }: Props) => {
   const color = colorState[state];
-  const matchMaxWidth = useMediaQuery('(max-width:500px)');
+  const matchMaxWidth = useMediaQuery("(max-width:500px)");
 
   return (
     <Box
@@ -39,13 +39,18 @@ const RoomItemAtm = ({ roomId, state, type, onClick }: Props) => {
         margin: "5px",
       }}
     >
-      <RoomIdAtm roomId={roomId} matchMaxWidth={matchMaxWidth} color={color} sx={{ marginTop: 3 }} />
+      <RoomIdAtm
+        roomId={roomId}
+        matchMaxWidth={matchMaxWidth}
+        color={color}
+        sx={{ marginTop: 3 }}
+      />
       <Box display="flex" flexDirection="column" alignItems="center">
         <Typography fontSize={matchMaxWidth ? 20 : 25} fontWeight={600}>
           {type}
         </Typography>
         <Typography fontSize={20} fontWeight={600} color={color}>
-          {RoomStatesSpanish[state]}
+          {RoomStatusSpanish[state]}
         </Typography>
       </Box>
     </Box>

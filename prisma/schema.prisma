@@ -44,16 +44,16 @@ model User {
 }
 
 model Room {
-  id               Int          @id @unique
+  id               Int              @id @unique
   record           Record[]
   prices           Price[]
   name             String
   type             String
-  status           RoomStatus   @default(available)
-  aditionals       Aditionals[]
+  status           RoomStatus       @default(available)
+  aditionals       AdditionalRoom[]
   temporalRecordId Int?
-  createAt         DateTime     @default(now())
-  updateAt         DateTime     @updatedAt
+  createAt         DateTime         @default(now())
+  updateAt         DateTime         @updatedAt
 }
 
 model Price {
@@ -70,14 +70,23 @@ model Price {
   updateAt  DateTime  @updatedAt()
 }
 
-model Aditionals {
-  id       Int      @id @default(autoincrement())
-  room     Room     @relation(fields: [roomId], references: [id])
-  roomId   Int
+model Additionals {
+  id       Int              @id @default(autoincrement())
   name     String
   price    Float
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  rooms    AdditionalRoom[]
+  createAt DateTime         @default(now())
+  updateAt DateTime         @updatedAt
+}
+
+model AdditionalRoom {
+  roomId       Int
+  additionalId Int
+
+  room       Room        @relation(fields: [roomId], references: [id])
+  additional Additionals @relation(fields: [additionalId], references: [id])
+
+  @@id([roomId, additionalId])
 }
 
 model Record {
