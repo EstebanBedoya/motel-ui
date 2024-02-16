@@ -1,8 +1,9 @@
-import { privateProcedure, publicProcedure, router } from "@/server/trpc";
+import { privateProcedure, router } from "@/server/trpc";
 import { db } from "@/libs/prisma";
 import { z } from "zod";
-import { RoomStates } from "@prisma/client";
+import { RoomStatus } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
+import { getSession } from "next-auth/react";
 
 export const roomsRouter = router({
   create: privateProcedure
@@ -29,21 +30,19 @@ export const roomsRouter = router({
         throw new TRPCError({ code: "UNAUTHORIZED", message: "Unauthorized" });
       }
 
-      const priceTypes = await db.priceType.findMany();
-
       const room = await db.room.create({
         data: {
           id: input.id,
           name: input.name,
           type: input.type,
-          state: input.state as RoomStates,
+          status: input.state as RoomStatus,
         },
       });
 
       await db.price.create({
         data: {
           roomId: room.id,
-          priceTypeId: priceTypes[0].id,
+          rateType: "hourly",
           weekday: input.shortPrice.weekday,
           weekend: input.shortPrice.weekend,
         },
@@ -52,7 +51,7 @@ export const roomsRouter = router({
       await db.price.create({
         data: {
           roomId: room.id,
-          priceTypeId: priceTypes[1].id,
+          rateType: "overnight",
           weekday: input.longPrice.weekday,
           weekend: input.longPrice.weekend,
         },
@@ -60,6 +59,7 @@ export const roomsRouter = router({
 
       return room;
     }),
+
   listAll: privateProcedure.query(async ({ ctx }) => {
     const { user } = ctx.session;
 
@@ -71,6 +71,7 @@ export const roomsRouter = router({
 
     return rooms;
   }),
+
   getById: privateProcedure.input(z.number()).query(async ({ input, ctx }) => {
     const { user } = ctx.session;
 
@@ -105,6 +106,7 @@ export const roomsRouter = router({
 
     return roomResponse;
   }),
+
   updateState: privateProcedure
     .input(
       z.object({
@@ -122,9 +124,9 @@ export const roomsRouter = router({
       }
 
       const nextState = {
-        available: RoomStates.ocuppied,
-        occupied: RoomStates.cleaning,
-        cleaning: RoomStates.available,
+        available: RoomStatus.occupied,
+        occupied: RoomStatus.cleaning,
+        cleaning: RoomStatus.available,
       };
 
       const room = await db.room.findUnique({
@@ -141,7 +143,7 @@ export const roomsRouter = router({
           id: input.roomId,
         },
         data: {
-          state: newState as RoomStates,
+          status: newState as RoomStatus,
         },
       });
 

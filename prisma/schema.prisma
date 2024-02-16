@@ -15,72 +15,59 @@ enum Role {
   employee
 }
 
-enum RoomStates {
+enum RoomStatus {
   available
   occupied
-  mantainance
+  maintenance
+  cleaning
+}
+
+enum RateType {
+  hourly
+  overnight
+}
+
+enum RecordType {
+  occupied
+  maintenance
   cleaning
 }
 
 model User {
   id       Int      @id @default(autoincrement())
+  record   Record[]
   email    String   @unique
   password String
   role     Role     @default(employee)
-  rooms    Record[]
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
 }
 
 model Room {
-  id         Int          @id @unique
-  prices     Price[]
-  records    Record[]
-  name       String
-  type       String
-  state      RoomStates   @default(available)
-  aditionals Aditionals[]
-  createAt   DateTime     @default(now())
-  updateAt   DateTime     @updatedAt
-}
-
-model PriceType {
-  id       Int      @id @unique
-  name     String
-  price    Price[]
-  createAt DateTime @default(now())
-  updateAt DateTime @updatedAt
+  id               Int          @id @unique
+  record           Record[]
+  prices           Price[]
+  name             String
+  type             String
+  status           RoomStatus   @default(available)
+  aditionals       Aditionals[]
+  temporalRecordId Int?
+  createAt         DateTime     @default(now())
+  updateAt         DateTime     @updatedAt
 }
 
 model Price {
-  id          Int       @id @default(autoincrement())
-  room        Room      @relation(fields: [roomId], references: [id])
-  roomId      Int
-  priceType   PriceType @relation(fields: [priceTypeId], references: [id])
-  priceTypeId Int
-  weekday     Float
-  weekend     Float
-  special     Float?
-  startDate   DateTime?
-  endDate     DateTime?
-  createAt    DateTime  @default(now())
-  updateAt    DateTime  @updatedAt()
-}
-
-model Record {
-  id          Int      @id @default(autoincrement())
-  roomId      Int
-  room        Room     @relation(fields: [roomId], references: [id])
-  userId      Int
-  user        User     @relation(fields: [userId], references: [id])
-  typeService String
-  checkIn     DateTime
-  checkOut    DateTime
-  extensions  Int
-  aditionals  String[]
-  total       Int
-  createAt    DateTime @default(now())
-  updateAt    DateTime @updatedAt
+  id        Int       @id @default(autoincrement())
+  room      Room      @relation(fields: [roomId], references: [id])
+  roomId    Int
+  rateType  RateType
+  weekday   Float
+  weekend   Float
+  special   Float?
+  startDate DateTime?
+  endDate   DateTime?
+  createAt  DateTime  @default(now())
+  updateAt  DateTime  @updatedAt()
 }
 
 model Aditionals {
@@ -91,4 +78,26 @@ model Aditionals {
   price    Float
   createAt DateTime @default(now())
   updateAt DateTime @updatedAt
+}
+
+model Record {
+  id                 Int        @id @default(autoincrement())
+  roomId             Int
+  room               Room       @relation(fields: [roomId], references: [id])
+  userId             Int
+  user               User       @relation(fields: [userId], references: [id])
+  rateType           RateType?
+  recordType         RecordType
+  startTime          DateTime
+  endTime            DateTime
+  extensions         Int?
+  aditionalIds       Int[]      @default([])
+  total              Float?
+  instructions       String?
+  maintenanceManager String?
+  phoneNumber        String?
+  maintenanceValue   Float?
+  maintenanceDetails String?
+  createAt           DateTime   @default(now())
+  updateAt           DateTime   @updatedAt
 }

@@ -27,16 +27,23 @@ const handler: NextAuthOptions = NextAuth({
 
         if (!matchPassword) return null;
 
-        return user;
+        console.log(user);
+
+        return { ...user, id: user.id };
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
-      return { ...token, ...user };
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
     },
     async session({ session, token }) {
+      console.log("callback token", token);
       session.user = { ...session.user, id: token.id } as any;
+      console.log("callback session", session);
       return session;
     },
   },
