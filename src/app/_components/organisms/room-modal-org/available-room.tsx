@@ -6,6 +6,7 @@ import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { useMediaQuery } from "@mui/material";
 import { useState } from "react";
 
 /** @components */
@@ -46,6 +47,8 @@ const services = [
 
 const AvailableRoom = {
   Content: () => {
+    const matchMaxWidth = useMediaQuery("(max-width:600px)");
+
     const [additionalSelected, setAdditionalSelected] = useState<string[]>([]);
     const [serviceSelected, setServiceSelected] = useState<string>(
       services[0].service
@@ -67,7 +70,7 @@ const AvailableRoom = {
 
     return (
       <Grid container xs={12}>
-        <Grid container item xs={6} px={2} gap={2} borderRight="2px solid #ccc">
+        <Grid container item xs={12} sm={6} md={6} pb={2} px={2} gap={2} borderRight={matchMaxWidth ? "unset" : "2px solid #ccc"} borderBottom={!matchMaxWidth ? "unset" : "2px solid #ccc"}>
           <Grid item>
             <Typography fontSize={20} fontWeight={700}>
               Seleccione el servicio*
@@ -123,9 +126,9 @@ const AvailableRoom = {
             <TextField fullWidth multiline rows={2} />
           </Grid>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6} md={6}>
           <ListItemsMol
-            inlineItems
+            inlineItems={!matchMaxWidth}
             title="Detalles:"
             items={[
               {

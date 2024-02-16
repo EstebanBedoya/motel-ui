@@ -12,6 +12,7 @@ import ListItemsMol from "@/app/_components/molecules/list-items-mol";
 /** @scripts */
 import { formatPrice } from "@/utils/format";
 import Button from "@mui/material/Button";
+import { useMediaQuery } from "@mui/material";
 
 const additional = [
   {
@@ -30,6 +31,8 @@ const additional = [
 
 const OccupiedRoom = {
   Content: () => {
+    const matchMaxWidth = useMediaQuery("(max-width:600px)");
+
     const [additionalSelected, setAdditionalSelected] = useState<string[]>([]);
 
     const handleSelectAdditional = (service: string) => {
@@ -44,7 +47,7 @@ const OccupiedRoom = {
 
     return (
       <Grid container xs={12}>
-        <Grid container item xs={6} px={2} gap={2} borderRight="2px solid #ccc">
+        <Grid container item xs={12} sm={6} md={6} pb={2} px={2} gap={2} borderRight={matchMaxWidth ? "unset" : "2px solid #ccc"} borderBottom={!matchMaxWidth ? "unset" : "2px solid #ccc"}>
           <ListItemsMol
             title="Facturación:"
             items={[
@@ -84,10 +87,10 @@ const OccupiedRoom = {
             </Stack>
           </Grid>
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6} md={6}>
           <ListItemsMol
             title="Detalles:"
-            inlineItems
+            inlineItems={!matchMaxWidth}
             items={[
               {
                 primary: "Nombre",
