@@ -30,7 +30,7 @@ export const recordsRouter = router({
         },
       });
 
-      const additional = await db.aditionals.findMany({
+      const additional = await db.additionals.findMany({
         select: {
           price: true,
         },
@@ -163,7 +163,7 @@ export const recordsRouter = router({
         throw new TRPCError({ code: "UNAUTHORIZED", message: "Unauthorized" });
       }
 
-      const additional = await db.aditionals.findMany({
+      const additional = await db.additionals.findMany({
         select: {
           price: true,
         },

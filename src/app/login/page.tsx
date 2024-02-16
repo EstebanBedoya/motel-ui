@@ -11,7 +11,7 @@ import { useRouter } from "next/navigation";
 
 /** @images */
 import backgroundLogin from "../../../public/background-login.jpg";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 export default function Page() {
   const [errors, setErrors] = useState<string[]>([]);
@@ -19,7 +19,7 @@ export default function Page() {
   const [password, setPassword] = useState("password"); // Default values for testing
   const router = useRouter();
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrors([]);
 

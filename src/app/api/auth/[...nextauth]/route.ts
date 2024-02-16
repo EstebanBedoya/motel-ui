@@ -1,11 +1,12 @@
 /** @package */
-import NextAuth, { NextAuthOptions } from "next-auth";
+import { NextApiHandler } from "next";
+import NextAuth, { AuthOptions, NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 /** @scripts */
 import { db } from "@/libs/prisma";
 
-const handler: NextAuthOptions = NextAuth({
+const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -27,18 +28,13 @@ const handler: NextAuthOptions = NextAuth({
 
         if (!matchPassword) return null;
 
-        console.log(user);
-
-        return { ...user, id: user.id };
+        return user;
       },
     }),
   ],
   callbacks: {
     async jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-      }
-      return token;
+      return { ...token, ...user };
     },
     async session({ session, token }) {
       session.user = { ...session.user, id: token.id } as any;
@@ -48,6 +44,8 @@ const handler: NextAuthOptions = NextAuth({
   pages: {
     signIn: "/login",
   },
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
