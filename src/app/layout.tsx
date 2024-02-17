@@ -1,9 +1,9 @@
 /** @styles */
-import ThemeRegistry from "@/styles/theme/ThemeRegistry";
+import ThemeRegistry from '@/styles/theme/ThemeRegistry';
 
 /** @script */
-import SessionAuthProvider from "@/app/_context/SessionAuthProvider";
-import TrpcProvider from "./_trpc/TrpcProvider";
+import SessionAuthProvider from '@/app/_context/SessionAuthProvider';
+import TrpcProvider from './_trpc/TrpcProvider';
 
 export default function RootLayout({
   children,

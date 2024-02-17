@@ -1,15 +1,15 @@
 /** @package */
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import Button from '@mui/material/Button';
 
 /** @component */
-import RoomIdAtm from "@/app/_components/atoms/room-id-atm";
+import { useTheme } from '@mui/material';
+import RoomIdAtm from '@/app/_components/atoms/room-id-atm';
 
 /** @style */
-import { useTheme } from "@mui/material";
-import ListItemsMol from "../list-items-mol";
+import ListItemsMol from '../list-items-mol';
 
 const CreateRoomCardSummary = () => {
   const theme = useTheme();
@@ -48,42 +48,42 @@ const CreateRoomCardSummary = () => {
             title="Detalles:"
             items={[
               {
-                primary: "Nombre",
-                secondary: "name",
+                primary: 'Nombre',
+                secondary: 'name',
               },
               {
-                primary: "Tipo de Habitacion",
-                secondary: "name",
+                primary: 'Tipo de Habitacion',
+                secondary: 'name',
               },
               {
-                primary: "Precios",
-                secondary: "name",
+                primary: 'Precios',
+                secondary: 'name',
               },
               {
-                primary: "Servicios",
-                secondary: "name",
+                primary: 'Servicios',
+                secondary: 'name',
               },
               {
-                primary: "Adicionales",
-                secondary: "name",
+                primary: 'Adicionales',
+                secondary: 'name',
               },
               {
-                primary: "Estado Habitación",
-                secondary: "name",
+                primary: 'Estado Habitación',
+                secondary: 'name',
               },
             ]}
           />
           <Grid container gap={2} justifyContent="flex-end" alignItems="center">
             <Button
               variant="contained"
-              sx={{ borderRadius: "20px", height: "28px" }}
+              sx={{ borderRadius: '20px', height: '28px' }}
             >
               Editar
             </Button>
             <Button
               variant="contained"
               color="error"
-              sx={{ borderRadius: "20px", height: "28px" }}
+              sx={{ borderRadius: '20px', height: '28px' }}
             >
               Eliminar
             </Button>

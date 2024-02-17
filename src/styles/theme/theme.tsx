@@ -1,46 +1,39 @@
 /** @package */
-import { Roboto } from "next/font/google";
-import { createTheme } from "@mui/material/styles";
+import { createTheme } from '@mui/material/styles';
 
-declare module "@mui/material/styles" {
+declare module '@mui/material/styles' {
   interface Palette {
     violet: Palette['primary'];
   }
   interface PaletteOptions {
-    violet?: PaletteOptions["primary"];
+    violet?: PaletteOptions['primary'];
   }
 }
 
-const roboto = Roboto({
-  weight: ["300", "400", "500", "700"],
-  subsets: ["latin"],
-  display: "swap",
-});
-
 const theme = createTheme({
   palette: {
-    mode: "light",
+    mode: 'light',
     primary: {
-      main: "#0054A3",
+      main: '#0054A3',
     },
     success: {
-      main: "#00AA07",
+      main: '#00AA07',
     },
     error: {
-      main: "#E40000",
-      light: "#E4000080",
+      main: '#E40000',
+      light: '#E4000080',
     },
     warning: {
-      main: "#FFA800",
-      light: "#FFA80080",
+      main: '#FFA800',
+      light: '#FFA80080',
     },
     violet: {
-      main: "#9431D0",
+      main: '#9431D0',
     },
-    text:{
-      primary: "#000000",
-      secondary: "#00000080",
-    }
+    text: {
+      primary: '#000000',
+      secondary: '#00000080',
+    },
   },
   typography: {
     fontFamily: ['sans-serif'].join(','),

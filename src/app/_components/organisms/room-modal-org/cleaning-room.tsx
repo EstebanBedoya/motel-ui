@@ -1,29 +1,29 @@
 /** @packages */
-import Grid from "@mui/material/Grid";
-import { useMediaQuery } from "@mui/material";
+import Grid from '@mui/material/Grid';
+import { useMediaQuery } from '@mui/material';
 
 /** @components */
-import ListItemsMol from "@/app/_components/molecules/list-items-mol";
+import Button from '@mui/material/Button';
+import ListItemsMol from '@/app/_components/molecules/list-items-mol';
 
 /** @scripts */
-import Button from "@mui/material/Button";
 
 const CleaningRoom = {
   Content: () => {
-    const matchMaxWidth = useMediaQuery("(max-width:600px)");
+    const matchMaxWidth = useMediaQuery('(max-width:600px)');
 
     return (
       <Grid container xs={12} height="100%">
         <Grid
-          borderBottom={!matchMaxWidth ? "unset" : "2px solid #ccc"}
-          borderRight={matchMaxWidth ? "unset" : "2px solid #ccc"} 
+          borderBottom={!matchMaxWidth ? 'unset' : '2px solid #ccc'}
+          borderRight={matchMaxWidth ? 'unset' : '2px solid #ccc'}
           container
           gap={2}
           item
           md={6}
           pb={2}
           px={2}
-          sm={6} 
+          sm={6}
           xs={12}
         >
           <ListItemsMol
@@ -31,12 +31,12 @@ const CleaningRoom = {
             inlineItems
             items={[
               {
-                primary: "Tiempo aprox",
-                secondary: "30 minutos",
+                primary: 'Tiempo aprox',
+                secondary: '30 minutos',
               },
               {
-                primary: "Encargado",
-                secondary: "Marta",
+                primary: 'Encargado',
+                secondary: 'Marta',
               },
             ]}
           />
@@ -47,24 +47,24 @@ const CleaningRoom = {
             inlineItems={!matchMaxWidth}
             items={[
               {
-                primary: "Nombre",
-                secondary: "name",
+                primary: 'Nombre',
+                secondary: 'name',
               },
               {
-                primary: "Tipo de Habitacion",
-                secondary: "Sencilla",
+                primary: 'Tipo de Habitacion',
+                secondary: 'Sencilla',
               },
               {
-                primary: "Precios",
-                secondary: "name",
+                primary: 'Precios',
+                secondary: 'name',
               },
               {
-                primary: "Servicios",
-                secondary: "name",
+                primary: 'Servicios',
+                secondary: 'name',
               },
               {
-                primary: "Estado Habitación",
-                secondary: "name",
+                primary: 'Estado Habitación',
+                secondary: 'name',
               },
             ]}
           />

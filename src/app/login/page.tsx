@@ -1,51 +1,52 @@
-"use client";
+'use client';
+
 /** @package */
-import BrandLogoAtm from "@/app/_components/atoms/brand-logo-atm";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Image from "next/image";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import Image from 'next/image';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 /** @images */
-import backgroundLogin from "../../../public/background-login.jpg";
-import { FormEvent, useState } from "react";
+import { FormEvent, useState } from 'react';
+import backgroundLogin from '../../../public/background-login.jpg';
+import BrandLogoAtm from '@/app/_components/atoms/brand-logo-atm';
 
 export default function Page() {
   const [errors, setErrors] = useState<string[]>([]);
-  const [email, setEmail] = useState("test@test.com"); // Default values for testing
-  const [password, setPassword] = useState("password"); // Default values for testing
+  const [email, setEmail] = useState('test@test.com'); // Default values for testing
+  const [password, setPassword] = useState('password'); // Default values for testing
   const router = useRouter();
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrors([]);
 
-    const responseNextAuth = await signIn("credentials", {
+    const responseNextAuth = await signIn('credentials', {
       email,
       password,
       redirect: false,
     });
 
     if (responseNextAuth?.error) {
-      setErrors(responseNextAuth.error.split(","));
+      setErrors(responseNextAuth.error.split(','));
       return;
     }
 
-    router.push("/dashboard/rooms");
+    router.push('/dashboard/rooms');
   };
 
   return (
     <div
       style={{
-        alignItems: "center",
-        display: "flex",
-        height: "100vh",
-        justifyContent: "center",
-        position: "relative",
-        width: "100%",
+        alignItems: 'center',
+        display: 'flex',
+        height: '100vh',
+        justifyContent: 'center',
+        position: 'relative',
+        width: '100%',
       }}
     >
       <Image
@@ -57,11 +58,11 @@ export default function Page() {
       />
       <Grid
         sx={{
-          backgroundColor: "white",
+          backgroundColor: 'white',
         }}
         position="absolute"
-        width={{ xs: "85vw", md: "60vw", lg: "30vw" }}
-        height={{ xs: "50vh", md: "55vh" }}
+        width={{ xs: '85vw', md: '60vw', lg: '30vw' }}
+        height={{ xs: '50vh', md: '55vh' }}
         borderRadius="20px"
         margin="auto"
         pl={5}

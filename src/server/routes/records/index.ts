@@ -1,8 +1,8 @@
-import { privateProcedure, router } from "@/server/trpc";
-import { db } from "@/libs/prisma";
-import { z } from "zod";
-import { RateType, RecordType, RoomStatus } from "@prisma/client";
-import { TRPCError } from "@trpc/server";
+import { z } from 'zod';
+import { RateType, RecordType, RoomStatus } from '@prisma/client';
+import { TRPCError } from '@trpc/server';
+import { db } from '@/libs/prisma';
+import { privateProcedure, router } from '@/server/trpc';
 
 export const recordsRouter = router({
   checkInRoom: privateProcedure
@@ -15,13 +15,13 @@ export const recordsRouter = router({
         additional: z.array(z.number()).optional(),
         isWeekDay: z.boolean(),
         checkIn: z.date(),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       const { user: userSession } = ctx.session;
 
       if (!userSession) {
-        throw new TRPCError({ code: "UNAUTHORIZED", message: "Unauthorized" });
+        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Unauthorized' });
       }
 
       const user = await db.user.findFirst({
@@ -43,7 +43,7 @@ export const recordsRouter = router({
 
       const totalAdditional = additional.reduce(
         (acc: number, current: { price: number }) => acc + current.price,
-        0
+        0,
       );
 
       const roomPrice = await db.price.findFirst({
@@ -93,13 +93,13 @@ export const recordsRouter = router({
       z.object({
         roomId: z.number(),
         endTime: z.date(),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       const { user: userSession } = ctx.session;
 
       if (!userSession) {
-        throw new TRPCError({ code: "UNAUTHORIZED", message: "Unauthorized" });
+        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Unauthorized' });
       }
 
       const room = await db.room.findFirst({
@@ -134,7 +134,7 @@ export const recordsRouter = router({
           recordType: RecordType.cleaning,
           startTime: input.endTime,
           endTime: new Date(),
-          instructions: "Room cleaning",
+          instructions: 'Room cleaning',
         },
       });
 
@@ -154,13 +154,13 @@ export const recordsRouter = router({
       z.object({
         roomId: z.number(),
         additional: z.array(z.number()),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       const { user: userSession } = ctx.session;
 
       if (!userSession) {
-        throw new TRPCError({ code: "UNAUTHORIZED", message: "Unauthorized" });
+        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Unauthorized' });
       }
 
       const additional = await db.additionals.findMany({
@@ -176,7 +176,7 @@ export const recordsRouter = router({
 
       const totalAdditional = additional.reduce(
         (acc: number, current: { price: number }) => acc + current.price,
-        0
+        0,
       );
 
       const room = await db.room.findFirst({
@@ -210,7 +210,7 @@ export const recordsRouter = router({
       z.object({
         roomId: z.number(),
         endTime: z.date(),
-      })
+      }),
     )
     .mutation(async ({ input }) => {
       const room = await db.room.findFirst({
@@ -258,13 +258,13 @@ export const recordsRouter = router({
         phoneNumber: z.string(),
         maintenanceValue: z.number(),
         maintenanceDetails: z.string(),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       const { user: userSession } = ctx.session;
 
       if (!userSession) {
-        throw new TRPCError({ code: "UNAUTHORIZED", message: "Unauthorized" });
+        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Unauthorized' });
       }
 
       const user = await db.user.findFirst({
@@ -280,7 +280,7 @@ export const recordsRouter = router({
           userId: user.id,
           startTime: input.startTime,
           endTime: new Date(),
-          instructions: "Room maintenance",
+          instructions: 'Room maintenance',
           maintenanceManager: input.maintenanceManager,
           phoneNumber: input.phoneNumber,
           maintenanceValue: input.maintenanceValue,
@@ -304,13 +304,13 @@ export const recordsRouter = router({
       z.object({
         roomId: z.number(),
         endTime: z.date(),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       const { user: userSession } = ctx.session;
 
       if (!userSession) {
-        throw new TRPCError({ code: "UNAUTHORIZED", message: "Unauthorized" });
+        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Unauthorized' });
       }
 
       const room = await db.room.findFirst({

@@ -1,25 +1,25 @@
 /** @packages */
-import Box from "@mui/material/Box";
-import CloseIcon from "@mui/icons-material/Close";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import { useMediaQuery } from "@mui/material";
+import Box from '@mui/material/Box';
+import CloseIcon from '@mui/icons-material/Close';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import IconButton from '@mui/material/IconButton';
+import Typography from '@mui/material/Typography';
+import { useMediaQuery } from '@mui/material';
 
 /** @components */
-import AvailableRoom from "./available-room";
-import CleaningRoom from "./cleaning-room";
-import MaintenanceRoom from "./maintenance-room";
-import RoomIdAtm from "@/app/_components/atoms/room-id-atm";
+import AvailableRoom from './available-room';
+import CleaningRoom from './cleaning-room';
+import MaintenanceRoom from './maintenance-room';
+import RoomIdAtm from '@/app/_components/atoms/room-id-atm';
 
 /** @styles */
 
 /** @scripts */
-import { RoomStatusSpanish, colorState } from "@/utils/room";
-import { RoomStatus } from "@/utils/types";
-import OccupiedRoomContent from "./occupied-room";
+import { RoomStatusSpanish, colorState } from '@/utils/room';
+import { RoomStatus } from '@/utils/types';
+import OccupiedRoomContent from './occupied-room';
 
 interface Props {
   roomData: any;
@@ -33,7 +33,7 @@ const RoomModalMol = ({
   handleClose,
 }: Props) => {
   const color = colorState[state as keyof typeof colorState];
-  const matchMaxWidth = useMediaQuery("(max-width:600px)");
+  const matchMaxWidth = useMediaQuery('(max-width:600px)');
 
   const stateContent = {
     [RoomStatus.AVAILABLE]: <AvailableRoom.Content />,
@@ -61,13 +61,15 @@ const RoomModalMol = ({
       open={open}
       onClose={handleClose}
       sx={{
-        "& .MuiDialog-paper": {
-          border: "2px",
-          borderStyle: "solid",
+        '& .MuiDialog-paper': {
+          border: '2px',
+          borderStyle: 'solid',
           borderColor: color,
-          width: { sm: "90vw", md: "70vw", lg: "50vw", xl: "40vw" },
-          maxWidth: "100%",
-          minHeight: "65vh",
+          width: {
+            sm: '90vw', md: '70vw', lg: '50vw', xl: '40vw',
+          },
+          maxWidth: '100%',
+          minHeight: '65vh',
         },
       }}
     >
@@ -91,7 +93,7 @@ const RoomModalMol = ({
         aria-label="close"
         onClick={handleClose}
         sx={{
-          position: "absolute",
+          position: 'absolute',
           right: 8,
           top: 8,
           color: (theme) => theme.palette.grey[500],
@@ -102,7 +104,7 @@ const RoomModalMol = ({
       <DialogContent dividers>
         {stateContent[state as keyof typeof stateContent]}
       </DialogContent>
-      <DialogActions sx={{ display: "flex", justifyContent: " center" }}>
+      <DialogActions sx={{ display: 'flex', justifyContent: ' center' }}>
         {stateActions[state as keyof typeof stateActions]}
       </DialogActions>
     </Dialog>

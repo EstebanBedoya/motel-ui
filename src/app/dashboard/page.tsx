@@ -1,6 +1,6 @@
 /** @package */
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation';
 
 export default function Page() {
-  redirect("/dashboard/rooms");
+  redirect('/dashboard/rooms');
 }

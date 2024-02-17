@@ -1,19 +1,19 @@
 /** @packages */
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Chip from "@mui/material/Chip";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import { useMediaQuery } from "@mui/material";
-import { useState } from "react";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import { useMediaQuery } from '@mui/material';
+import { useState } from 'react';
 
 /** @components */
-import ListItemsMol from "@/app/_components/molecules/list-items-mol";
+import ListItemsMol from '@/app/_components/molecules/list-items-mol';
 
 /** @scripts */
-import { formatPrice } from "@/utils/format";
+import { formatPrice } from '@/utils/format';
 
 interface ActionProps {
   handleClose: () => void;
@@ -21,44 +21,42 @@ interface ActionProps {
 
 const additional = [
   {
-    service: "Bar",
+    service: 'Bar',
     price: 10000,
   },
   {
-    service: "Restaurante",
+    service: 'Restaurante',
     price: 20000,
   },
   {
-    service: "Lavanderia",
+    service: 'Lavanderia',
     price: 50000,
   },
 ];
 
 const services = [
   {
-    service: "Rato",
+    service: 'Rato',
     price: 30000,
   },
   {
-    service: "Amanecida",
+    service: 'Amanecida',
     price: 60000,
   },
 ];
 
 const AvailableRoom = {
   Content: () => {
-    const matchMaxWidth = useMediaQuery("(max-width:600px)");
+    const matchMaxWidth = useMediaQuery('(max-width:600px)');
 
     const [additionalSelected, setAdditionalSelected] = useState<string[]>([]);
     const [serviceSelected, setServiceSelected] = useState<string>(
-      services[0].service
+      services[0].service,
     );
 
     const handleSelectAdditional = (service: string) => {
       if (additionalSelected.includes(service)) {
-        setAdditionalSelected((prev) =>
-          prev.filter((item) => item !== service)
-        );
+        setAdditionalSelected((prev) => prev.filter((item) => item !== service));
       } else {
         setAdditionalSelected((prev) => [...prev, service]);
       }
@@ -70,7 +68,18 @@ const AvailableRoom = {
 
     return (
       <Grid container xs={12}>
-        <Grid container item xs={12} sm={6} md={6} pb={2} px={2} gap={2} borderRight={matchMaxWidth ? "unset" : "2px solid #ccc"} borderBottom={!matchMaxWidth ? "unset" : "2px solid #ccc"}>
+        <Grid
+          borderBottom={!matchMaxWidth ? 'unset' : '2px solid #ccc'}
+          borderRight={matchMaxWidth ? 'unset' : '2px solid #ccc'}
+          container
+          gap={2}
+          item
+          md={6}
+          pb={2}
+          px={2}
+          sm={6}
+          xs={12}
+        >
           <Grid item>
             <Typography fontSize={20} fontWeight={700}>
               Seleccione el servicio*
@@ -87,7 +96,7 @@ const AvailableRoom = {
                   key={service}
                   label={`${service}: ${formatPrice(price)}`}
                   color="primary"
-                  variant={serviceSelected === service ? "filled" : "outlined"}
+                  variant={serviceSelected === service ? 'filled' : 'outlined'}
                   size="small"
                   onClick={() => handleServiceSelected(service)}
                 />
@@ -111,7 +120,7 @@ const AvailableRoom = {
                   label={`${service}: ${formatPrice(price)}`}
                   color="info"
                   variant={
-                    additionalSelected.includes(service) ? "filled" : "outlined"
+                    additionalSelected.includes(service) ? 'filled' : 'outlined'
                   }
                   size="small"
                   onClick={() => handleSelectAdditional(service)}
@@ -132,24 +141,24 @@ const AvailableRoom = {
             title="Detalles:"
             items={[
               {
-                primary: "Nombre",
-                secondary: "name",
+                primary: 'Nombre',
+                secondary: 'name',
               },
               {
-                primary: "Tipo de Habitacion",
-                secondary: "Sencilla",
+                primary: 'Tipo de Habitacion',
+                secondary: 'Sencilla',
               },
               {
-                primary: "Precios",
-                secondary: "name",
+                primary: 'Precios',
+                secondary: 'name',
               },
               {
-                primary: "Servicios",
-                secondary: "name",
+                primary: 'Servicios',
+                secondary: 'name',
               },
               {
-                primary: "Estado Habitación",
-                secondary: "name",
+                primary: 'Estado Habitación',
+                secondary: 'name',
               },
             ]}
           />
@@ -161,7 +170,8 @@ const AvailableRoom = {
             mt={5}
           >
             <Typography fontSize={25} fontWeight={700}>
-              Total:{" "}
+              Total:
+              {' '}
             </Typography>
             <Typography fontSize={35} fontWeight={700} color="primary">
               {formatPrice(150000)}

@@ -1,6 +1,6 @@
 /** @package */
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 interface Props {
   roomId: number;
@@ -9,7 +9,10 @@ interface Props {
   matchMaxWidth?: boolean;
 }
 
-const RoomIdAtm = ({ roomId, matchMaxWidth, color, sx }: Props) => (
+const RoomIdAtm = ({
+  color,
+  roomId,
+}: Props) => (
   <Box
     alignItems="center"
     border={4}
