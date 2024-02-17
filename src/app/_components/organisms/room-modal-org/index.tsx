@@ -17,8 +17,8 @@ import RoomIdAtm from "@/app/_components/atoms/room-id-atm";
 /** @styles */
 
 /** @scripts */
-import { RoomStatesSpanish, colorState } from "@/utils/room";
-import { RoomStates } from "@/utils/types";
+import { RoomStatusSpanish, colorState } from "@/utils/room";
+import { RoomStatus } from "@/utils/types";
 import OccupiedRoomContent from "./occupied-room";
 
 interface Props {
@@ -36,19 +36,19 @@ const RoomModalMol = ({
   const matchMaxWidth = useMediaQuery("(max-width:600px)");
 
   const stateContent = {
-    [RoomStates.AVAILABLE]: <AvailableRoom.Content />,
-    [RoomStates.OCCUPIED]: <OccupiedRoomContent.Content />,
-    [RoomStates.CLEANING]: <CleaningRoom.Content />,
-    [RoomStates.MAINTENANCE]: <MaintenanceRoom.Content inMaintenance={false} />,
+    [RoomStatus.AVAILABLE]: <AvailableRoom.Content />,
+    [RoomStatus.OCCUPIED]: <OccupiedRoomContent.Content />,
+    [RoomStatus.CLEANING]: <CleaningRoom.Content />,
+    [RoomStatus.MAINTENANCE]: <MaintenanceRoom.Content inMaintenance={false} />,
   };
 
   const stateActions = {
-    [RoomStates.AVAILABLE]: <AvailableRoom.Actions handleClose={handleClose} />,
-    [RoomStates.OCCUPIED]: (
+    [RoomStatus.AVAILABLE]: <AvailableRoom.Actions handleClose={handleClose} />,
+    [RoomStatus.OCCUPIED]: (
       <OccupiedRoomContent.Actions handleClose={handleClose} />
     ),
-    [RoomStates.CLEANING]: <CleaningRoom.Actions handleClose={handleClose} />,
-    [RoomStates.MAINTENANCE]: (
+    [RoomStatus.CLEANING]: <CleaningRoom.Actions handleClose={handleClose} />,
+    [RoomStatus.MAINTENANCE]: (
       <MaintenanceRoom.Actions
         handleClose={handleClose}
         inMaintenance={false}
@@ -83,7 +83,7 @@ const RoomModalMol = ({
         <RoomIdAtm roomId={id} color={color} />
         <Typography fontSize={matchMaxWidth ? 20 : 25} fontWeight={700} color={color}>
           {`Habitación - ${
-            RoomStatesSpanish[state as keyof typeof RoomStatesSpanish]
+            RoomStatusSpanish[state as keyof typeof RoomStatusSpanish]
           }`}
         </Typography>
       </Box>

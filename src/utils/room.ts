@@ -1,16 +1,16 @@
 import theme from "@/styles/theme/theme";
-import { RoomStates } from "./types";
+import { RoomStatus } from "./types";
 
 export const colorState = {
-  [RoomStates.AVAILABLE]: theme.palette.success.main,
-  [RoomStates.OCCUPIED]: theme.palette.error.main,
-  [RoomStates.MAINTENANCE]: theme.palette.warning.main,
-  [RoomStates.CLEANING]: theme.palette.violet.main,
+  [RoomStatus.AVAILABLE]: theme.palette.success.main,
+  [RoomStatus.OCCUPIED]: theme.palette.error.main,
+  [RoomStatus.MAINTENANCE]: theme.palette.warning.main,
+  [RoomStatus.CLEANING]: theme.palette.violet.main,
 };
 
-export const RoomStatesSpanish = {
-  [RoomStates.AVAILABLE]: "Disponible",
-  [RoomStates.OCCUPIED]: "Ocupada",
-  [RoomStates.MAINTENANCE]: "Mantenimiento",
-  [RoomStates.CLEANING]: "Limpieza",
+export const RoomStatusSpanish = {
+  [RoomStatus.AVAILABLE]: "Disponible",
+  [RoomStatus.OCCUPIED]: "Ocupada",
+  [RoomStatus.MAINTENANCE]: "Mantenimiento",
+  [RoomStatus.CLEANING]: "Limpieza",
 };
