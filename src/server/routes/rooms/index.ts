@@ -1,9 +1,8 @@
-import { privateProcedure, router } from "@/server/trpc";
-import { db } from "@/libs/prisma";
-import { z } from "zod";
-import { RoomStatus } from "@prisma/client";
-import { TRPCError } from "@trpc/server";
-import { getSession } from "next-auth/react";
+import { z } from 'zod';
+import { RoomStatus } from '@prisma/client';
+import { TRPCError } from '@trpc/server';
+import { db } from '@/libs/prisma';
+import { privateProcedure, router } from '@/server/trpc';
 
 export const roomsRouter = router({
   create: privateProcedure
@@ -12,7 +11,7 @@ export const roomsRouter = router({
         id: z.number(),
         name: z.string(),
         type: z.string(),
-        state: z.enum(["available", "occupied", "maintenance", "cleaning"]),
+        state: z.enum(['available', 'occupied', 'maintenance', 'cleaning']),
         shortPrice: z.object({
           weekday: z.number(),
           weekend: z.number(),
@@ -21,13 +20,13 @@ export const roomsRouter = router({
           weekday: z.number(),
           weekend: z.number(),
         }),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       const { user } = ctx.session;
 
       if (!user) {
-        throw new TRPCError({ code: "UNAUTHORIZED", message: "Unauthorized" });
+        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Unauthorized' });
       }
 
       const room = await db.room.create({
@@ -42,7 +41,7 @@ export const roomsRouter = router({
       await db.price.create({
         data: {
           roomId: room.id,
-          rateType: "hourly",
+          rateType: 'hourly',
           weekday: input.shortPrice.weekday,
           weekend: input.shortPrice.weekend,
         },
@@ -51,7 +50,7 @@ export const roomsRouter = router({
       await db.price.create({
         data: {
           roomId: room.id,
-          rateType: "overnight",
+          rateType: 'overnight',
           weekday: input.longPrice.weekday,
           weekend: input.longPrice.weekend,
         },
@@ -64,7 +63,7 @@ export const roomsRouter = router({
     const { user } = ctx.session;
 
     if (!user) {
-      throw new TRPCError({ code: "UNAUTHORIZED", message: "Unauthorized" });
+      throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Unauthorized' });
     }
 
     const rooms = await db.room.findMany();
@@ -76,7 +75,7 @@ export const roomsRouter = router({
     const { user } = ctx.session;
 
     if (!user) {
-      throw new TRPCError({ code: "UNAUTHORIZED", message: "Unauthorized" });
+      throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Unauthorized' });
     }
 
     const room = await db.room.findUnique({
@@ -86,7 +85,7 @@ export const roomsRouter = router({
     });
 
     if (!room) {
-      throw new TRPCError({ code: "NOT_FOUND", message: "Room not found" });
+      throw new TRPCError({ code: 'NOT_FOUND', message: 'Room not found' });
     }
 
     const prices = await db.price.findMany({
@@ -96,7 +95,7 @@ export const roomsRouter = router({
     });
 
     if (!prices) {
-      throw new TRPCError({ code: "NOT_FOUND", message: "Prices not found" });
+      throw new TRPCError({ code: 'NOT_FOUND', message: 'Prices not found' });
     }
 
     const roomResponse = {
@@ -112,15 +111,15 @@ export const roomsRouter = router({
       z.object({
         roomId: z.number(),
         newState: z
-          .enum(["available", "occupied", "maintenance", "cleaning"])
+          .enum(['available', 'occupied', 'maintenance', 'cleaning'])
           .optional(),
-      })
+      }),
     )
     .mutation(async ({ input, ctx }) => {
       const { user } = ctx.session;
 
       if (!user) {
-        throw new TRPCError({ code: "UNAUTHORIZED", message: "Unauthorized" });
+        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Unauthorized' });
       }
 
       const nextState = {
@@ -135,8 +134,7 @@ export const roomsRouter = router({
         },
       });
 
-      const newState =
-        input.newState ?? nextState[room.state as keyof typeof nextState];
+      const newState = input.newState ?? nextState[room.state as keyof typeof nextState];
 
       const roomUpdated = await db.room.update({
         where: {

@@ -1,5 +1,5 @@
 /** @components */
-import HeaderAppBar from "@/app/_components/molecules/header-app-bar";
+import HeaderAppBar from '@/app/_components/molecules/header-app-bar';
 
 export default function DashboardLayout({
   children,
@@ -7,7 +7,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div style={{ width: "100vw"}}>
+    <div style={{ width: '100vw' }}>
       <HeaderAppBar />
       {children}
     </div>

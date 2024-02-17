@@ -1,4 +1,6 @@
 /** @script */
-import example from "./example.json";
+import example from './example.json';
 
-export default { example };
+const res = { example };
+
+export default res;

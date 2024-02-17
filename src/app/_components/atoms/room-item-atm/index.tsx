@@ -1,14 +1,14 @@
 /** @package */
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 /** @style */
-import { useMediaQuery, useTheme } from "@mui/material";
+import { useMediaQuery } from '@mui/material';
 
 /** @component */
-import RoomIdAtm from "../room-id-atm";
-import { RoomStatus } from "@/utils/types";
-import { RoomStatusSpanish, colorState } from "@/utils/room";
+import RoomIdAtm from '../room-id-atm';
+import { RoomStatus } from '@/utils/types';
+import { RoomStatusSpanish, colorState } from '@/utils/room';
 
 interface Props {
   roomId: number;
@@ -16,9 +16,11 @@ interface Props {
   type: string;
   onClick?: () => void;
 }
-const RoomItemAtm = ({ roomId, state, type, onClick }: Props) => {
+const RoomItemAtm = ({
+  roomId, state, type, onClick,
+}: Props) => {
   const color = colorState[state];
-  const matchMaxWidth = useMediaQuery("(max-width:500px)");
+  const matchMaxWidth = useMediaQuery('(max-width:500px)');
 
   return (
     <Box
@@ -30,13 +32,13 @@ const RoomItemAtm = ({ roomId, state, type, onClick }: Props) => {
       gap={2}
       height={matchMaxWidth ? 200 : 226}
       onClick={onClick}
-      width={"100%"}
+      width="100%"
       maxWidth="250px"
       sx={{
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
-        cursor: "pointer",
-        margin: "5px",
+        cursor: 'pointer',
+        margin: '5px',
       }}
     >
       <RoomIdAtm

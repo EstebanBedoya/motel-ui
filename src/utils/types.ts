@@ -1,8 +1,8 @@
 export enum RoomStatus {
-  AVAILABLE = "available",
-  OCCUPIED = "occupied",
-  MAINTENANCE = "maintenance",
-  CLEANING = "cleaning",
+  AVAILABLE = 'available',
+  OCCUPIED = 'occupied',
+  MAINTENANCE = 'maintenance',
+  CLEANING = 'cleaning',
 }
 
 export interface IRoom {

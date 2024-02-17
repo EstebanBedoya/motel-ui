@@ -1,10 +1,10 @@
 /** @components */
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListSubheader from "@mui/material/ListSubheader";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import ListItemText from "@mui/material/ListItemText";
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListSubheader from '@mui/material/ListSubheader';
+import ArrowRightIcon from '@mui/icons-material/ArrowRight';
+import ListItemText from '@mui/material/ListItemText';
 
 interface Props {
   title: string;
@@ -14,29 +14,29 @@ interface Props {
 
 const ListItemsMol = ({ title, items, inlineItems = false }: Props) => (
   <List
-    subheader={
+    subheader={(
       <ListSubheader
         sx={{
           fontSize: 20,
           fontWeight: 700,
-          color: "black",
-          lineHeight: "unset",
+          color: 'black',
+          lineHeight: 'unset',
         }}
       >
         {title}
       </ListSubheader>
-    }
+    )}
   >
     {items.map((item) => (
       <ListItem
-        key={typeof item === "string" ? item : item.primary}
+        key={typeof item === 'string' ? item : item.primary}
         sx={{
           paddingY: 0,
         }}
       >
         <ListItemIcon
           sx={{
-            minWidth: "30px",
+            minWidth: '30px',
           }}
         >
           <ArrowRightIcon />
@@ -45,20 +45,20 @@ const ListItemsMol = ({ title, items, inlineItems = false }: Props) => (
           sx={
             inlineItems
               ? {
-                  display: "flex",
-                  gap: 1,
-                  alignItems: "center",
-                }
+                display: 'flex',
+                gap: 1,
+                alignItems: 'center',
+              }
               : null
           }
           primaryTypographyProps={{
-            fontWeight: typeof item === "string" ? "normal" : 700,
+            fontWeight: typeof item === 'string' ? 'normal' : 700,
           }}
           secondaryTypographyProps={{
-            color: "black",
+            color: 'black',
           }}
-          primary={typeof item === "string" ? item : item.primary}
-          secondary={typeof item === "string" ? "" : item.secondary}
+          primary={typeof item === 'string' ? item : item.primary}
+          secondary={typeof item === 'string' ? '' : item.secondary}
         />
       </ListItem>
     ))}

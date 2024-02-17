@@ -1,18 +1,17 @@
 /** @packages */
-import { configureStore } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
+import { configureStore, createSlice } from '@reduxjs/toolkit';
 
 export const iconslice = createSlice({
-  name: "icon",
+  name: 'icon',
   initialState: {
-    icon: "moon",
+    icon: 'moon',
   },
   reducers: {
     iconMoon: (state) => {
-      state.icon = "moon";
+      state.icon = 'moon';
     },
     iconSun: (state) => {
-      state.icon = "sun";
+      state.icon = 'sun';
     },
   },
 });

@@ -1,5 +1,5 @@
-import theme from "@/styles/theme/theme";
-import { RoomStatus } from "./types";
+import theme from '@/styles/theme/theme';
+import { RoomStatus } from './types';
 
 export const colorState = {
   [RoomStatus.AVAILABLE]: theme.palette.success.main,
@@ -9,8 +9,8 @@ export const colorState = {
 };
 
 export const RoomStatusSpanish = {
-  [RoomStatus.AVAILABLE]: "Disponible",
-  [RoomStatus.OCCUPIED]: "Ocupada",
-  [RoomStatus.MAINTENANCE]: "Mantenimiento",
-  [RoomStatus.CLEANING]: "Limpieza",
+  [RoomStatus.AVAILABLE]: 'Disponible',
+  [RoomStatus.OCCUPIED]: 'Ocupada',
+  [RoomStatus.MAINTENANCE]: 'Mantenimiento',
+  [RoomStatus.CLEANING]: 'Limpieza',
 };

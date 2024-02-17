@@ -1,18 +1,17 @@
 /** @package */
-import { NextApiHandler } from "next";
-import NextAuth, { AuthOptions, NextAuthOptions } from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth, { AuthOptions } from 'next-auth';
+import CredentialsProvider from 'next-auth/providers/credentials';
 
 /** @scripts */
-import { db } from "@/libs/prisma";
+import { db } from '@/libs/prisma';
 
 const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
-      name: "Credentials",
+      name: 'Credentials',
       credentials: {
-        email: { label: "email", type: "email", placeholder: "test@test.com" },
-        password: { label: "Password", type: "password" },
+        email: { label: 'email', type: 'email', placeholder: 'test@test.com' },
+        password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials) {
         const user = await db.user.findUnique({
@@ -42,7 +41,7 @@ const authOptions: AuthOptions = {
     },
   },
   pages: {
-    signIn: "/login",
+    signIn: '/login',
   },
 };
 

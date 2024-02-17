@@ -1,12 +1,12 @@
 /** @packages */
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import { useMediaQuery } from "@mui/material";
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import { useMediaQuery } from '@mui/material';
 
 /** @components */
-import ListItemsMol from "@/app/_components/molecules/list-items-mol";
+import ListItemsMol from '@/app/_components/molecules/list-items-mol';
 
 /** @scripts */
 
@@ -18,42 +18,54 @@ interface ActionProps extends Props {
   handleClose: () => void;
 }
 
-// Este modal va a tener 2 versiones una para cuando se vaya a ingresar a mantenimento y otra para salir de mantenimiento
+// Este modal va a tener 2 versiones una para cuando
+// se vaya a ingresar a mantenimento y otra para salir de mantenimiento
 const MaintenanceRoom = {
   Content: ({ inMaintenance }: Props) => {
-    const matchMaxWidth = useMediaQuery("(max-width:600px)");
+    const matchMaxWidth = useMediaQuery('(max-width:600px)');
 
     return (
       <Grid container xs={12} height="100%">
-        <Grid container item xs={12} sm={6} md={6} px={2} pb={2} gap={2} borderBottom={!matchMaxWidth ? "unset" : "2px solid #ccc"} borderRight={matchMaxWidth ? "unset" : "2px solid #ccc"}>
+        <Grid
+          borderBottom={!matchMaxWidth ? 'unset' : '2px solid #ccc'}
+          borderRight={matchMaxWidth ? 'unset' : '2px solid #ccc'}
+          container
+          gap={2}
+          item
+          md={6}
+          pb={2}
+          px={2}
+          sm={6}
+          xs={12}
+        >
           {inMaintenance ? (
             <ListItemsMol
               title="Resumen"
               inlineItems
               items={[
                 {
-                  primary: "Encagrgado",
-                  secondary: "Roberto",
+                  primary: 'Encagrgado',
+                  secondary: 'Roberto',
                 },
                 {
-                  primary: "Contacto",
-                  secondary: "123456789",
+                  primary: 'Contacto',
+                  secondary: '123456789',
                 },
                 {
-                  primary: "Fecha inicial",
-                  secondary: "02 / Marzo / 2024",
+                  primary: 'Fecha inicial',
+                  secondary: '02 / Marzo / 2024',
                 },
                 {
-                  primary: "Fecha final",
-                  secondary: "02 / Marzo / 2024",
+                  primary: 'Fecha final',
+                  secondary: '02 / Marzo / 2024',
                 },
                 {
-                  primary: "Detalles",
-                  secondary: "many text",
+                  primary: 'Detalles',
+                  secondary: 'many text',
                 },
                 {
-                  primary: "valor",
-                  secondary: "$100.000",
+                  primary: 'valor',
+                  secondary: '$100.000',
                 },
               ]}
             />
@@ -106,24 +118,24 @@ const MaintenanceRoom = {
             inlineItems={!matchMaxWidth}
             items={[
               {
-                primary: "Nombre",
-                secondary: "name",
+                primary: 'Nombre',
+                secondary: 'name',
               },
               {
-                primary: "Tipo de Habitacion",
-                secondary: "Sencilla",
+                primary: 'Tipo de Habitacion',
+                secondary: 'Sencilla',
               },
               {
-                primary: "Precios",
-                secondary: "name",
+                primary: 'Precios',
+                secondary: 'name',
               },
               {
-                primary: "Servicios",
-                secondary: "name",
+                primary: 'Servicios',
+                secondary: 'name',
               },
               {
-                primary: "Estado Habitación",
-                secondary: "name",
+                primary: 'Estado Habitación',
+                secondary: 'name',
               },
             ]}
           />
@@ -135,10 +147,10 @@ const MaintenanceRoom = {
   Actions: ({ handleClose, inMaintenance }: ActionProps) => (
     <>
       <Button onClick={handleClose} variant="contained" color="error">
-        {inMaintenance ? "Cerrar" : "Cancelar"}
+        {inMaintenance ? 'Cerrar' : 'Cancelar'}
       </Button>
       <Button onClick={handleClose} variant="contained">
-        {inMaintenance ? "Terminar Manteiniemto" : "Iniciar Mantenimiento"}
+        {inMaintenance ? 'Terminar Manteiniemto' : 'Iniciar Mantenimiento'}
       </Button>
     </>
   ),

@@ -1,37 +1,38 @@
-"use client";
+'use client';
+
 /** @package */
-import Box from "@mui/material/Box";
-import Checkbox from "@mui/material/Checkbox";
-import FormControl from "@mui/material/FormControl";
-import Grid from "@mui/material/Grid";
-import InputLabel from "@mui/material/InputLabel";
-import ListItemText from "@mui/material/ListItemText";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import { useState } from "react";
-import Button from "@mui/material/Button";
+import Box from '@mui/material/Box';
+import Checkbox from '@mui/material/Checkbox';
+import FormControl from '@mui/material/FormControl';
+import Grid from '@mui/material/Grid';
+import InputLabel from '@mui/material/InputLabel';
+import ListItemText from '@mui/material/ListItemText';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
+import Typography from '@mui/material/Typography';
+import { useState } from 'react';
+import Button from '@mui/material/Button';
 
 /** @style */
-import { Divider, useTheme } from "@mui/material";
+import { Divider, useTheme } from '@mui/material';
 
 const names = [
-  "Oliver Hansen",
-  "Van Henry",
-  "April Tucker",
-  "Ralph Hubbard",
-  "Omar Alexander",
-  "Carlos Abbott",
-  "Miriam Wagner",
-  "Bradley Wilkerson",
-  "Virginia Andrews",
-  "Kelly Snyder",
+  'Oliver Hansen',
+  'Van Henry',
+  'April Tucker',
+  'Ralph Hubbard',
+  'Omar Alexander',
+  'Carlos Abbott',
+  'Miriam Wagner',
+  'Bradley Wilkerson',
+  'Virginia Andrews',
+  'Kelly Snyder',
 ];
 
 const TextFieldAtm = ({
   label,
-  width = "150px",
+  width = '150px',
   isRequired = false,
   sx,
 }: {
@@ -66,11 +67,11 @@ const SelectAtm = ({
     const {
       target: { value },
     } = event;
-    setPersonName(typeof value === "string" ? value.split(",") : value);
+    setPersonName(typeof value === 'string' ? value.split(',') : value);
   };
 
   return (
-    <Box sx={{ minWidth: 110, maxWidth: "100%" }}>
+    <Box sx={{ minWidth: 110, maxWidth: '100%' }}>
       <FormControl fullWidth size="small" required={isRequired}>
         <InputLabel id="demo-simple-select-label">{label}</InputLabel>
         <Select
@@ -80,7 +81,7 @@ const SelectAtm = ({
           label={label}
           value={personName}
           onChange={handleChange}
-          renderValue={multiple ? (selected) => selected.join(", ") : undefined}
+          renderValue={multiple ? (selected) => selected.join(', ') : undefined}
           MenuProps={{
             PaperProps: {
               style: {
@@ -115,10 +116,10 @@ const CreateRoomCardMol = () => {
       container
       spacing={2}
     >
-      <Typography fontWeight={600} fontSize={20} >
+      <Typography fontWeight={600} fontSize={20}>
         Detalles de la habitacion
       </Typography>
-      <Divider sx={{ color: "red", width:"100%", mt: 1}} />
+      <Divider sx={{ color: 'red', width: '100%', mt: 1 }} />
       <Grid item container xs={12} gap={1}>
         <Grid item xs={12} md={6}>
           <TextFieldAtm label="Nombre" width="100%" isRequired />
@@ -127,7 +128,7 @@ const CreateRoomCardMol = () => {
           <TextFieldAtm label="Precio" width="100%" isRequired />
         </Grid>
       </Grid>
-      <Typography fontWeight={600} fontSize={18} pt={1} >
+      <Typography fontWeight={600} fontSize={18} pt={1}>
         Precios
       </Typography>
       <Grid item container xs={12} gap={1}>
@@ -149,7 +150,7 @@ const CreateRoomCardMol = () => {
       <Grid item xs={12} md={6} mt={2}>
         <SelectAtm label="Adicionales" isRequired multiple />
       </Grid>
-      <Divider sx={{ color: "red", width:"100%", mt: 1}} />
+      <Divider sx={{ color: 'red', width: '100%', mt: 1 }} />
       <Grid
         item
         container
@@ -159,7 +160,7 @@ const CreateRoomCardMol = () => {
         <Button
           variant="contained"
           sx={{
-            borderRadius: "20px",
+            borderRadius: '20px',
           }}
         >
           Crear habitacion

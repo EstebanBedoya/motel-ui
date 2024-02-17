@@ -1,21 +1,22 @@
-"use client";
+'use client';
+
 /** @packages */
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Avatar from "@mui/material/Avatar";
-import Tooltip from "@mui/material/Tooltip";
-import IconButton from "@mui/material/IconButton";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import Typography from "@mui/material/Typography";
-import { useState } from "react";
-import { signOut } from "next-auth/react";
+import AppBar from '@mui/material/AppBar';
+import Box from '@mui/material/Box';
+import Toolbar from '@mui/material/Toolbar';
+import Avatar from '@mui/material/Avatar';
+import Tooltip from '@mui/material/Tooltip';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import Typography from '@mui/material/Typography';
+import { useState } from 'react';
+import { signOut } from 'next-auth/react';
 
 /** @component */
-import BrandLogoAtm from "@/app/_components/atoms/brand-logo-atm";
+import BrandLogoAtm from '@/app/_components/atoms/brand-logo-atm';
 
-const actions = ["Profile", "Logout"];
+const actions = ['Profile', 'Logout'];
 
 const HeaderAppBar = () => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
@@ -25,10 +26,10 @@ const HeaderAppBar = () => {
   };
 
   const handleCloseUserMenu = async (actionSelected: string) => {
-    if (actionSelected === "Logout") {
+    if (actionSelected === 'Logout') {
       await signOut();
     }
-  
+
     setAnchorElUser(null);
   };
 
@@ -36,9 +37,9 @@ const HeaderAppBar = () => {
     <AppBar
       position="sticky"
       color="inherit"
-      sx={{ borderBottom: "2px solid #0054A3" }}
+      sx={{ borderBottom: '2px solid #0054A3' }}
     >
-      <Toolbar sx={{ justifyContent: "space-between"}}>
+      <Toolbar sx={{ justifyContent: 'space-between' }}>
         <BrandLogoAtm />
         <Box>
           <Tooltip title="Open settings">
@@ -47,17 +48,17 @@ const HeaderAppBar = () => {
             </IconButton>
           </Tooltip>
           <Menu
-            sx={{ mt: "45px" }}
+            sx={{ mt: '45px' }}
             id="menu-appbar"
             anchorEl={anchorElUser}
             anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
+              vertical: 'top',
+              horizontal: 'right',
             }}
             keepMounted
             transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
+              vertical: 'top',
+              horizontal: 'right',
             }}
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
@@ -68,7 +69,7 @@ const HeaderAppBar = () => {
                 onClick={() => handleCloseUserMenu(action)}
               >
                 <Typography
-                  color={index === arr.length - 1 ? "red" : "black"}
+                  color={index === arr.length - 1 ? 'red' : 'black'}
                   textAlign="center"
                 >
                   {action}

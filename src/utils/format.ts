@@ -7,15 +7,13 @@ export const formatRequest = (request: string) => {
 
   return request.replace(
     regex,
-    (_, capturedGroup) =>
-      requestsHost[capturedGroup as keyof typeof requestsHost] ?? ""
+    (_, capturedGroup) => requestsHost[capturedGroup as keyof typeof requestsHost] ?? '',
   );
 };
 
-export const formatPrice = (price: number) =>
-  price.toLocaleString("es-Co", {
-    style: "currency",
-    currency: "COP",
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  });
+export const formatPrice = (price: number) => price.toLocaleString('es-Co', {
+  style: 'currency',
+  currency: 'COP',
+  minimumFractionDigits: 0,
+  maximumFractionDigits: 0,
+});
