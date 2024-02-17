@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { useMediaQuery } from "@mui/material";
 
 /** @components */
 import ListItemsMol from "@/app/_components/molecules/list-items-mol";
@@ -20,9 +21,11 @@ interface ActionProps extends Props {
 // Este modal va a tener 2 versiones una para cuando se vaya a ingresar a mantenimento y otra para salir de mantenimiento
 const MaintenanceRoom = {
   Content: ({ inMaintenance }: Props) => {
+    const matchMaxWidth = useMediaQuery("(max-width:600px)");
+
     return (
       <Grid container xs={12} height="100%">
-        <Grid container item xs={6} px={2} gap={2} borderRight="2px solid #ccc">
+        <Grid container item xs={12} sm={6} md={6} px={2} pb={2} gap={2} borderBottom={!matchMaxWidth ? "unset" : "2px solid #ccc"} borderRight={matchMaxWidth ? "unset" : "2px solid #ccc"}>
           {inMaintenance ? (
             <ListItemsMol
               title="Resumen"
@@ -97,10 +100,10 @@ const MaintenanceRoom = {
             </Grid>
           )}
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6} md={6}>
           <ListItemsMol
             title="Detalles"
-            inlineItems
+            inlineItems={!matchMaxWidth}
             items={[
               {
                 primary: "Nombre",

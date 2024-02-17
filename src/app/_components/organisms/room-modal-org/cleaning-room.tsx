@@ -1,5 +1,6 @@
 /** @packages */
 import Grid from "@mui/material/Grid";
+import { useMediaQuery } from "@mui/material";
 
 /** @components */
 import ListItemsMol from "@/app/_components/molecules/list-items-mol";
@@ -9,15 +10,21 @@ import Button from "@mui/material/Button";
 
 const CleaningRoom = {
   Content: () => {
+    const matchMaxWidth = useMediaQuery("(max-width:600px)");
+
     return (
       <Grid container xs={12} height="100%">
         <Grid
+          borderBottom={!matchMaxWidth ? "unset" : "2px solid #ccc"}
+          borderRight={matchMaxWidth ? "unset" : "2px solid #ccc"} 
           container
-          item
-          xs={6}
-          px={2}
           gap={2}
-          borderRight="2px solid #ccc"
+          item
+          md={6}
+          pb={2}
+          px={2}
+          sm={6} 
+          xs={12}
         >
           <ListItemsMol
             title="Detalles de la limpieza"
@@ -34,10 +41,10 @@ const CleaningRoom = {
             ]}
           />
         </Grid>
-        <Grid item xs={6}>
+        <Grid item xs={12} sm={6} md={6}>
           <ListItemsMol
             title="Detalles"
-            inlineItems
+            inlineItems={!matchMaxWidth}
             items={[
               {
                 primary: "Nombre",

@@ -6,6 +6,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
+import { useMediaQuery } from "@mui/material";
 
 /** @components */
 import AvailableRoom from "./available-room";
@@ -32,6 +33,7 @@ const RoomModalMol = ({
   handleClose,
 }: Props) => {
   const color = colorState[state as keyof typeof colorState];
+  const matchMaxWidth = useMediaQuery("(max-width:600px)");
 
   const stateContent = {
     [RoomStatus.AVAILABLE]: <AvailableRoom.Content />,
@@ -70,16 +72,16 @@ const RoomModalMol = ({
       }}
     >
       <Box
-        display="flex"
-        flexDirection="column"
         alignItems="center"
-        gap={2}
         borderBottom={2}
         borderColor={color}
+        display="flex"
+        flexDirection="column"
+        gap={2}
         py={3}
       >
         <RoomIdAtm roomId={id} color={color} />
-        <Typography fontSize={25} fontWeight={700} color={color}>
+        <Typography fontSize={matchMaxWidth ? 20 : 25} fontWeight={700} color={color}>
           {`Habitación - ${
             RoomStatusSpanish[state as keyof typeof RoomStatusSpanish]
           }`}
