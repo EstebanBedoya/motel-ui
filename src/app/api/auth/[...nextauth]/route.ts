@@ -1,11 +1,12 @@
 /** @package */
-import NextAuth, { NextAuthOptions } from "next-auth";
+import { NextApiHandler } from "next";
+import NextAuth, { AuthOptions, NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 /** @scripts */
 import { db } from "@/libs/prisma";
 
-const handler: NextAuthOptions = NextAuth({
+const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -43,7 +44,8 @@ const handler: NextAuthOptions = NextAuth({
   pages: {
     signIn: "/login",
   },
-});
+};
 
-export const authOptions = handler;
+const handler = NextAuth(authOptions);
+
 export { handler as GET, handler as POST };

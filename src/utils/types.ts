@@ -1,4 +1,4 @@
-export enum RoomStates {
+export enum RoomStatus {
   AVAILABLE = "available",
   OCCUPIED = "occupied",
   MAINTENANCE = "maintenance",
@@ -8,5 +8,5 @@ export enum RoomStates {
 export interface IRoom {
   id: number;
   type: string;
-  state: RoomStates;
+  state: RoomStatus;
 }
