@@ -8,7 +8,6 @@ export const recordsRouter = router({
   checkInRoom: privateProcedure
     .input(
       z.object({
-        id: z.number(),
         roomId: z.number(),
         rateType: z.enum([RateType.hourly, RateType.overnight]),
         instructions: z.string().optional(),
@@ -66,7 +65,7 @@ export const recordsRouter = router({
           roomId: input.roomId,
           userId: user.id,
           recordType: RecordType.occupied,
-          rateType: input.rateType,
+          rateType: input.rateType as RateType,
           startTime: input.checkIn,
           endTime: new Date(),
           instructions: input.instructions,

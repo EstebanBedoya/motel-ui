@@ -1,26 +1,24 @@
 /** @package */
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 
 /** @style */
-import { useMediaQuery } from '@mui/material';
+import { useMediaQuery } from "@mui/material";
 
 /** @component */
-import RoomIdAtm from '../room-id-atm';
-import { RoomStatus } from '@/utils/types';
-import { RoomStatusSpanish, colorState } from '@/utils/room';
+import RoomIdAtm from "../room-id-atm";
+import { RoomStatus } from "@/utils/types";
+import { RoomStatusSpanish, colorState } from "@/utils/room";
 
 interface Props {
   roomId: number;
-  state: RoomStatus;
+  status: RoomStatus;
   type: string;
   onClick?: () => void;
 }
-const RoomItemAtm = ({
-  roomId, state, type, onClick,
-}: Props) => {
-  const color = colorState[state];
-  const matchMaxWidth = useMediaQuery('(max-width:500px)');
+const RoomItemAtm = ({ roomId, status, type, onClick }: Props) => {
+  const color = colorState[status];
+  const matchMaxWidth = useMediaQuery("(max-width:500px)");
 
   return (
     <Box
@@ -37,8 +35,8 @@ const RoomItemAtm = ({
       sx={{
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
-        cursor: 'pointer',
-        margin: '5px',
+        cursor: "pointer",
+        margin: "5px",
       }}
     >
       <RoomIdAtm
@@ -52,7 +50,7 @@ const RoomItemAtm = ({
           {type}
         </Typography>
         <Typography fontSize={20} fontWeight={600} color={color}>
-          {RoomStatusSpanish[state]}
+          {RoomStatusSpanish[status]}
         </Typography>
       </Box>
     </Box>

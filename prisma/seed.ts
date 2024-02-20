@@ -1,6 +1,13 @@
 import { PrismaClient, RateType, Role } from "@prisma/client";
 const prisma = new PrismaClient();
 
+const cleanDatabase = async () => {
+  await prisma.additionals.deleteMany();
+  await prisma.price.deleteMany();
+  await prisma.room.deleteMany();
+  await prisma.user.deleteMany();
+};
+
 const seedUser = async () => {
   const user = await prisma.user.create({
     data: {
@@ -122,6 +129,10 @@ const seedRooms = async () => {
     data: pricesHourly,
   });
 
+  await prisma.price.createMany({
+    data: pricesOvernight,
+  });
+
   return rooms;
 };
 
@@ -140,6 +151,8 @@ const seedAdditional = async () => {
 };
 
 const main = async () => {
+  await cleanDatabase();
+  console.log("Database cleaned");
   const user = await seedUser();
   console.log("seeded user:", user);
   const rooms = await seedRooms();
