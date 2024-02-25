@@ -12,12 +12,13 @@ import Box from '@mui/material/Box';
 /** @component */
 import SelectAtm from '@/app/_components/atoms/select-atm';
 import RoomItemAtm from '@/app/_components/atoms/room-item-atm';
-import CreateRoomCardMol from '@/app/_components/molecules/create-room-card-mol';
 import RoomModalMol from '@/app/_components/organisms/room-modal-org';
 
 /** @scripts */
 import { IRoom, RoomStatus } from '@/utils/types';
 import { colorState } from '@/utils/room';
+import { trpc } from '@/app/_trpc/client';
+import CreateRoomSection from '@/app/_components/organisms/room-modal-org/create-room-section';
 
 const mockItems: IRoom[] = [
   { id: 101, state: RoomStatus.AVAILABLE, type: 'sencilla' },
@@ -43,6 +44,7 @@ export default function Page() {
   const [roomModalData, setRoomModalData] = useState<IRoom | null>(null);
   const theme = useTheme();
   const matchMaxWidth = useMediaQuery('(max-width:500px)');
+  const { data: rooms } = trpc.rooms.listAll.useQuery();
 
   const handleChange = (_: any, newValue: string) => {
     setTabValue(newValue);
@@ -152,6 +154,7 @@ export default function Page() {
         mt={5}
         justifyItems="center"
         pl={matchMaxWidth ? 3 : 10}
+        overflow="auto"
         pr={matchMaxWidth ? 3 : 10}
       >
         {mockItems
@@ -176,7 +179,7 @@ export default function Page() {
             </Grid>
           ))}
         {tabValue === 'create' && (
-          <CreateRoomCardMol />
+          <CreateRoomSection />
           // <CreateRoomCardSummary />
         )}
       </Grid>
