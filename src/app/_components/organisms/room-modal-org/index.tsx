@@ -5,8 +5,10 @@ import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { useMediaQuery } from '@mui/material';
+import BuildIcon from '@mui/icons-material/Build';
 
 /** @components */
+import { useState } from 'react';
 import AvailableRoom from './available-room';
 import CleaningRoom from './cleaning-room';
 import MaintenanceRoom from './maintenance-room';
@@ -29,16 +31,26 @@ interface Props {
 const RoomModalMol = ({ roomId, open, handleClose }: Props) => {
   const { data: room } = trpc.rooms.getById.useQuery(roomId);
   const { status } = room ?? {};
-  const color = colorState[status as keyof typeof colorState];
   const matchMaxWidth = useMediaQuery('(max-width:600px)');
+  const [openMaintenance, setOpenMaintenance] = useState(false);
+  const color = colorState[openMaintenance ? RoomStatus.MAINTENANCE : status as keyof typeof colorState];
 
   const stateContent = {
     [RoomStatus.AVAILABLE]: (
       <AvailableRoom roomData={room} handleClose={handleClose} />
     ),
-    [RoomStatus.OCCUPIED]: <OccupiedRoomContent.Content />,
-    [RoomStatus.CLEANING]: <CleaningRoom.Content />,
-    [RoomStatus.MAINTENANCE]: <MaintenanceRoom.Content inMaintenance={false} />,
+    [RoomStatus.OCCUPIED]: <OccupiedRoomContent roomData={room} handleClose={handleClose} />,
+    [RoomStatus.CLEANING]: <CleaningRoom roomData={room} handleClose={handleClose} />,
+    [RoomStatus.MAINTENANCE]: <MaintenanceRoom roomData={room} inMaintenance handleClose={handleClose} />,
+  };
+
+  const handleOpenMaintenance = () => {
+    setOpenMaintenance(true);
+  };
+
+  const handleCloseMaintenance = () => {
+    setOpenMaintenance(false);
+    handleClose();
   };
 
   return (
@@ -77,7 +89,7 @@ const RoomModalMol = ({ roomId, open, handleClose }: Props) => {
           color={color}
         >
           {`Habitación - ${
-            RoomStatusSpanish[status as keyof typeof RoomStatusSpanish]
+            RoomStatusSpanish[openMaintenance ? RoomStatus.MAINTENANCE : status as keyof typeof RoomStatusSpanish]
           }`}
         </Typography>
       </Box>
@@ -93,7 +105,27 @@ const RoomModalMol = ({ roomId, open, handleClose }: Props) => {
       >
         <CloseIcon />
       </IconButton>
-      {stateContent[status as keyof typeof stateContent]}
+      {
+        !(openMaintenance || status === RoomStatus.MAINTENANCE) && (
+          <IconButton
+            aria-label="maintenance"
+            onClick={handleOpenMaintenance}
+            sx={{
+              position: 'absolute',
+              left: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <BuildIcon />
+          </IconButton>
+        )
+      }
+      {(openMaintenance)
+        ? (
+          <MaintenanceRoom roomData={room} inMaintenance={false} handleClose={handleCloseMaintenance} />
+        )
+        : stateContent[status as keyof typeof stateContent]}
     </Dialog>
   );
 };

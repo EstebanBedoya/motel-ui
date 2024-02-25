@@ -12,12 +12,12 @@ import SelectAtm from '@/app/_components/atoms/select-atm';
 import RoomItemAtm from '@/app/_components/atoms/room-item-atm';
 import CreateRoomCardMol from '@/app/_components/molecules/create-room-card-mol';
 import RoomModalMol from '@/app/_components/organisms/room-modal-org';
-
-/** @scripts */
-import { RoomStatus } from '@/utils/types';
 import TabsFilterMol, {
   EFilter,
 } from '@/app/_components/molecules/tabs-filter-mol';
+
+/** @scripts */
+import { RoomStatus } from '@/utils/types';
 import { trpc } from '@/app/_trpc/client';
 
 export default function Page() {

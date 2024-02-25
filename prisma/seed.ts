@@ -1,7 +1,9 @@
-import { PrismaClient, RateType, Role } from "@prisma/client";
+import { PrismaClient, RateType, Role } from '@prisma/client';
+
 const prisma = new PrismaClient();
 
 const cleanDatabase = async () => {
+  await prisma.record.deleteMany();
   await prisma.additionals.deleteMany();
   await prisma.price.deleteMany();
   await prisma.room.deleteMany();
@@ -11,8 +13,8 @@ const cleanDatabase = async () => {
 const seedUser = async () => {
   const user = await prisma.user.create({
     data: {
-      email: "test@test.com",
-      password: "password",
+      email: 'test@test.com',
+      password: 'password',
       role: Role.admin,
     },
   });
@@ -22,13 +24,13 @@ const seedUser = async () => {
 
 const seedRooms = async () => {
   const mockItems = [
-    { id: 101, type: "sencilla", name: "secilla" },
-    { id: 102, type: "jacuzzi", name: "Especial Name" },
-    { id: 103, type: "sauna", name: "Especial Name" },
-    { id: 104, type: "sencilla", name: "secilla" },
-    { id: 105, type: "jacuzzi", name: "Especial Name" },
-    { id: 106, type: "sauna", name: "Especial Name" },
-    { id: 107, type: "sencilla", name: "secilla" },
+    { id: 101, type: 'sencilla', name: 'secilla' },
+    { id: 102, type: 'jacuzzi', name: 'Especial Name' },
+    { id: 103, type: 'sauna', name: 'Especial Name' },
+    { id: 104, type: 'sencilla', name: 'secilla' },
+    { id: 105, type: 'jacuzzi', name: 'Especial Name' },
+    { id: 106, type: 'sauna', name: 'Especial Name' },
+    { id: 107, type: 'sencilla', name: 'secilla' },
   ];
 
   const pricesHourly = [
@@ -138,9 +140,9 @@ const seedRooms = async () => {
 
 const seedAdditional = async () => {
   const mockItems = [
-    { name: "jacuzzi", price: 30000 },
-    { name: "sauna", price: 30000 },
-    { name: "bar", price: 10000 },
+    { name: 'jacuzzi', price: 30000 },
+    { name: 'sauna', price: 30000 },
+    { name: 'bar', price: 10000 },
   ];
 
   const additional = await prisma.additionals.createMany({
@@ -152,18 +154,18 @@ const seedAdditional = async () => {
 
 const main = async () => {
   await cleanDatabase();
-  console.log("Database cleaned");
+  console.log('Database cleaned');
   const user = await seedUser();
-  console.log("seeded user:", user);
+  console.log('seeded user:', user);
   const rooms = await seedRooms();
-  console.log("seeded rooms:", rooms);
+  console.log('seeded rooms:', rooms);
   const additional = await seedAdditional();
-  console.log("seeded additional:", additional);
+  console.log('seeded additional:', additional);
 };
 
 main()
   .then(async () => {
-    console.log("Seeding complete!");
+    console.log('Seeding complete!');
     await prisma.$disconnect();
   })
   .catch(async (e) => {

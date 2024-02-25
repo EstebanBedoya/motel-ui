@@ -8,7 +8,6 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { DialogActions, DialogContent, useMediaQuery } from '@mui/material';
 import { useMemo, useState } from 'react';
-import dayjs from 'dayjs';
 
 /** @components */
 import { Price, RateType, Room } from '@prisma/client';
@@ -17,6 +16,7 @@ import ListItemsMol from '@/app/_components/molecules/list-items-mol';
 /** @scripts */
 import { formatPrice } from '@/utils/format';
 import { trpc } from '@/app/_trpc/client';
+import { isWeekend, priceSpanish } from '@/utils/room';
 
 interface ContentProps {
   roomData: Room & Price;
@@ -38,18 +38,11 @@ const additional = [
   },
 ];
 
-const priceSpanish = {
-  hourly: 'Rato',
-  overnight: 'Amacenida',
-};
-
 const AvailableRoom = ({ roomData, handleClose }: ContentProps) => {
   const { mutate: checkInRoom } = trpc.records.checkInRoom.useMutation();
   const { prices, name, type } = roomData;
   const matchMaxWidth = useMediaQuery('(max-width:600px)');
-  const currentDay = dayjs();
 
-  const isWeekend = currentDay.day() === 0 || currentDay.day() === 6;
   const pricesType = Object.keys(prices);
 
   const [additionalSelected, setAdditionalSelected] = useState<string[]>([]);

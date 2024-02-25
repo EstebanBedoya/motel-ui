@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import theme from '@/styles/theme/theme';
 import { RoomStatus } from './types';
 
@@ -14,3 +15,14 @@ export const RoomStatusSpanish = {
   [RoomStatus.MAINTENANCE]: 'Mantenimiento',
   [RoomStatus.CLEANING]: 'Limpieza',
 };
+
+export const priceSpanish = {
+  hourly: 'Rato',
+  overnight: 'Amacenida',
+};
+
+export const isWeekend = (() => {
+  const currentDay = dayjs();
+
+  return currentDay.day() === 0 || currentDay.day() === 6;
+})();

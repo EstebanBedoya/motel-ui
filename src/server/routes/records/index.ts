@@ -70,6 +70,7 @@ export const recordsRouter = router({
           endTime: new Date(),
           instructions: input.instructions,
           aditionalIds: input.additional,
+          priceRate: price,
           total,
         },
       });
@@ -253,10 +254,10 @@ export const recordsRouter = router({
       z.object({
         roomId: z.number(),
         startTime: z.date(),
-        maintenanceManager: z.string(),
-        phoneNumber: z.string(),
-        maintenanceValue: z.number(),
-        maintenanceDetails: z.string(),
+        maintenanceManager: z.string().optional(),
+        phoneNumber: z.string().optional(),
+        maintenanceValue: z.number().optional(),
+        maintenanceDetails: z.string().optional(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
@@ -346,5 +347,36 @@ export const recordsRouter = router({
           temporalRecordId: null,
         },
       });
+    }),
+
+  getRecord: privateProcedure
+    .input(
+      z.object({
+        roomId: z.number(),
+        recordType: z.enum([
+          RecordType.occupied,
+          RecordType.cleaning,
+          RecordType.maintenance,
+        ]),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const { user: userSession } = ctx.session;
+
+      if (!userSession) {
+        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Unauthorized' });
+      }
+
+      const record = await db.record.findFirst({
+        where: {
+          roomId: input.roomId,
+          recordType: input.recordType,
+        },
+        orderBy: {
+          createAt: 'desc',
+        },
+      });
+
+      return record;
     }),
 });
