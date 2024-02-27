@@ -70,7 +70,7 @@ export const recordsRouter = router({
           endTime: new Date(),
           instructions: input.instructions,
           aditionalIds: input.additional,
-          priceRate: price,
+          priceRate: price as number,
           total,
         },
       });
