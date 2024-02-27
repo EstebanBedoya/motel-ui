@@ -1,22 +1,20 @@
 /** @package */
-import Box from "@mui/material/Box";
-import Tab from "@mui/material/Tab";
-import Tabs from "@mui/material/Tabs";
+import Box from '@mui/material/Box';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
 
 /** @styles */
-import { colorState } from "@/utils/room";
-import { useMediaQuery, useTheme } from "@mui/material";
-import { RoomStatus } from "@prisma/client";
-import { redirect, useRouter } from "next/navigation";
-import { useState } from "react";
+import { useMediaQuery, useTheme } from '@mui/material';
+import { RoomStatus } from '@prisma/client';
+import { colorState } from '@/utils/room';
 
 export enum EFilter {
-  all = "all",
-  available = "available",
-  occupied = "occupied",
-  cleaning = "cleaning",
-  maintenance = "maintenance",
-  create = "create",
+  all = 'all',
+  available = 'available',
+  occupied = 'occupied',
+  cleaning = 'cleaning',
+  maintenance = 'maintenance',
+  create = 'create',
 }
 
 interface Props {
@@ -25,12 +23,11 @@ interface Props {
 }
 
 const TabsFilterMol = ({ tabValue, onChange }: Props) => {
-  const matchMaxWidth = useMediaQuery("(max-width:500px)");
+  const matchMaxWidth = useMediaQuery('(max-width:500px)');
   const theme = useTheme();
 
-  const stateColor =
-    colorState[tabValue as unknown as keyof typeof colorState] ??
-    theme.palette.primary.main;
+  const stateColor = colorState[tabValue as unknown as keyof typeof colorState]
+    ?? theme.palette.primary.main;
 
   const handleChange = (_: React.SyntheticEvent, newValue: EFilter) => {
     onChange(newValue);
@@ -42,8 +39,8 @@ const TabsFilterMol = ({ tabValue, onChange }: Props) => {
       borderTop={2}
       borderColor={theme.palette.text.secondary}
       sx={{
-        justifyContent: "center",
-        display: "flex",
+        justifyContent: 'center',
+        display: 'flex',
       }}
     >
       <Tabs
@@ -51,15 +48,15 @@ const TabsFilterMol = ({ tabValue, onChange }: Props) => {
         onChange={handleChange}
         centered
         sx={{
-          "& .MuiTabs-indicator": {
-            backgroundColor: !matchMaxWidth ? stateColor : "unset",
+          '& .MuiTabs-indicator': {
+            backgroundColor: !matchMaxWidth ? stateColor : 'unset',
           },
-          "& .Mui-selected": {
+          '& .Mui-selected': {
             color: stateColor,
           },
-          "& .MuiTabs-flexContainer": {
-            overflowY: "auto",
-            display: "block",
+          '& .MuiTabs-flexContainer': {
+            overflowY: 'auto',
+            display: 'block',
           },
         }}
       >

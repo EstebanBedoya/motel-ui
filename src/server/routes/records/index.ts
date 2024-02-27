@@ -62,20 +62,6 @@ export const recordsRouter = router({
 
       const total: number = price + totalAdditional;
 
-      // const record = await db.record.create({
-      //   data: {
-      //     roomId: input.roomId,
-      //     userId: user.id,
-      //     recordType: RecordType.occupied,
-      //     rateType: input.rateType as RateType,
-      //     startTime: input.checkIn,
-      //     endTime: new Date(),
-      //     instructions: input.instructions,
-      //     aditionalIds: input.additional,
-      //     priceRate: price,
-      //     total,
-      //   },
-      // });
       const record: Record = {
         roomId: input.roomId,
         userId: user.id,
