@@ -1,5 +1,7 @@
 import { z } from 'zod';
-import { RateType, RecordType, RoomStatus } from '@prisma/client';
+import {
+  RateType, Record, RecordType, RoomStatus,
+} from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { db } from '@/libs/prisma';
 import { privateProcedure, router } from '@/server/trpc';
@@ -40,7 +42,7 @@ export const recordsRouter = router({
         },
       });
 
-      const totalAdditional = additional.reduce(
+      const totalAdditional: number = additional.reduce(
         (acc: number, current: { price: number }) => acc + current.price,
         0,
       );
@@ -60,19 +62,35 @@ export const recordsRouter = router({
 
       const total: number = price + totalAdditional;
 
-      const record = await db.record.create({
-        data: {
-          roomId: input.roomId,
-          userId: user.id,
-          recordType: RecordType.occupied,
-          rateType: input.rateType as RateType,
-          startTime: input.checkIn,
-          endTime: new Date(),
-          instructions: input.instructions,
-          aditionalIds: input.additional,
-          priceRate: price,
-          total,
-        },
+      // const record = await db.record.create({
+      //   data: {
+      //     roomId: input.roomId,
+      //     userId: user.id,
+      //     recordType: RecordType.occupied,
+      //     rateType: input.rateType as RateType,
+      //     startTime: input.checkIn,
+      //     endTime: new Date(),
+      //     instructions: input.instructions,
+      //     aditionalIds: input.additional,
+      //     priceRate: price,
+      //     total,
+      //   },
+      // });
+      const record: Record = {
+        roomId: input.roomId,
+        userId: user.id,
+        recordType: RecordType.occupied,
+        rateType: input.rateType as RateType,
+        startTime: input.checkIn,
+        endTime: new Date(),
+        instructions: input.instructions,
+        aditionalIds: input.additional,
+        priceRate: price,
+        total,
+      };
+
+      const createdRecord = await db.record.create({
+        data: record,
       });
 
       await db.room.update({
@@ -81,11 +99,11 @@ export const recordsRouter = router({
         },
         data: {
           status: RoomStatus.occupied,
-          temporalRecordId: record.id,
+          temporalRecordId: createdRecord.id,
         },
       });
 
-      return record;
+      return createdRecord;
     }),
 
   checkOutRoom: privateProcedure
