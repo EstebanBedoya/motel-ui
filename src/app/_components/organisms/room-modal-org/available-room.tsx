@@ -8,6 +8,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { DialogActions, DialogContent, useMediaQuery } from '@mui/material';
 import { useMemo, useState } from 'react';
+import { toast } from 'sonner';
 
 /** @components */
 import { Price, RateType, Room } from '@prisma/client';
@@ -39,7 +40,7 @@ const additional = [
 ];
 
 const AvailableRoom = ({ roomData, handleClose }: ContentProps) => {
-  const { mutate: checkInRoom } = trpc.records.checkInRoom.useMutation();
+  const { mutateAsync: checkInRoom } = trpc.records.checkInRoom.useMutation();
   const { prices, name, type } = roomData;
   const matchMaxWidth = useMediaQuery('(max-width:600px)');
 
@@ -77,8 +78,8 @@ const AvailableRoom = ({ roomData, handleClose }: ContentProps) => {
     setServiceSelected(service);
   };
 
-  const handleCheckIn = () => {
-    checkInRoom({
+  const handleCheckIn = async () => {
+    await checkInRoom({
       roomId: roomData.id,
       rateType: serviceSelected as RateType,
       instructions,
@@ -87,8 +88,15 @@ const AvailableRoom = ({ roomData, handleClose }: ContentProps) => {
       ),
       isWeekDay: !isWeekend,
       checkIn: new Date(),
+    }, {
+      onSuccess: () => {
+        toast.success('Check in exitoso');
+        handleClose();
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
     });
-    handleClose();
   };
 
   return (

@@ -1,6 +1,7 @@
 /** @packages */
 import Grid from '@mui/material/Grid';
 import DialogContent from '@mui/material/DialogContent';
+import { toast } from 'sonner';
 
 /** @components */
 import Button from '@mui/material/Button';
@@ -20,11 +21,18 @@ interface Props {
 const CleaningRoom = ({ roomData, handleClose }: Props) => {
   const { name, type } = roomData;
   const matchMaxWidth = useMediaQuery('(max-width:600px)');
-  const { mutate: endCleaning } = trpc.records.endCleaning.useMutation();
+  const { mutateAsync: endCleaning } = trpc.records.endCleaning.useMutation();
 
   const handleEndCleaning = async () => {
-    endCleaning({ roomId: roomData.id, endTime: dayjs().toDate() });
-    handleClose();
+    await endCleaning({ roomId: roomData.id, endTime: dayjs().toDate() }, {
+      onSuccess: () => {
+        toast.success('Limpieza terminada');
+        handleClose();
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    });
   };
 
   return (

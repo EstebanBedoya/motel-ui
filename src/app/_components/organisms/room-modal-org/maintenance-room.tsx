@@ -4,6 +4,7 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { DialogActions, DialogContent, useMediaQuery } from '@mui/material';
+import { toast } from 'sonner';
 
 /** @components */
 import {
@@ -38,7 +39,11 @@ const MaintenanceRoom = ({ inMaintenance, handleClose, roomData }: Props) => {
       maintenanceDetails: details,
     }, {
       onSuccess: () => {
+        toast.success('Mantenimiento iniciado');
         handleClose();
+      },
+      onError: (error) => {
+        toast.error(error.message);
       },
     });
   };

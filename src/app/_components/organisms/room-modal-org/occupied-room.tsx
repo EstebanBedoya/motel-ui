@@ -11,6 +11,7 @@ import Button from '@mui/material/Button';
 import { DialogActions, DialogContent, useMediaQuery } from '@mui/material';
 import { Price, RecordType, Room } from '@prisma/client';
 import dayjs from 'dayjs';
+import { toast } from 'sonner';
 import ListItemsMol from '@/app/_components/molecules/list-items-mol';
 
 /** @scripts */
@@ -44,7 +45,7 @@ const OccupiedRoom = ({ roomData, handleClose }: ContentProps) => {
     roomId: roomData.id,
     recordType: RecordType.occupied,
   });
-  const { mutate: checkout } = trpc.records.checkOutRoom.useMutation();
+  const { mutateAsync: checkout } = trpc.records.checkOutRoom.useMutation();
   const matchMaxWidth = useMediaQuery('(max-width:600px)');
 
   const [additionalSelected, setAdditionalSelected] = useState<string[]>([]);
@@ -64,15 +65,22 @@ const OccupiedRoom = ({ roomData, handleClose }: ContentProps) => {
       0,
     );
 
-    return (record?.priceRate ?? 0) + additionalPrice;
-  }, [additionalSelected]);
+    return (record?.total ?? 0) + additionalPrice;
+  }, [additionalSelected, record]);
 
-  const handleCheckout = () => {
-    checkout({
+  const handleCheckout = async () => {
+    await checkout({
       roomId: roomData.id,
       endTime: dayjs().toDate(),
+    }, {
+      onSuccess: () => {
+        toast.success('Check out exitoso');
+        handleClose();
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
     });
-    handleClose();
   };
 
   return (

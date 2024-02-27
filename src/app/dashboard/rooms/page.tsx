@@ -24,7 +24,7 @@ export default function Page() {
   const [tabValue, setTabValue] = useState<EFilter>(EFilter.all);
   const [roomId, setRoomId] = useState<number | null>(null);
   const matchMaxWidth = useMediaQuery('(max-width:500px)');
-  const { data: rooms } = trpc.rooms.listAll.useQuery();
+  const { data: rooms, refetch } = trpc.rooms.listAll.useQuery();
 
   const filterRooms = rooms?.filter(
     (item: Room) => (item.status as EFilter) === tabValue || tabValue === EFilter.all,
@@ -32,6 +32,11 @@ export default function Page() {
 
   const handleRoomModalData = (roomIdSelected: number) => {
     setRoomId(roomIdSelected);
+  };
+
+  const handleClose = () => {
+    setRoomId(null);
+    refetch();
   };
 
   return (
@@ -79,13 +84,12 @@ export default function Page() {
         ))}
         {tabValue === EFilter.create && (
           <CreateRoomCardMol />
-          // <CreateRoomCardSummary />
         )}
       </Grid>
       {roomId && (
         <RoomModalMol
           roomId={roomId}
-          handleClose={() => setRoomId(null)}
+          handleClose={handleClose}
           open={!!roomId}
         />
       )}
