@@ -56,9 +56,9 @@ export const recordsRouter = router({
         },
       });
 
-      const price = input.isWeekDay ? roomPrice.weekday : roomPrice.weekend;
+      const price: number = input.isWeekDay ? roomPrice.weekday : roomPrice.weekend;
 
-      const total = price + totalAdditional;
+      const total: number = price + totalAdditional;
 
       const record = await db.record.create({
         data: {
@@ -70,7 +70,7 @@ export const recordsRouter = router({
           endTime: new Date(),
           instructions: input.instructions,
           aditionalIds: input.additional,
-          priceRate: price as number,
+          priceRate: price,
           total,
         },
       });
