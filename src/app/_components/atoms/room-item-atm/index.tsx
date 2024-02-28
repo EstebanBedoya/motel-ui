@@ -12,14 +12,14 @@ import { RoomStatusSpanish, colorState } from '@/utils/room';
 
 interface Props {
   roomId: number;
-  state: RoomStatus;
+  status: RoomStatus;
   type: string;
   onClick?: () => void;
 }
 const RoomItemAtm = ({
-  roomId, state, type, onClick,
+  roomId, status, type, onClick,
 }: Props) => {
-  const color = colorState[state];
+  const color = colorState[status];
   const matchMaxWidth = useMediaQuery('(max-width:500px)');
 
   return (
@@ -52,7 +52,7 @@ const RoomItemAtm = ({
           {type}
         </Typography>
         <Typography fontSize={20} fontWeight={600} color={color}>
-          {RoomStatusSpanish[state]}
+          {RoomStatusSpanish[status]}
         </Typography>
       </Box>
     </Box>

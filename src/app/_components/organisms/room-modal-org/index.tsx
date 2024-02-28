@@ -2,13 +2,13 @@
 import Box from '@mui/material/Box';
 import CloseIcon from '@mui/icons-material/Close';
 import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { useMediaQuery } from '@mui/material';
+import BuildIcon from '@mui/icons-material/Build';
 
 /** @components */
+import { useState } from 'react';
 import AvailableRoom from './available-room';
 import CleaningRoom from './cleaning-room';
 import MaintenanceRoom from './maintenance-room';
@@ -20,40 +20,37 @@ import RoomIdAtm from '@/app/_components/atoms/room-id-atm';
 import { RoomStatusSpanish, colorState } from '@/utils/room';
 import { RoomStatus } from '@/utils/types';
 import OccupiedRoomContent from './occupied-room';
+import { trpc } from '@/app/_trpc/client';
 
 interface Props {
-  roomData: any;
+  roomId: number;
   open: boolean;
   handleClose: () => void;
 }
 
-const RoomModalMol = ({
-  roomData: { id, state },
-  open,
-  handleClose,
-}: Props) => {
-  const color = colorState[state as keyof typeof colorState];
+const RoomModalMol = ({ roomId, open, handleClose }: Props) => {
+  const { data: room } = trpc.rooms.getById.useQuery(roomId);
+  const { status } = room ?? {};
   const matchMaxWidth = useMediaQuery('(max-width:600px)');
+  const [openMaintenance, setOpenMaintenance] = useState(false);
+  const color = colorState[openMaintenance ? RoomStatus.MAINTENANCE : status as keyof typeof colorState];
 
   const stateContent = {
-    [RoomStatus.AVAILABLE]: <AvailableRoom.Content />,
-    [RoomStatus.OCCUPIED]: <OccupiedRoomContent.Content />,
-    [RoomStatus.CLEANING]: <CleaningRoom.Content />,
-    [RoomStatus.MAINTENANCE]: <MaintenanceRoom.Content inMaintenance={false} />,
+    [RoomStatus.AVAILABLE]: (
+      <AvailableRoom roomData={room} handleClose={handleClose} />
+    ),
+    [RoomStatus.OCCUPIED]: <OccupiedRoomContent roomData={room} handleClose={handleClose} />,
+    [RoomStatus.CLEANING]: <CleaningRoom roomData={room} handleClose={handleClose} />,
+    [RoomStatus.MAINTENANCE]: <MaintenanceRoom roomData={room} inMaintenance handleClose={handleClose} />,
   };
 
-  const stateActions = {
-    [RoomStatus.AVAILABLE]: <AvailableRoom.Actions handleClose={handleClose} />,
-    [RoomStatus.OCCUPIED]: (
-      <OccupiedRoomContent.Actions handleClose={handleClose} />
-    ),
-    [RoomStatus.CLEANING]: <CleaningRoom.Actions handleClose={handleClose} />,
-    [RoomStatus.MAINTENANCE]: (
-      <MaintenanceRoom.Actions
-        handleClose={handleClose}
-        inMaintenance={false}
-      />
-    ),
+  const handleOpenMaintenance = () => {
+    setOpenMaintenance(true);
+  };
+
+  const handleCloseMaintenance = () => {
+    setOpenMaintenance(false);
+    handleClose();
   };
 
   return (
@@ -66,7 +63,10 @@ const RoomModalMol = ({
           borderStyle: 'solid',
           borderColor: color,
           width: {
-            sm: '90vw', md: '70vw', lg: '50vw', xl: '40vw',
+            sm: '90vw',
+            md: '70vw',
+            lg: '50vw',
+            xl: '40vw',
           },
           maxWidth: '100%',
           minHeight: '65vh',
@@ -82,10 +82,14 @@ const RoomModalMol = ({
         gap={2}
         py={3}
       >
-        <RoomIdAtm roomId={id} color={color} />
-        <Typography fontSize={matchMaxWidth ? 20 : 25} fontWeight={700} color={color}>
+        <RoomIdAtm roomId={+roomId} color={color} />
+        <Typography
+          fontSize={matchMaxWidth ? 20 : 25}
+          fontWeight={700}
+          color={color}
+        >
           {`Habitación - ${
-            RoomStatusSpanish[state as keyof typeof RoomStatusSpanish]
+            RoomStatusSpanish[openMaintenance ? RoomStatus.MAINTENANCE : status as keyof typeof RoomStatusSpanish]
           }`}
         </Typography>
       </Box>
@@ -101,12 +105,27 @@ const RoomModalMol = ({
       >
         <CloseIcon />
       </IconButton>
-      <DialogContent dividers>
-        {stateContent[state as keyof typeof stateContent]}
-      </DialogContent>
-      <DialogActions sx={{ display: 'flex', justifyContent: ' center' }}>
-        {stateActions[state as keyof typeof stateActions]}
-      </DialogActions>
+      {
+        !(openMaintenance || status === RoomStatus.MAINTENANCE) && (
+          <IconButton
+            aria-label="maintenance"
+            onClick={handleOpenMaintenance}
+            sx={{
+              position: 'absolute',
+              left: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <BuildIcon />
+          </IconButton>
+        )
+      }
+      {(openMaintenance)
+        ? (
+          <MaintenanceRoom roomData={room} inMaintenance={false} handleClose={handleCloseMaintenance} />
+        )
+        : stateContent[status as keyof typeof stateContent]}
     </Dialog>
   );
 };
