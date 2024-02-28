@@ -34,6 +34,7 @@ const RoomItemAtm = ({
       onClick={onClick}
       width="100%"
       maxWidth="250px"
+      bgcolor={`${color}15`}
       sx={{
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
