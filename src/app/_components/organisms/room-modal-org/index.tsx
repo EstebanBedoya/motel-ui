@@ -79,6 +79,7 @@ const RoomModalMol = ({ roomId, open, handleClose }: Props) => {
         borderColor={color}
         display="flex"
         flexDirection="column"
+        bgcolor={`${color}15`}
         gap={2}
         py={3}
       >
