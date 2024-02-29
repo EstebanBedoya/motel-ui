@@ -1,5 +1,7 @@
 import { z } from 'zod';
-import { RateType, RecordType, RoomStatus } from '@prisma/client';
+import {
+  RateType, Record, RecordType, RoomStatus,
+} from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { db } from '@/libs/prisma';
 import { privateProcedure, router } from '@/server/trpc';
@@ -8,7 +10,6 @@ export const recordsRouter = router({
   checkInRoom: privateProcedure
     .input(
       z.object({
-        id: z.number(),
         roomId: z.number(),
         rateType: z.enum([RateType.hourly, RateType.overnight]),
         instructions: z.string().optional(),
@@ -41,7 +42,7 @@ export const recordsRouter = router({
         },
       });
 
-      const totalAdditional = additional.reduce(
+      const totalAdditional: number = additional.reduce(
         (acc: number, current: { price: number }) => acc + current.price,
         0,
       );
@@ -57,22 +58,25 @@ export const recordsRouter = router({
         },
       });
 
-      const price = input.isWeekDay ? roomPrice.weekday : roomPrice.weekend;
+      const price: number = input.isWeekDay ? roomPrice.weekday : roomPrice.weekend;
 
-      const total = price + totalAdditional;
+      const total: number = price + totalAdditional;
 
-      const record = await db.record.create({
-        data: {
-          roomId: input.roomId,
-          userId: user.id,
-          recordType: RecordType.occupied,
-          rateType: input.rateType,
-          startTime: input.checkIn,
-          endTime: new Date(),
-          instructions: input.instructions,
-          aditionalIds: input.additional,
-          total,
-        },
+      const record: Record = {
+        roomId: input.roomId,
+        userId: user.id,
+        recordType: RecordType.occupied,
+        rateType: input.rateType as RateType,
+        startTime: input.checkIn,
+        endTime: new Date(),
+        instructions: input.instructions,
+        aditionalIds: input.additional,
+        priceRate: price,
+        total,
+      };
+
+      const createdRecord = await db.record.create({
+        data: record,
       });
 
       await db.room.update({
@@ -81,11 +85,11 @@ export const recordsRouter = router({
         },
         data: {
           status: RoomStatus.occupied,
-          temporalRecordId: record.id,
+          temporalRecordId: createdRecord.id,
         },
       });
 
-      return record;
+      return createdRecord;
     }),
 
   checkOutRoom: privateProcedure
@@ -254,10 +258,10 @@ export const recordsRouter = router({
       z.object({
         roomId: z.number(),
         startTime: z.date(),
-        maintenanceManager: z.string(),
-        phoneNumber: z.string(),
-        maintenanceValue: z.number(),
-        maintenanceDetails: z.string(),
+        maintenanceManager: z.string().optional(),
+        phoneNumber: z.string().optional(),
+        maintenanceValue: z.number().optional(),
+        maintenanceDetails: z.string().optional(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
@@ -347,5 +351,36 @@ export const recordsRouter = router({
           temporalRecordId: null,
         },
       });
+    }),
+
+  getRecord: privateProcedure
+    .input(
+      z.object({
+        roomId: z.number(),
+        recordType: z.enum([
+          RecordType.occupied,
+          RecordType.cleaning,
+          RecordType.maintenance,
+        ]),
+      }),
+    )
+    .query(async ({ input, ctx }) => {
+      const { user: userSession } = ctx.session;
+
+      if (!userSession) {
+        throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Unauthorized' });
+      }
+
+      const record = await db.record.findFirst({
+        where: {
+          roomId: input.roomId,
+          recordType: input.recordType,
+        },
+        orderBy: {
+          createAt: 'desc',
+        },
+      });
+
+      return record;
     }),
 });

@@ -54,6 +54,10 @@ const ListItemsMol = ({
                 display: 'flex',
                 gap: 1,
                 alignItems: 'center',
+                '& .MuiListItemText-secondary': {
+                  fontSize: 16,
+                  color: 'black',
+                },
               }
               : null
           }

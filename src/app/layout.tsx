@@ -1,4 +1,5 @@
 /** @styles */
+import { Toaster } from 'sonner';
 import ThemeRegistry from '@/styles/theme/ThemeRegistry';
 
 /** @script */
@@ -14,6 +15,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <SessionAuthProvider>
+          <Toaster />
           <TrpcProvider>
             <ThemeRegistry>{children}</ThemeRegistry>
           </TrpcProvider>

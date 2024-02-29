@@ -101,6 +101,7 @@ model Record {
   endTime            DateTime
   extensions         Int?
   aditionalIds       Int[]      @default([])
+  priceRate          Float?
   total              Float?
   instructions       String?
   maintenanceManager String?
