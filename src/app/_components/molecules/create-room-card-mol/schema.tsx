@@ -1,6 +1,5 @@
 // @packages
 import * as Yup from 'yup';
-import { t } from 'i18next';
 
 export const schema = Yup.object().shape({
   id: Yup.string().required('Esto es requerido pai').nullable(),

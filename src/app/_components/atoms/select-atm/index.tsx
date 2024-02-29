@@ -4,19 +4,18 @@
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useState } from 'react';
+import Select from '@mui/material/Select';
 import { FormHelperText } from '@mui/material';
-import { UseFormReturn } from 'react-hook-form';
-import { IError, IRulesParams } from '@/utils/types';
+import { FieldError, UseFormReturn } from 'react-hook-form';
+import { IRulesParams } from '@/utils/types';
 import UseControllerCustom from '@/hooks/useControllerCustom';
 
 type Props = {
   control: UseFormReturn['control'];
-  error?: IError;
   fullWidth?: boolean;
   isRequired?: boolean;
   label: string;
+  error?: FieldError;
   minWidth?: string;
   multiple?: boolean;
   name: string;

@@ -1,23 +1,16 @@
 'use client';
 
 /** @package */
-import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
-import InputLabel from '@mui/material/InputLabel';
-import ListItemText from '@mui/material/ListItemText';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import { forwardRef, useState } from 'react';
+import { forwardRef } from 'react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Button from '@mui/material/Button';
 
 /** @style */
 import { Divider, useTheme } from '@mui/material';
-import { UseFormReturn, useForm } from 'react-hook-form';
+import { FieldError, UseFormReturn, useForm } from 'react-hook-form';
 import { schema } from './schema';
 import SelectAtm from '../../atoms/select-atm';
 
@@ -26,6 +19,8 @@ interface ITextFieldPropsAtm {
   isRequired?: boolean;
   label: string;
   sx?: Record<string, unknown>;
+  type?: string;
+  error: FieldError | undefined;
   width?: string | number;
 }
 
@@ -44,29 +39,18 @@ export interface IFormState {
   additions: (string | undefined)[];
 }
 
-const names = [
-  'Oliver Hansen',
-  'Van Henry',
-  'April Tucker',
-  'Ralph Hubbard',
-  'Omar Alexander',
-  'Carlos Abbott',
-  'Miriam Wagner',
-  'Bradley Wilkerson',
-  'Virginia Andrews',
-  'Kelly Snyder',
-];
-
 const TextFieldAtm = forwardRef<HTMLInputElement, ITextFieldPropsAtm>(({
   isRequired = false,
   label,
   sx,
+  type = 'text',
   error,
   width = '150px',
   ...props
 }: ITextFieldPropsAtm, ref) => (
   <TextField
     {...props}
+    type={type}
     label={label}
     size="small"
     error={!!error}
@@ -86,55 +70,6 @@ const TextFieldAtm = forwardRef<HTMLInputElement, ITextFieldPropsAtm>(({
 ));
 
 TextFieldAtm.displayName = 'TextField';
-
-// const SelectAtm = ({
-//   label,
-//   isRequired = false,
-//   multiple = false,
-// }: {
-//   label: string;
-//   isRequired: boolean;
-//   multiple?: boolean;
-// }) => {
-//   const [personName, setPersonName] = useState<string[]>([]);
-//   const handleChange = (event: SelectChangeEvent<typeof personName>) => {
-//     const {
-//       target: { value },
-//     } = event;
-//     setPersonName(typeof value === 'string' ? value.split(',') : value);
-//   };
-
-//   return (
-//     <Box sx={{ minWidth: 110, maxWidth: '100%' }}>
-//       <FormControl fullWidth size="small" required={isRequired}>
-//         <InputLabel id="demo-simple-select-label">{label}</InputLabel>
-//         <Select
-//           labelId="demo-simple-select-label"
-//           id="demo-multiple-checkbox"
-//           multiple={multiple}
-//           label={label}
-//           value={personName}
-//           onChange={handleChange}
-//           renderValue={multiple ? (selected) => selected.join(', ') : undefined}
-//           MenuProps={{
-//             PaperProps: {
-//               style: {
-//                 maxHeight: 48 * 4.5 + 8,
-//               },
-//             },
-//           }}
-//         >
-//           {names.map((name) => (
-//             <MenuItem key={name} value={name}>
-//               {multiple && <Checkbox checked={personName.indexOf(name) > -1} />}
-//               <ListItemText primary={name} />
-//             </MenuItem>
-//           ))}
-//         </Select>
-//       </FormControl>
-//     </Box>
-//   );
-// };
 
 const CreateRoomCardMol = ({
   onSubmit,
@@ -156,6 +91,7 @@ const CreateRoomCardMol = ({
       additions: [],
       name: '',
       type: '',
+      id: '',
       longPrice: {
         sunrise: null,
         while: null,
@@ -167,7 +103,7 @@ const CreateRoomCardMol = ({
     },
   });
 
-  const onHandleSubmit = (data: IFormState) => {
+  const onHandleSubmit = (data: any) => {
     onSubmit(data);
     reset();
   };
@@ -276,7 +212,7 @@ const CreateRoomCardMol = ({
             rules={{ required: true }}
             label="Servicios adicionales"
             isRequired
-            error={errors.additions}
+            error={errors.additions as FieldError}
             minWidth="100%"
             multiple
           />

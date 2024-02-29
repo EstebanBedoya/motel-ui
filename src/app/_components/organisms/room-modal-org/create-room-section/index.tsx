@@ -1,19 +1,9 @@
 'use client';
 
 /** @package */
-import Box from '@mui/material/Box';
-import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
 import Grid from '@mui/material/Grid';
-import InputLabel from '@mui/material/InputLabel';
-import ListItemText from '@mui/material/ListItemText';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import { Divider, useMediaQuery, useTheme } from '@mui/material';
+import { useMediaQuery } from '@mui/material';
 import { useState } from 'react';
-import Button from '@mui/material/Button';
 
 /** @scripts */
 import CreateRoomCardMol, { IFormState } from '@/app/_components/molecules/create-room-card-mol';
@@ -22,7 +12,6 @@ import CreatedRoomCard from '@/app/_components/molecules/created-room-card';
 import { RoomStatus } from '@/utils/types';
 
 const CreateRoomSection = () => {
-  const theme = useTheme();
   const matchMaxWidth = useMediaQuery('(max-width:500px)');
   const [addedRoomsList, setAddedRoomsList] = useState<IFormState[]>([]);
   const mutation = trpc.rooms.create.useMutation();
@@ -54,6 +43,7 @@ const CreateRoomSection = () => {
     <Grid
       container
       justifyContent="center"
+      mt={2}
       display={matchMaxWidth ? '' : 'grid'}
     >
       {addedRoomsList.map((room) => (
