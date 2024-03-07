@@ -57,7 +57,7 @@ const SelectAtm = ({
       >
         <MenuItem value={1}>Sencilla</MenuItem>
         <MenuItem value={2}>Normal</MenuItem>
-        <MenuItem value={3}>Zozorrita</MenuItem>
+        <MenuItem value={3}>select</MenuItem>
       </Select>
       <FormHelperText>{error?.message}</FormHelperText>
     </FormControl>

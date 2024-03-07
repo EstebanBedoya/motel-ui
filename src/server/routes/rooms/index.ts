@@ -20,6 +20,7 @@ export const roomsRouter = router({
           weekday: z.number(),
           weekend: z.number(),
         }),
+        additional: z.array(z.number()),
       }),
     )
     .mutation(async ({ input, ctx }) => {
@@ -55,6 +56,15 @@ export const roomsRouter = router({
           weekend: input.longPrice.weekend,
         },
       });
+
+      if (input.additional?.length) {
+        await db.additionalRoom.createMany({
+          data: input.additional.map((additionalId) => ({
+            additionalId,
+            roomId: room.id,
+          })),
+        });
+      }
 
       return room;
     }),

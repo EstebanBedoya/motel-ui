@@ -24,5 +24,5 @@ export const priceSpanish = {
 export const isWeekend = (() => {
   const currentDay = dayjs();
 
-  return currentDay.day() === 0 || currentDay.day() === 6;
+  return currentDay.day() === 5 || currentDay.day() === 6;
 })();
