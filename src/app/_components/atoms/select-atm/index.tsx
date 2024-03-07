@@ -4,40 +4,62 @@
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { useState } from 'react';
+import Select from '@mui/material/Select';
+import { FormHelperText } from '@mui/material';
+import { FieldError, UseFormReturn } from 'react-hook-form';
+import { IRulesParams } from '@/utils/types';
+import UseControllerCustom from '@/hooks/useControllerCustom';
 
 type Props = {
+  control: UseFormReturn['control'];
   fullWidth?: boolean;
+  isRequired?: boolean;
+  label: string;
+  error?: FieldError;
+  minWidth?: string;
+  multiple?: boolean;
+  name: string;
+  rules: IRulesParams;
 };
 
-const SelectAtm = ({ fullWidth }: Props) => {
-  const [age, setAge] = useState('');
-
-  const handleChange = (event: SelectChangeEvent) => {
-    setAge(event.target.value);
-  };
+const SelectAtm = ({
+  control,
+  error,
+  fullWidth,
+  isRequired,
+  label,
+  minWidth = '50vW',
+  multiple,
+  name,
+  rules,
+}: Props) => {
+  const { field } = name ? UseControllerCustom(control, name, rules) : { field: null };
 
   return (
-    <FormControl fullWidth={fullWidth} sx={{ minWidth: '50vW' }}>
+    <FormControl
+      error={!!error}
+      fullWidth={fullWidth}
+      sx={{ minWidth }}
+      required={isRequired}
+    >
       <InputLabel id="select-helper-label" sx={{ top: '-7px' }}>
-        Filtro de habitaciones
+        {label || 'labelFiltro de habitaciones'}
       </InputLabel>
       <Select
         id="select-helper"
-        label="Filter Rooms"
+        label={label}
         labelId="select-helper-label"
-        onChange={handleChange}
+        onChange={field?.onChange}
+        multiple={multiple}
+        ref={field?.ref}
         sx={{ height: 40 }}
-        value={age}
+        value={multiple ? field?.value || [] : field?.value || ''}
       >
-        <MenuItem value="">
-          <em>None</em>
-        </MenuItem>
         <MenuItem value={1}>Sencilla</MenuItem>
         <MenuItem value={2}>Normal</MenuItem>
         <MenuItem value={3}>select</MenuItem>
       </Select>
+      <FormHelperText>{error?.message}</FormHelperText>
     </FormControl>
   );
 };

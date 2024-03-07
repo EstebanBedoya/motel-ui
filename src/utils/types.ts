@@ -10,3 +10,21 @@ export interface IRoom {
   type: string;
   state: RoomStatus;
 }
+
+export interface IRef {
+  name: string;
+}
+
+export interface IError {
+  message: string;
+  ref: IRef;
+  type: string;
+}
+
+export interface IRulesParams {
+  maxLength?: number;
+  minLength?: number;
+  pattern?: RegExp;
+  required?: boolean;
+  validate?: (value: string) => boolean;
+}

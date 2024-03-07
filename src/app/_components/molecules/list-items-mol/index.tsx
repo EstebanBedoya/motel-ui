@@ -10,14 +10,20 @@ interface Props {
   title: string;
   items: string[] | { primary: string; secondary: string }[];
   inlineItems?: boolean;
+  headerSize?: number;
 }
 
-const ListItemsMol = ({ title, items, inlineItems = false }: Props) => (
+const ListItemsMol = ({
+  title,
+  items,
+  inlineItems = false,
+  headerSize = 20,
+}: Props) => (
   <List
     subheader={(
       <ListSubheader
         sx={{
-          fontSize: 20,
+          fontSize: headerSize,
           fontWeight: 700,
           color: 'black',
           lineHeight: 'unset',

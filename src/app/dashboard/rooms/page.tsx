@@ -3,21 +3,21 @@
 /** @package */
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import { Room } from '@prisma/client';
 import { useMediaQuery } from '@mui/material';
 import { useState } from 'react';
 
 /** @component */
-import { Room } from '@prisma/client';
+import CreateRoomSection from '@/app/_components/organisms/room-modal-org/create-room-section';
 import RoomItemAtm from '@/app/_components/atoms/room-item-atm';
-import CreateRoomCardMol from '@/app/_components/molecules/create-room-card-mol';
 import RoomModalMol from '@/app/_components/organisms/room-modal-org';
 import TabsFilterMol, {
   EFilter,
 } from '@/app/_components/molecules/tabs-filter-mol';
 
 /** @scripts */
-import { RoomStatus } from '@/utils/types';
 import { trpc } from '@/app/_trpc/client';
+import { RoomStatus } from '@/utils/types';
 
 export default function Page() {
   const [tabValue, setTabValue] = useState<EFilter>(EFilter.all);
@@ -38,6 +38,15 @@ export default function Page() {
     refetch();
   };
 
+  const onChangeTab = (value: EFilter) => {
+    setTabValue((prevValue) => {
+      if (prevValue === EFilter.create) {
+        refetch();
+      }
+      return value;
+    });
+  };
+
   return (
     <>
       <Grid
@@ -52,13 +61,14 @@ export default function Page() {
           Habitaciones
         </Typography>
       </Grid>
-      <TabsFilterMol tabValue={tabValue} onChange={setTabValue} />
+      <TabsFilterMol tabValue={tabValue} onChange={onChangeTab} />
       <Grid
         container
         mb={5}
         mt={5}
         justifyItems="center"
         pl={matchMaxWidth ? 3 : 10}
+        overflow="auto"
         pr={matchMaxWidth ? 3 : 10}
       >
         {filterRooms.map((item: Room) => (
@@ -81,7 +91,7 @@ export default function Page() {
           </Grid>
         ))}
         {tabValue === EFilter.create && (
-          <CreateRoomCardMol />
+          <CreateRoomSection />
         )}
       </Grid>
       {roomId && (
