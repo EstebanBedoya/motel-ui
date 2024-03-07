@@ -22,7 +22,7 @@ interface IProps {
     while: number;
     sunrise: number;
   };
-  additions: (string | undefined)[] | null;
+  additions: number[] | null;
 }
 
 const CreatedRoomCard = ({

@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { forwardRef } from 'react';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { zodResolver } from '@hookform/resolvers/zod';
 import Button from '@mui/material/Button';
 
 /** @style */
@@ -36,7 +36,7 @@ export interface IFormState {
   };
   id: string;
   type: string;
-  additions: (string | undefined)[];
+  additions: (number)[];
 }
 
 const TextFieldAtm = forwardRef<HTMLInputElement, ITextFieldPropsAtm>(({
@@ -86,7 +86,7 @@ const CreateRoomCardMol = ({
     reset,
   } = useForm({
     mode: 'onSubmit',
-    resolver: yupResolver(schema),
+    resolver: zodResolver(schema),
     defaultValues: {
       additions: [],
       name: '',

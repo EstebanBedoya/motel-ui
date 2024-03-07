@@ -4,6 +4,7 @@
 import Grid from '@mui/material/Grid';
 import { useMediaQuery } from '@mui/material';
 import { useState } from 'react';
+import { toast } from 'sonner';
 
 /** @scripts */
 import CreateRoomCardMol, { IFormState } from '@/app/_components/molecules/create-room-card-mol';
@@ -18,10 +19,11 @@ const CreateRoomSection = () => {
 
   const onSubmit = async (data: IFormState) => {
     const params = {
-      name: data.name,
+      additional: data.additions,
       id: +data.id,
-      type: data.type,
+      name: data.name,
       state: RoomStatus.AVAILABLE,
+      type: data.type.toString(),
       shortPrice: {
         weekday: +data.shortPrice.while,
         weekend: +data.shortPrice.sunrise,
@@ -32,11 +34,15 @@ const CreateRoomSection = () => {
       },
     };
 
-    mutation.mutate(params);
-
-    if (!mutation.error) {
-      setAddedRoomsList([...addedRoomsList, data]);
-    }
+    mutation.mutate(params, {
+      onSuccess: () => {
+        setAddedRoomsList([...addedRoomsList, data]);
+        toast.success('Habitación creada con éxito');
+      },
+      onError: () => {
+        toast.error('Ha ocurrido un error');
+      },
+    });
   };
 
   return (
