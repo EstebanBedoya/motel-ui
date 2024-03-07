@@ -8,7 +8,6 @@ import { useState } from 'react';
 
 /** @component */
 import { Room } from '@prisma/client';
-import SelectAtm from '@/app/_components/atoms/select-atm';
 import RoomItemAtm from '@/app/_components/atoms/room-item-atm';
 import CreateRoomCardMol from '@/app/_components/molecules/create-room-card-mol';
 import RoomModalMol from '@/app/_components/organisms/room-modal-org';
@@ -52,7 +51,6 @@ export default function Page() {
         <Typography variant="h1" fontWeight={700} fontSize={35}>
           Habitaciones
         </Typography>
-        <SelectAtm />
       </Grid>
       <TabsFilterMol tabValue={tabValue} onChange={setTabValue} />
       <Grid
