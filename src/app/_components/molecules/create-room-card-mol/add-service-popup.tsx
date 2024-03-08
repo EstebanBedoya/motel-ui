@@ -5,11 +5,12 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
 import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 import { useForm } from 'react-hook-form';
+import { useMediaQuery } from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 /** @scripts */
-import { Typography } from '@mui/material';
 import { addServiceSchema } from './schema';
 
 /** @components */
@@ -32,6 +33,8 @@ const AddServicePopUp = ({
   onSubmit,
   open,
 } : IAddServicePopUpProps) => {
+  const matchMaxWidth = useMediaQuery('(max-width:500px)');
+
   const {
     register,
     handleSubmit,
@@ -46,7 +49,7 @@ const AddServicePopUp = ({
       open={open}
       PaperProps={{
         style: {
-          width: '30vw',
+          width: matchMaxWidth ? '80vw' : '30vw',
         },
       }}
     >
