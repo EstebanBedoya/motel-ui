@@ -12,14 +12,17 @@ import UseControllerCustom from '@/hooks/useControllerCustom';
 
 type Props = {
   control: UseFormReturn['control'];
+  error?: FieldError;
   fullWidth?: boolean;
   isRequired?: boolean;
+  items: Record<string, unknown>[];
   label: string;
-  error?: FieldError;
+  labelProp?: string;
   minWidth?: string;
   multiple?: boolean;
   name: string;
   rules: IRulesParams;
+  valueProp?: string;
 };
 
 const SelectAtm = ({
@@ -27,11 +30,14 @@ const SelectAtm = ({
   error,
   fullWidth,
   isRequired,
+  items,
   label,
+  labelProp = 'name',
   minWidth = '50vW',
   multiple,
   name,
   rules,
+  valueProp = 'id',
 }: Props) => {
   const { field } = name ? UseControllerCustom(control, name, rules) : { field: null };
 
@@ -55,9 +61,11 @@ const SelectAtm = ({
         sx={{ height: 40 }}
         value={multiple ? field?.value || [] : field?.value || ''}
       >
-        <MenuItem value={1}>Sencilla</MenuItem>
-        <MenuItem value={2}>Normal</MenuItem>
-        <MenuItem value={3}>select</MenuItem>
+        {items?.map((item: any) => (
+          <MenuItem key={item[valueProp]} value={item[valueProp]}>
+            {item[labelProp]}
+          </MenuItem>
+        ))}
       </Select>
       <FormHelperText>{error?.message}</FormHelperText>
     </FormControl>

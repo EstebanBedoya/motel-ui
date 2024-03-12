@@ -15,3 +15,8 @@ export const schema = z.object({
   type: z.number().min(1, { message: 'Este campo es requerido' }),
   additions: z.array(z.number()).min(1, { message: 'Este campo es requerido' }).nullable(),
 });
+
+export const addServiceSchema = z.object({
+  name: z.string().min(1, { message: 'Este campo es requerido' }),
+  price: z.string().min(1, { message: 'Este campo es requerido' }),
+});
