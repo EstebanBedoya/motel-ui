@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { RateType, RoomStatus } from '@prisma/client';
+import { Additionals, RateType, RoomStatus } from '@prisma/client';
 import { TRPCError } from '@trpc/server';
 import { db } from '@/libs/prisma';
 import { privateProcedure, router } from '@/server/trpc';
@@ -132,12 +132,22 @@ export const roomsRouter = router({
       throw new TRPCError({ code: 'NOT_FOUND', message: 'Prices not found' });
     }
 
+    const additional = await db.additionalRoom.findMany({
+      where: {
+        roomId: room.id,
+      },
+      select: {
+        additional: true,
+      },
+    });
+
     const roomResponse = {
       ...room,
       prices: {
         hourly: pricesHourly,
         overnight: pricesOvernight,
       },
+      additional: additional.map((add: Additionals) => add.additional),
     };
 
     return roomResponse;
