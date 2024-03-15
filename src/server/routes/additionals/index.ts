@@ -39,4 +39,20 @@ export const additionalRouter = router({
 
     return additional;
   }),
+
+  // lisAllByRoom: privateProcedure.input(z.number()).query(async ({ input, ctx }) => {
+  //   const { user } = ctx.session;
+
+  //   if (!user) {
+  //     throw new TRPCError({ code: 'UNAUTHORIZED', message: 'Unauthorized' });
+  //   }
+
+  //   const additional = await db.additionalRoom.findMany({
+  //     where: {
+  //       roomId: input,
+  //     },
+  //   });
+
+  //   return additional;
+  // }),
 });
