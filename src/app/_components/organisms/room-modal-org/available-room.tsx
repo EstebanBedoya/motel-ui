@@ -11,7 +11,9 @@ import { useMemo, useState } from 'react';
 import { toast } from 'sonner';
 
 /** @components */
-import { Price, RateType, Room } from '@prisma/client';
+import {
+  Additionals, Price, RateType, Room,
+} from '@prisma/client';
 import ListItemsMol from '@/app/_components/molecules/list-items-mol';
 
 /** @scripts */
@@ -24,24 +26,11 @@ interface ContentProps {
   handleClose: () => void;
 }
 
-const additional = [
-  {
-    service: 'Bar',
-    price: 10000,
-  },
-  {
-    service: 'Restaurante',
-    price: 20000,
-  },
-  {
-    service: 'Lavanderia',
-    price: 50000,
-  },
-];
-
 const AvailableRoom = ({ roomData, handleClose }: ContentProps) => {
   const { mutateAsync: checkInRoom } = trpc.records.checkInRoom.useMutation();
-  const { prices, name, type } = roomData;
+  const {
+    prices, name, type, additional,
+  } = roomData;
   const matchMaxWidth = useMediaQuery('(max-width:600px)');
 
   const pricesType = Object.keys(prices);
@@ -55,7 +44,7 @@ const AvailableRoom = ({ roomData, handleClose }: ContentProps) => {
   const totalPrice = useMemo(() => {
     const additionalPrice = additionalSelected.reduce(
       // eslint-disable-next-line no-unsafe-optional-chaining
-      (acc, service) => acc + additional.find((item) => item.service === service)?.price!,
+      (acc, service) => acc + additional.find((item: Additionals) => item.name === service)?.price!,
       0,
     );
 
@@ -84,7 +73,7 @@ const AvailableRoom = ({ roomData, handleClose }: ContentProps) => {
       rateType: serviceSelected as RateType,
       instructions,
       additional: additionalSelected.map(
-        (item) => additional.find((add) => add.service === item)?.price!,
+        (item) => additional.find((add: Additionals) => add.name === item)?.id!,
       ),
       isWeekDay: !isWeekend,
       checkIn: new Date(),
@@ -146,28 +135,33 @@ const AvailableRoom = ({ roomData, handleClose }: ContentProps) => {
               <Typography fontSize={20} fontWeight={700}>
                 Adicionales
               </Typography>
-              <Stack
-                direction="row"
-                spacing={1}
-                mt={1}
-                useFlexGap
-                flexWrap="wrap"
-              >
-                {additional.map(({ service, price }) => (
-                  <Chip
-                    key={service}
-                    label={`${service}: ${formatPrice(price)}`}
-                    color="info"
-                    variant={
-                      additionalSelected.includes(service)
-                        ? 'filled'
-                        : 'outlined'
-                    }
-                    size="small"
-                    onClick={() => handleSelectAdditional(service)}
-                  />
-                ))}
-              </Stack>
+              {additional.length ? (
+
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  mt={1}
+                  useFlexGap
+                  flexWrap="wrap"
+                >
+                  {additional?.map(({ name: nameAdditional, price }: Additionals) => (
+                    <Chip
+                      key={nameAdditional}
+                      label={`${nameAdditional}: ${formatPrice(price)}`}
+                      color="info"
+                      variant={
+                        additionalSelected.includes(nameAdditional)
+                          ? 'filled'
+                          : 'outlined'
+                      }
+                      size="small"
+                      onClick={() => handleSelectAdditional(nameAdditional)}
+                    />
+                  ))}
+                </Stack>
+              ) : (
+                <Typography variant="body2">No hay adicionales</Typography>
+              )}
             </Grid>
             <Grid item width="100%">
               <Typography fontSize={20} fontWeight={700}>
