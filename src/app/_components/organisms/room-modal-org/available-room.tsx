@@ -26,6 +26,9 @@ interface ContentProps {
   handleClose: () => void;
 }
 
+// Create a type with the keys of the prices object
+const paymentMethods = ['Efectivo', 'Tarjeta', 'Bancolombia', 'Nequi'];
+
 const AvailableRoom = ({ roomData, handleClose }: ContentProps) => {
   const { mutateAsync: checkInRoom } = trpc.records.checkInRoom.useMutation();
   const {
@@ -40,6 +43,7 @@ const AvailableRoom = ({ roomData, handleClose }: ContentProps) => {
     pricesType[0] as RateType,
   );
   const [instructions, setInstructions] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState(paymentMethods[0]);
 
   const totalPrice = useMemo(() => {
     const additionalPrice = additionalSelected.reduce(
@@ -67,11 +71,16 @@ const AvailableRoom = ({ roomData, handleClose }: ContentProps) => {
     setServiceSelected(service);
   };
 
+  const handlePaymentMethod = (method: string) => {
+    setPaymentMethod(method);
+  };
+
   const handleCheckIn = async () => {
     await checkInRoom({
       roomId: roomData.id,
       rateType: serviceSelected as RateType,
       instructions,
+      paymentMethod,
       additional: additionalSelected.map(
         (item) => additional.find((add: Additionals) => add.name === item)?.id!,
       ),
@@ -191,6 +200,29 @@ const AvailableRoom = ({ roomData, handleClose }: ContentProps) => {
                 },
               ]}
             />
+            <Box paddingX={2}>
+              <Typography fontSize={20} fontWeight={700}>
+                Metodo de pago
+              </Typography>
+              <Stack
+                direction="row"
+                spacing={1}
+                mt={1}
+                useFlexGap
+                flexWrap="wrap"
+              >
+                {paymentMethods.map((method) => (
+                  <Chip
+                    key={method}
+                    label={method}
+                    color="primary"
+                    variant={paymentMethod === method ? 'filled' : 'outlined'}
+                    size="small"
+                    onClick={() => handlePaymentMethod(method)}
+                  />
+                ))}
+              </Stack>
+            </Box>
             <Box
               alignItems="center"
               display="flex"

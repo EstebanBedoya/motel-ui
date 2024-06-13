@@ -108,6 +108,7 @@ model Record {
   phoneNumber        String?
   maintenanceValue   Float?
   maintenanceDetails String?
+  paymentMethod      String?
   createAt           DateTime   @default(now())
   updateAt           DateTime   @updatedAt
 }
