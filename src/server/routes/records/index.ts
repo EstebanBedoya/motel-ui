@@ -16,6 +16,7 @@ export const recordsRouter = router({
         additional: z.array(z.number()).optional(),
         isWeekDay: z.boolean(),
         checkIn: z.date(),
+        paymentMethod: z.string().optional(),
       }),
     )
     .mutation(async ({ input, ctx }) => {
@@ -72,6 +73,7 @@ export const recordsRouter = router({
         instructions: input.instructions,
         aditionalIds: input.additional,
         priceRate: price,
+        paymentMethod: input.paymentMethod,
         total,
       };
 
