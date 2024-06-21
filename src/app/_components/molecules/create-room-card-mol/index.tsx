@@ -15,13 +15,16 @@ import { useTheme } from '@mui/material';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 /** @scripts */
+import { Price, Room } from '@prisma/client';
 import { trpc } from '@/app/_trpc/client';
 import { schema } from './schema';
 
 /** @components */
 import SelectAtm from '@/app/_components/atoms/select-atm';
 import TextFieldAtm from '@/app/_components/atoms/text-field-atm';
-import AddServicePopUp, { IFormState as IAddService } from './add-service-popup';
+import AddServicePopUp, {
+  IFormState as IAddService,
+} from './add-service-popup';
 
 /** @interfaces */
 export interface IFormState {
@@ -36,18 +39,22 @@ export interface IFormState {
   };
   id: string;
   type: string;
-  additions: (number)[];
+  additions: number[];
 }
 
-const CreateRoomCardMol = ({
-  onSubmit,
-}: {
+interface Props {
   onSubmit: (data: IFormState) => void;
-}) => {
+  isEdit?: boolean;
+  editData?: Room & Price;
+}
+
+const CreateRoomCardMol = ({ onSubmit, isEdit = false, editData }: Props) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const { data: additional, refetch } = trpc.additional.listAll.useQuery();
   const mutation = trpc.additional.create.useMutation();
+
+  console.log(editData);
 
   const {
     control,
@@ -55,21 +62,21 @@ const CreateRoomCardMol = ({
     handleSubmit,
     register,
     reset,
-  } = useForm({
+  } = useForm<IFormState>({
     mode: 'onSubmit',
     resolver: zodResolver(schema),
     defaultValues: {
-      additions: [],
-      name: '',
-      type: '',
-      id: '',
+      additions: editData?.additional ?? [],
+      name: editData?.name ?? '',
+      type: editData?.type ?? '',
+      id: editData?.id ?? '',
       longPrice: {
-        sunrise: null,
-        while: null,
+        sunrise: editData?.prices?.hourly?.weekend ?? null,
+        while: editData?.prices?.overnight?.weekend ?? null,
       },
       shortPrice: {
-        sunrise: null,
-        while: null,
+        sunrise: editData?.prices?.hourly?.weekday ?? null,
+        while: editData?.prices?.overnight?.weekday ?? null,
       },
     },
   });
@@ -104,12 +111,13 @@ const CreateRoomCardMol = ({
   return (
     <>
       <Grid
-        border="2px solid"
+        border={!isEdit ? '2px solid' : 'unset'}
         borderColor={theme.palette.text.secondary}
-        borderRadius="20px"
+        borderRadius={!isEdit ? '20px' : undefined}
         paddingX={3}
         paddingY={2}
-        width={600}
+        p={isEdit ? 5 : undefined}
+        width={!isEdit ? 600 : undefined}
         container
         spacing={2}
       >
@@ -241,12 +249,7 @@ const CreateRoomCardMol = ({
           </Grid>
         </Grid>
         <Divider sx={{ color: 'red', width: '100%', mt: 1 }} />
-        <Grid
-          item
-          container
-          justifyContent="center"
-          alignItems="flex-end"
-        >
+        <Grid item container justifyContent="center" alignItems="flex-end">
           <Button
             variant="contained"
             sx={{
