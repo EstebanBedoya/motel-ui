@@ -8,7 +8,6 @@ import { useMediaQuery } from '@mui/material';
 import { useState } from 'react';
 
 /** @component */
-import CreateRoomSection from '@/app/_components/organisms/room-modal-org/create-room-section';
 import RoomItemAtm from '@/app/_components/atoms/room-item-atm';
 import RoomModalMol from '@/app/_components/organisms/room-modal-org';
 import TabsFilterMol, {
@@ -90,9 +89,6 @@ export default function Page() {
             />
           </Grid>
         ))}
-        {tabValue === EFilter.create && (
-          <CreateRoomSection />
-        )}
       </Grid>
       {roomId && (
         <RoomModalMol

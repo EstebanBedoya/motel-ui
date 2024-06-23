@@ -1,6 +1,3 @@
-/** @components */
-import HeaderAppBar from '@/app/_components/molecules/header-app-bar';
-
 export default function DashboardLayout({
   children,
 }: {
@@ -8,7 +5,6 @@ export default function DashboardLayout({
 }) {
   return (
     <div style={{ width: '100vw' }}>
-      <HeaderAppBar />
       {children}
     </div>
   );

@@ -100,14 +100,6 @@ const TabsFilterMol = ({ tabValue, onChange }: Props) => {
             fontWeight: 700,
           }}
         />
-        <Tab
-          label="Crear Habitación"
-          value="create"
-          sx={{
-            color: theme.palette.text.primary,
-            fontWeight: 700,
-          }}
-        />
       </Tabs>
     </Box>
   );

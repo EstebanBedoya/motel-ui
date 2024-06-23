@@ -1,5 +1,8 @@
-/** @styles */
+/** @Packages */
 import { Toaster } from 'sonner';
+import Navbar from '@/app/_components/organisms/navbar';
+
+/** @styles */
 import ThemeRegistry from '@/styles/theme/ThemeRegistry';
 
 /** @script */
@@ -17,7 +20,11 @@ export default function RootLayout({
         <SessionAuthProvider>
           <Toaster />
           <TrpcProvider>
-            <ThemeRegistry>{children}</ThemeRegistry>
+            <ThemeRegistry>
+              <Navbar>
+                {children}
+              </Navbar>
+            </ThemeRegistry>
           </TrpcProvider>
         </SessionAuthProvider>
       </body>

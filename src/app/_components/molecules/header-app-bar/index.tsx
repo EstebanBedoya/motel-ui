@@ -2,23 +2,30 @@
 
 /** @packages */
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Avatar from '@mui/material/Avatar';
-import Tooltip from '@mui/material/Tooltip';
+import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import Toolbar from '@mui/material/Toolbar';
+import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
 import { signOut } from 'next-auth/react';
+import { useState } from 'react';
 
 /** @component */
 import BrandLogoAtm from '@/app/_components/atoms/brand-logo-atm';
 
 const actions = ['Profile', 'Logout'];
 
-const HeaderAppBar = () => {
+/** @Interfaces */
+interface IHeaderAppBar {
+  open: boolean;
+  handleDrawerOpen: () => void;
+}
+
+const HeaderAppBar = ({ open, handleDrawerOpen }: IHeaderAppBar) => {
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -35,11 +42,22 @@ const HeaderAppBar = () => {
 
   return (
     <AppBar
-      position="sticky"
       color="inherit"
       sx={{ borderBottom: '2px solid #0054A3' }}
     >
       <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={handleDrawerOpen}
+          edge="start"
+          sx={{
+            marginRight: 5,
+            ...(open && { visibility: 'hidden' }),
+          }}
+        >
+          <MenuIcon />
+        </IconButton>
         <BrandLogoAtm />
         <Box>
           <Tooltip title="Open settings">
